@@ -3214,7 +3214,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@zcloak/contracts-core@workspace:packages/contracts-core"
   dependencies:
-    "@zcloak/web3-query": ^0.0.0
+    "@zcloak/web3-query": ^0.0.1
     ethers: ^5.6.7
     eventemitter3: ^4.0.7
   languageName: unknown
@@ -3330,7 +3330,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zcloak/web3-query@^0.0.0, @zcloak/web3-query@workspace:packages/web3-query":
+"@zcloak/web3-query@^0.0.1, @zcloak/web3-query@workspace:packages/web3-query":
   version: 0.0.0-use.local
   resolution: "@zcloak/web3-query@workspace:packages/web3-query"
   dependencies:
