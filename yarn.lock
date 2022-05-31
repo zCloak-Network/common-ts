@@ -3324,17 +3324,17 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@zcloak/service@workspace:packages/service":
+  version: 0.0.0-use.local
+  resolution: "@zcloak/service@workspace:packages/service"
+  languageName: unknown
+  linkType: soft
+
 "@zcloak/web3-query@^0.0.0, @zcloak/web3-query@workspace:packages/web3-query":
   version: 0.0.0-use.local
   resolution: "@zcloak/web3-query@workspace:packages/web3-query"
   dependencies:
     ethers: ^5.6.7
-  languageName: unknown
-  linkType: soft
-
-"@zkid/service@workspace:packages/service":
-  version: 0.0.0-use.local
-  resolution: "@zkid/service@workspace:packages/service"
   languageName: unknown
   linkType: soft
 

@@ -1,3 +1,3 @@
-# @zcloak/zkid-core
+# @zcloak/contracts-core
 
-This is package core for zkid interface.
+This is package core for [zCloak-contracts](https://github.com/zCloak-Network/zCloak-contracts).

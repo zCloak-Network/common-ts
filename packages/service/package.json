@@ -6,7 +6,7 @@
   "homepage": "https://github.com/zCloak/common-ts/tree/master/packages/service#readme",
   "license": "Apache-2.0",
   "maintainers": [],
-  "name": "@zkid/service",
+  "name": "@zcloak/service",
   "repository": {
     "directory": "packages/service",
     "type": "git",
