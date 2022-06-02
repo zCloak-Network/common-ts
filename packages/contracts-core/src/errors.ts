@@ -1,9 +1,3 @@
-export class NoZkidExtension extends Error {
-  constructor() {
-    super('Zkid Extension not install');
-  }
-}
-
 export class WalletError extends Error {}
 
 export class ContractError extends WalletError {

@@ -25,16 +25,6 @@ export function assert(condition: unknown, message: string | (() => Error)): ass
   }
 }
 
-export function documentReadyPromise<T>(creator: () => Promise<T>): Promise<T> {
-  return new Promise((resolve): void => {
-    if (document.readyState === 'complete') {
-      resolve(creator());
-    } else {
-      window.addEventListener('load', () => resolve(creator()));
-    }
-  });
-}
-
 export function shortenAddress(address?: string | null, chars = 4): string {
   if (!address) {
     return '';
