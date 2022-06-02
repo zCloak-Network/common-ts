@@ -1,16 +1,16 @@
 {
   "author": "zCloak",
-  "bugs": "https://github.com/zCloak/common-ts/issues",
+  "bugs": "https://github.com/zCloak-Network/common-ts/issues",
   "contributors": [],
   "description": "zCloak web3-query",
-  "homepage": "https://github.com/zCloak/common-ts/tree/master/packages/web3-query#readme",
+  "homepage": "https://github.com/zCloak-Network/common-ts/tree/master/packages/web3-query#readme",
   "license": "Apache-2.0",
   "maintainers": [],
   "name": "@zcloak/web3-query",
   "repository": {
     "directory": "packages/web3-query",
     "type": "git",
-    "url": "https://github.com/zCloak/common-ts.git"
+    "url": "https://github.com/zCloak-Network/common-ts.git"
   },
   "sideEffects": false,
   "type": "module",

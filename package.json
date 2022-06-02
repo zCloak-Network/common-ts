@@ -16,6 +16,7 @@
     "packages/*"
   ],
   "scripts": {
+    "start": "cd packages/example && yarn webpack serve --config webpack.serve.cjs --port 3000",
     "build": "zcloak-dev-build-ts",
     "build:release": "zcloak-ci-ghact-build",
     "clean": "zcloak-dev-clean-build",
