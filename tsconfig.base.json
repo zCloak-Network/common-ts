@@ -6,6 +6,8 @@
     "composite": false,
     "jsx": "react",
     "paths": {
+      "@zcloak/example": ["example/src"],
+      "@zcloak/example/*": ["example/src/*"],
       "@zcloak/contracts-core": ["contracts-core/src"],
       "@zcloak/contracts-core/*": ["contracts-core/src/*"],
       "@zcloak/react-wallet": ["react-wallet/src"],

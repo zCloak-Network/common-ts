@@ -1,4 +1,3 @@
-export { default as getLibrary } from './getLibrary';
+export * from './connectors';
+export * from './useConnectCallback';
 export * from './WalletProvider';
-export * from './useEagerConnect';
-export * from './switchNetwork';

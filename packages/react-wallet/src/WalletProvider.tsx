@@ -1,59 +1,51 @@
-import type { JsonRpcProvider } from '@ethersproject/providers';
-import type { Web3ReactContextInterface } from '@web3-react/core/dist/types';
+import type { Connector, Web3ReactStore } from '@web3-react/types';
+import type { Endpoint } from './types';
 
-import { useWeb3React, Web3ReactProvider } from '@web3-react/core';
-import { InjectedConnector } from '@web3-react/injected-connector';
-import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
+import { useWeb3React, Web3ReactHooks, Web3ReactProvider } from '@web3-react/core';
 import React, { createContext, useContext, useMemo } from 'react';
 
-import getLibrary from './getLibrary';
-
-interface State {
-  injected: InjectedConnector;
-  walletConnect: WalletConnectConnector;
-}
+import { createConnectors } from './connectors';
 
 interface Props {
-  supportedChainIds: number[];
+  endpoints: Endpoint[];
 }
 
-export const WalletContext = createContext<State>({} as State);
+interface State {
+  connectors: [Connector, Web3ReactHooks, Web3ReactStore][];
+}
 
-const WalletProvider: React.FC<React.PropsWithChildren<Props>> = ({
-  children,
-  supportedChainIds
-}) => {
-  const injected = useMemo(
+const WalletContext = createContext<State>({} as State);
+
+const WalletProvider: React.FC<React.PropsWithChildren<Props>> = ({ children, endpoints }) => {
+  const allowedChainIds = useMemo(() => endpoints.map(({ chainId }) => chainId), [endpoints]);
+  const rpcs = useMemo(
     () =>
-      new InjectedConnector({
-        supportedChainIds
-      }),
-    [supportedChainIds]
+      endpoints
+        .map(({ chainId, rpcs }) => ({ [chainId]: rpcs }))
+        .reduce((l, r) => ({ ...l, ...r })),
+    [endpoints]
   );
 
-  const walletConnect = useMemo(
-    () =>
-      new WalletConnectConnector({
-        supportedChainIds
-      }),
-    [supportedChainIds]
+  const connectors = useMemo(
+    () => createConnectors(allowedChainIds, rpcs),
+    [allowedChainIds, rpcs]
   );
 
   return (
-    <WalletContext.Provider value={{ injected, walletConnect }}>
-      <Web3ReactProvider getLibrary={getLibrary}>{children}</Web3ReactProvider>
+    <WalletContext.Provider value={{ connectors }}>
+      <Web3ReactProvider connectors={connectors}>{children}</Web3ReactProvider>
     </WalletContext.Provider>
   );
 };
 
-const useWallet = (): Web3ReactContextInterface<JsonRpcProvider> => {
-  const wallet = useWeb3React();
+function useWallet() {
+  return useWeb3React();
+}
 
-  return wallet;
-};
+function useConnectors() {
+  const { connectors } = useContext(WalletContext);
 
-const useConnectors = () => {
-  return useContext(WalletContext);
-};
+  return connectors;
+}
 
-export { WalletProvider, useConnectors, useWallet };
+export { WalletProvider, useWallet, useConnectors };
