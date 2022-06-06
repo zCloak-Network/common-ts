@@ -38,7 +38,13 @@ export class MetaMaskWallet extends AbstractWallet {
   };
 
   private handleAccounts = (accounts: string[]) => this.emit('account_change', accounts);
-  private handleChain = (chainId: string) => this.emit('chain_change', chainId);
+  private handleChain = (chainId: string) => {
+    if (this.#ethereum) {
+      this.provider = new Web3Provider(this.#ethereum);
+    }
+
+    this.emit('chain_change', chainId);
+  };
 
   public connect(): Promise<void> {
     return detectEthereumProvider().then(async (ethereum: any) => {

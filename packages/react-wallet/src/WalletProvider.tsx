@@ -80,7 +80,7 @@ export const WalletProvider: React.FC<React.PropsWithChildren<Props>> = ({
     (): WalletState => ({
       ...(error ? {} : debounceState),
       error: error,
-      active: !!debounceState.account,
+      active: !error || !!debounceState.account,
       wallet: wallet.current,
       connect,
       disconnect
