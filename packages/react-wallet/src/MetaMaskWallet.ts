@@ -65,7 +65,7 @@ export class MetaMaskWallet extends AbstractWallet {
 
     if (this.#ethereum) {
       this.#ethereum.removeListener('connect', this.handleConnect);
-      this.#ethereum.removeListener('disconnect', () => this.handleDisconnect);
+      this.#ethereum.removeListener('disconnect', this.handleDisconnect);
       this.#ethereum.removeListener('chainChanged', this.handleChain);
       this.#ethereum.removeListener('accountsChanged', this.handleAccounts);
     }

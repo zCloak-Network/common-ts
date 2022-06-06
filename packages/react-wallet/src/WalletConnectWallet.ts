@@ -53,7 +53,7 @@ export class WalletConnectWallet extends AbstractWallet {
     this.provider = undefined;
 
     if (this.#walletConnectProvider) {
-      this.#walletConnectProvider.removeListener('disconnect', () => this.handleDisconnect);
+      this.#walletConnectProvider.removeListener('disconnect', this.handleDisconnect);
       this.#walletConnectProvider.removeListener('chainChanged', this.handleChain);
       this.#walletConnectProvider.removeListener('accountsChanged', this.handleAccounts);
       await this.#walletConnectProvider.disconnect();
