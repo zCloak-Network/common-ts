@@ -36,17 +36,18 @@ export class WalletConnectWallet extends AbstractWallet {
   }
 
   public async connect(): Promise<void> {
-    this.#walletConnectProvider = new WalletConnectProvider(this.#options);
+    this.#walletConnectProvider = new WalletConnectProvider({
+      ...this.#options,
+      chainId: Number(Object.keys(this.#options.rpc)[0])
+    });
     this.#walletConnectProvider.on('disconnect', this.handleDisconnect);
     this.#walletConnectProvider.on('chainChanged', this.handleChain);
     this.#walletConnectProvider.on('accountsChanged', this.handleAccounts);
 
     this.provider = new Web3Provider(this.#walletConnectProvider);
 
-    const [accounts, chainId] = await Promise.all([
-      this.#walletConnectProvider.request<string[]>({ method: 'eth_requestAccounts' }),
-      this.#walletConnectProvider.request<string>({ method: 'eth_chainId' })
-    ]);
+    const accounts = await this.#walletConnectProvider.enable();
+    const chainId = await this.#walletConnectProvider.request<string>({ method: 'eth_chainId' });
 
     this.emit('account_change', accounts);
     this.emit('chain_change', chainId);

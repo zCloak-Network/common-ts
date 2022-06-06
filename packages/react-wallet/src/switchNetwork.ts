@@ -26,7 +26,6 @@ export async function switchNetwork(
   } catch (error: any) {
     if (params) {
       await addNetwork(externalProvider, params);
-      switchNetwork(externalProvider, chainId);
 
       return true;
     } else {

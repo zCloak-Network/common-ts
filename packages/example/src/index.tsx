@@ -20,7 +20,7 @@ export const endpoints = [
     name: 'Moonbase Alpha',
     rpc: 'https://rpc.api.moonbase.moonbeam.network',
     rpcs: ['https://rpc.api.moonbase.moonbeam.network'],
-    currencySymbol: 'GLMR',
+    currencySymbol: 'DEV',
     decimals: 18,
     explorer: 'https://moonbase.moonscan.io'
   }

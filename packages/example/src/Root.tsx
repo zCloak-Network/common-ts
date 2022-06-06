@@ -13,7 +13,7 @@ const walletConnectWallet = new WalletConnectWallet({
 });
 
 const Root: React.FC = () => {
-  const { account, chainId, connect, error, provider, wallet } = useWallet();
+  const { account, chainId, connect, disconnect, error, provider, wallet } = useWallet();
   const [balance, setBalance] = useState<string>();
 
   useEffect(() => {
@@ -41,6 +41,7 @@ const Root: React.FC = () => {
       >
         connect
       </button>
+      <button onClick={disconnect}>disconnect</button>
       <button
         onClick={() => {
           wallet?.switchNetwork(endpoints[0].chainId, {

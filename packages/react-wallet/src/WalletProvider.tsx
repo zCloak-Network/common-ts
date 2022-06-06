@@ -66,26 +66,27 @@ export const WalletProvider: React.FC<React.PropsWithChildren<Props>> = ({
     }
   }, [handleWalletData]);
 
-  const debounceState = useDebounce(state, 100);
-
   const error = useMemo(
     () =>
-      supportedChainId && debounceState.chainId && !supportedChainId.includes(debounceState.chainId)
-        ? new UnsupportedChainIdError(debounceState.chainId)
+      supportedChainId && state.chainId && !supportedChainId.includes(state.chainId)
+        ? new UnsupportedChainIdError(state.chainId)
         : undefined,
-    [debounceState.chainId, supportedChainId]
+    [state.chainId, supportedChainId]
   );
 
-  const value = useMemo(
-    (): WalletState => ({
-      ...(error ? {} : debounceState),
-      error: error,
-      active: !error && !!debounceState.account,
-      wallet: wallet.current,
-      connect,
-      disconnect
-    }),
-    [connect, debounceState, disconnect, error]
+  const value = useDebounce(
+    useMemo(
+      (): WalletState => ({
+        ...(error ? {} : state),
+        error: error,
+        active: !error && !!state.account,
+        wallet: wallet.current,
+        connect,
+        disconnect
+      }),
+      [connect, state, disconnect, error]
+    ),
+    100
   );
 
   return <WalletContext.Provider value={value}>{children}</WalletContext.Provider>;
