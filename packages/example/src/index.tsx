@@ -1,8 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
-import { WalletProvider } from '@zcloak/react-wallet';
-import { Endpoint } from '@zcloak/react-wallet/types';
+import { WalletProvider } from '@zcloak/react-wallet/WalletProvider';
 
 import Root from './Root';
 
@@ -15,7 +14,7 @@ if (!rootElement) {
 
 const root = createRoot(rootElement);
 
-export const endpoints: Endpoint[] = [
+export const endpoints = [
   {
     chainId: 1287,
     name: 'Moonbase Alpha',
@@ -28,7 +27,7 @@ export const endpoints: Endpoint[] = [
 ];
 
 root.render(
-  <WalletProvider endpoints={endpoints}>
+  <WalletProvider supportedChainId={endpoints.map(({ chainId }) => chainId)}>
     <Root />
   </WalletProvider>
 );

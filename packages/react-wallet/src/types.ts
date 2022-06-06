@@ -1,9 +1,1 @@
-export type Endpoint = {
-  chainId: number;
-  name: string;
-  rpc: string;
-  rpcs: string[];
-  currencySymbol: string;
-  decimals: 18;
-  explorer: string;
-};
+export type WalletEvents = 'account_change' | 'chain_change';
