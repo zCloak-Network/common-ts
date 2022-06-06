@@ -1532,7 +1532,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/address@npm:5.6.1, @ethersproject/address@npm:^5, @ethersproject/address@npm:^5.6.1":
+"@ethersproject/address@npm:5.6.1, @ethersproject/address@npm:^5.6.1":
   version: 5.6.1
   resolution: "@ethersproject/address@npm:5.6.1"
   dependencies:
@@ -1713,7 +1713,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ethersproject/providers@npm:5.6.8, @ethersproject/providers@npm:^5":
+"@ethersproject/providers@npm:5.6.8, @ethersproject/providers@npm:^5.6.8":
   version: 5.6.8
   resolution: "@ethersproject/providers@npm:5.6.8"
   dependencies:
@@ -3382,65 +3382,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@web3-react/core@npm:^8.0.30-beta.0":
-  version: 8.0.30-beta.0
-  resolution: "@web3-react/core@npm:8.0.30-beta.0"
-  dependencies:
-    "@ethersproject/providers": ^5
-    "@web3-react/store": ^8.0.22-beta.0
-    "@web3-react/types": ^8.0.17-beta.0
-    zustand: ^4.0.0-rc.0
-  peerDependencies:
-    react: ">=16.8"
-  dependenciesMeta:
-    "@ethersproject/providers":
-      optional: true
-  checksum: c20366c8f8f37f116a700620b17d11ca477ceb2cd1c929dafabad95457219459d335e0626328c8da791a5af91c080c551be2388792c0843d72a8024f96233c0d
-  languageName: node
-  linkType: hard
-
-"@web3-react/metamask@npm:^8.0.24-beta.0":
-  version: 8.0.24-beta.0
-  resolution: "@web3-react/metamask@npm:8.0.24-beta.0"
-  dependencies:
-    "@metamask/detect-provider": ^1.2.0
-    "@web3-react/types": ^8.0.17-beta.0
-  checksum: 6f92d1ef3a618cee956cf398651fcdf1f85095790918b326bf595916dae590223eabeed8c6d111974869bad3f1031bee2bebea9fbdccb7d37352c582add963f0
-  languageName: node
-  linkType: hard
-
-"@web3-react/store@npm:^8.0.22-beta.0":
-  version: 8.0.22-beta.0
-  resolution: "@web3-react/store@npm:8.0.22-beta.0"
-  dependencies:
-    "@ethersproject/address": ^5
-    "@web3-react/types": ^8.0.17-beta.0
-    zustand: ^4.0.0-rc.0
-  checksum: 779b3b5debeb6f36e738635b4fc9eea9a690d1849d0aa566927e58cbf9e53981e32249ad79fcfaff747de1eb64d20a2102ad6ece7590fa66eb940a12e530cb25
-  languageName: node
-  linkType: hard
-
-"@web3-react/types@npm:^8.0.17-beta.0":
-  version: 8.0.17-beta.0
-  resolution: "@web3-react/types@npm:8.0.17-beta.0"
-  dependencies:
-    zustand: ^4.0.0-rc.0
-  checksum: e467ba7f2276c1316e61c51426db8d985de1695b92bc2b1dd1527ef8beb1404d2d5759ca038b7ea6803341bdb9db03ba0bb721f3b13ba213a221e2acbac1e03a
-  languageName: node
-  linkType: hard
-
-"@web3-react/walletconnect@npm:^8.0.31-beta.0":
-  version: 8.0.31-beta.0
-  resolution: "@web3-react/walletconnect@npm:8.0.31-beta.0"
-  dependencies:
-    "@web3-react/types": ^8.0.17-beta.0
-    eventemitter3: ^4.0.7
-  peerDependencies:
-    "@walletconnect/ethereum-provider": ^1.7.5
-  checksum: d843a1a8e9e89fb3e0cef9ca2761d8832eb84c2b0e245a99b2cb9668ecc4a625477a5864c6119ee56d5406d5525495c11e9ee44203d71d640104c7e2b008bcda
-  languageName: node
-  linkType: hard
-
 "@webassemblyjs/ast@npm:1.11.1":
   version: 1.11.1
   resolution: "@webassemblyjs/ast@npm:1.11.1"
@@ -3644,7 +3585,7 @@ __metadata:
   resolution: "@zcloak/contracts-core@workspace:packages/contracts-core"
   dependencies:
     "@zcloak/web3-query": ^0.0.2-1
-    ethers: ^5.6.7
+    ethers: ^5.6.8
     eventemitter3: ^4.0.7
   languageName: unknown
   linkType: soft
@@ -3781,12 +3722,10 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@zcloak/react-wallet@workspace:packages/react-wallet"
   dependencies:
+    "@ethersproject/providers": ^5.6.8
+    "@metamask/detect-provider": ^1.2.0
     "@walletconnect/ethereum-provider": ^1.7.8
-    "@web3-react/core": ^8.0.30-beta.0
-    "@web3-react/metamask": ^8.0.24-beta.0
-    "@web3-react/store": ^8.0.22-beta.0
-    "@web3-react/types": ^8.0.17-beta.0
-    "@web3-react/walletconnect": ^8.0.31-beta.0
+    eventemitter3: ^4.0.7
     react: ^18.1.0
     react-dom: ^18.1.0
   peerDependencies:
@@ -3805,7 +3744,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@zcloak/web3-query@workspace:packages/web3-query"
   dependencies:
-    ethers: ^5.6.7
+    ethers: ^5.6.8
   languageName: unknown
   linkType: soft
 
@@ -6914,7 +6853,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ethers@npm:^5.6.7":
+"ethers@npm:^5.6.8":
   version: 5.6.8
   resolution: "ethers@npm:5.6.8"
   dependencies:
@@ -12196,7 +12135,7 @@ __metadata:
     "@types/react": ^18.0.9
     "@types/react-dom": ^18.0.5
     "@zcloak/dev": ^0.1.1
-    ethers: ^5.6.7
+    ethers: ^5.6.8
     typescript: ^4.6.4
   languageName: unknown
   linkType: soft
@@ -13560,15 +13499,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:1.1.0":
-  version: 1.1.0
-  resolution: "use-sync-external-store@npm:1.1.0"
-  peerDependencies:
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 8993a0b642f91d7fcdbb02b7b3ac984bd3af4769686f38291fe7fcfe73dfb73d6c64d20dfb7e5e7fbf5a6da8f5392d6f8e5b00c243a04975595946e82c02b883
-  languageName: node
-  linkType: hard
-
 "util-deprecate@npm:^1.0.1, util-deprecate@npm:^1.0.2, util-deprecate@npm:~1.0.1":
   version: 1.0.2
   resolution: "util-deprecate@npm:1.0.2"
@@ -14173,22 +14103,5 @@ __metadata:
     y18n: ^5.0.5
     yargs-parser: ^21.0.0
   checksum: 00d58a2c052937fa044834313f07910fd0a115dec5ee35919e857eeee3736b21a4eafa8264535800ba8bac312991ce785ecb8a51f4d2cc8c4676d865af1cfbde
-  languageName: node
-  linkType: hard
-
-"zustand@npm:^4.0.0-rc.0":
-  version: 4.0.0-rc.1
-  resolution: "zustand@npm:4.0.0-rc.1"
-  dependencies:
-    use-sync-external-store: 1.1.0
-  peerDependencies:
-    immer: ">=9.0"
-    react: ">=16.8"
-  peerDependenciesMeta:
-    immer:
-      optional: true
-    react:
-      optional: true
-  checksum: c88ae96286229b3c463cf7989c860fcde8ec9cf885eb50a0e0eaf9642388d407a854e5e07b9f80676454732bf15e1c7645201cff21fd9feacd5df8bbd62fcd46
   languageName: node
   linkType: hard
