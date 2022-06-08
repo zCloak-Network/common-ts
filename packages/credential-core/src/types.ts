@@ -12,8 +12,6 @@ export enum EncryptionAlgorithms {
 
 export interface DidKeystore extends Keystore<SigningAlgorithms, EncryptionAlgorithms> {
   address: string;
-  did: string;
-  fullDid: string;
   publicKey: Uint8Array;
   encryptPublicKey: Uint8Array;
   isLocked: boolean;

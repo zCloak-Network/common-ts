@@ -1,16 +1,14 @@
 import type { KeyringPair$Json } from '@polkadot/keyring/types';
 
 import { jest } from '@jest/globals';
-import { init } from '@kiltprotocol/sdk-js';
 import { stringToU8a, u8aEq } from '@polkadot/util';
 
 import { JsonKeystore } from './JsonKeystore';
 
 describe('JsonKeystore', (): void => {
   beforeEach(() => {
-    jest.setTimeout(300000);
+    jest.setTimeout(30000);
     process.env.NODE_ENV = 'test';
-    init({ address: 'wss://peregrine.kilt.io/parachain-public-ws/' });
   });
 
   it('encrypt and decrypted', async () => {

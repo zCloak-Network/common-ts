@@ -1,7 +1,6 @@
 import type { KeystoreSigningData, RequestData, ResponseData } from '@kiltprotocol/types';
 import type { KeyringPair$Json } from '@polkadot/keyring/types';
 
-import { DidUtils } from '@kiltprotocol/did';
 import { Keyring } from '@polkadot/keyring';
 import { decodePair } from '@polkadot/keyring/pair/decode';
 import { KeyringPair } from '@polkadot/keyring/types';
@@ -21,6 +20,7 @@ export class JsonKeystore implements DidKeystore {
   constructor(json: KeyringPair$Json) {
     this.#json = json;
     this.#keyring = new Keyring();
+    this.#keyring.setSS58Format(38);
     this.#siningPair = this.#keyring.createFromJson(json);
   }
 
@@ -36,14 +36,6 @@ export class JsonKeystore implements DidKeystore {
 
   public get address(): string {
     return this.#siningPair.address;
-  }
-
-  public get did(): string {
-    return DidUtils.getKiltDidFromIdentifier(this.address, 'light');
-  }
-
-  public get fullDid(): string {
-    return DidUtils.getKiltDidFromIdentifier(this.address, 'full');
   }
 
   public get isLocked(): boolean {
