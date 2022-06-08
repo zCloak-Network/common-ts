@@ -26,6 +26,7 @@ module.exports = {
     '@typescript-eslint/no-misused-promises': 'off',
     '@typescript-eslint/ban-types': 'off',
     'operator-linebreak': 'off',
+    'brace-style': 'off',
     'simple-import-sort/imports': [
       2,
       {

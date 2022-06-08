@@ -1,0 +1,21 @@
+{
+  "author": "zCloak",
+  "bugs": "https://github.com/zCloak-Network/common-ts/issues",
+  "contributors": [],
+  "description": "zCloak credential-core",
+  "homepage": "https://github.com/zCloak-Network/common-ts/tree/master/packages/credential-core#readme",
+  "license": "Apache-2.0",
+  "maintainers": [],
+  "name": "@zcloak/credential-core",
+  "repository": {
+    "directory": "packages/credential-core",
+    "type": "git",
+    "url": "https://github.com/zCloak-Network/common-ts.git"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "version": "0.0.2-4",
+  "dependencies": {
+    "@kiltprotocol/sdk-js": "^0.26.0"
+  }
+}
