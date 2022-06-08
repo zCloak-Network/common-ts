@@ -10,6 +10,8 @@
       "@zcloak/example/*": ["example/src/*"],
       "@zcloak/contracts-core": ["contracts-core/src"],
       "@zcloak/contracts-core/*": ["contracts-core/src/*"],
+      "@zcloak/credential-core": ["credential-core/src"],
+      "@zcloak/credential-core/*": ["credential-core/src/*"],
       "@zcloak/react-wallet": ["react-wallet/src"],
       "@zcloak/react-wallet/*": ["react-wallet/src/*"],
       "@zcloak/service": ["service/src"],
