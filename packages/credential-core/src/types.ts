@@ -1,5 +1,7 @@
 import type { Keystore } from '@kiltprotocol/types';
 
+import { KeyringPair } from '@polkadot/keyring/types';
+
 export enum SigningAlgorithms {
   Ed25519 = 'ed25519',
   Sr25519 = 'sr25519',
@@ -15,6 +17,7 @@ export interface DidKeystore extends Keystore<SigningAlgorithms, EncryptionAlgor
   publicKey: Uint8Array;
   encryptPublicKey: Uint8Array;
   isLocked: boolean;
+  siningPair: KeyringPair;
   lock: () => void;
   unlock: (passphrase?: string) => void;
 }

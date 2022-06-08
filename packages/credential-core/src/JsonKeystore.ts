@@ -24,6 +24,10 @@ export class JsonKeystore implements DidKeystore {
     this.#siningPair = this.#keyring.createFromJson(json);
   }
 
+  public get siningPair(): KeyringPair {
+    return this.#siningPair;
+  }
+
   public get publicKey(): Uint8Array {
     return this.#siningPair.publicKey;
   }

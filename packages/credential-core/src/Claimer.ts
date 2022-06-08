@@ -1,3 +1,4 @@
+import type { LightDidDetails } from '@kiltprotocol/did';
 import type {
   CTypeSchemaWithoutId,
   IClaim,
@@ -6,7 +7,6 @@ import type {
   ICTypeSchema
 } from '@kiltprotocol/types';
 
-import { LightDidDetails } from '@kiltprotocol/did';
 import {
   Attestation,
   Claim,

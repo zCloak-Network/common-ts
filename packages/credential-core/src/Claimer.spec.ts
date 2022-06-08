@@ -78,6 +78,7 @@ describe('Claimer', (): void => {
 
     const requestForAttestation = await claimer.requestForAttestation(claim);
 
+    console.log(requestForAttestation);
     expect(requestForAttestation.verifyData()).toEqual(true);
     expect(requestForAttestation.verifyRootHash()).toEqual(true);
     expect(await requestForAttestation.verifySignature()).toEqual(false);
