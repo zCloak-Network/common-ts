@@ -1,7 +1,15 @@
 import type { KeyringPair$Json } from '@polkadot/keyring/types';
 
 import { jest } from '@jest/globals';
-import { connect, disconnect, IEncryptedMessage, init, Message } from '@kiltprotocol/sdk-js';
+import {
+  connect,
+  Credential,
+  disconnect,
+  IEncryptedMessage,
+  init,
+  Message,
+  MessageBodyType
+} from '@kiltprotocol/sdk-js';
 import { assert } from '@polkadot/util';
 
 import { Attester } from './Attester';
@@ -29,9 +37,10 @@ describe('Claimer', (): void => {
   let jsonKeystoreClaimer: JsonKeystore;
   let jsonKeystoreAttester: JsonKeystore;
   let encryptMessage: IEncryptedMessage;
+  let credential: Credential;
 
   beforeEach(() => {
-    jest.setTimeout(60000);
+    jest.setTimeout(600);
     process.env.NODE_ENV = 'test';
   });
 
@@ -77,7 +86,7 @@ describe('Claimer', (): void => {
     });
     const requestForAttestation = await claimer.requestForAttestation(claim);
 
-    const credential = claimer.generateCredential(requestForAttestation, attesterFullDid.did);
+    credential = claimer.generateCredential(requestForAttestation, attesterFullDid.did);
 
     const message = new Message(
       {
@@ -96,7 +105,7 @@ describe('Claimer', (): void => {
     );
   });
 
-  it('attest flow', async () => {
+  it.skip('attest flow', async () => {
     const claimer = new Claimer(jsonKeystoreClaimer, endpoint);
     const attester = new Attester(jsonKeystoreAttester, endpoint);
 
@@ -106,6 +115,14 @@ describe('Claimer', (): void => {
     claimer.unlock('1');
     attester.unlock('1');
 
-    console.log(await attester.decryptMessage(encryptMessage));
+    const message = await attester.decryptMessage(encryptMessage);
+
+    if (message.body.type === MessageBodyType.REQUEST_ATTESTATION) {
+      await attester.attestClaim(message.body.content.requestForAttestation);
+    }
+  });
+
+  it.skip('check credential verify status', async () => {
+    expect(await credential.verify()).toEqual(true);
   });
 });
