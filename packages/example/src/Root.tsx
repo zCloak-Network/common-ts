@@ -26,7 +26,7 @@ const Root: React.FC = () => {
     console.log(account, chainId, provider, error);
   }, [account, chainId, error, provider]);
 
-  useEagerConnect(walletConnectWallet);
+  useEagerConnect(metaMaskWallet);
 
   return (
     <>
@@ -36,7 +36,7 @@ const Root: React.FC = () => {
       <p>error: {error?.message}</p>
       <button
         onClick={() => {
-          connect(walletConnectWallet);
+          connect(metaMaskWallet);
         }}
       >
         connect

@@ -1,5 +1,6 @@
 import type { JsonRpcProvider } from '@ethersproject/providers';
 
+import { getAddress } from '@ethersproject/address';
 import React, { createContext, useCallback, useContext, useMemo, useRef, useState } from 'react';
 
 import { AbstractWallet } from './AbstractWallet';
@@ -41,7 +42,10 @@ export const WalletProvider: React.FC<React.PropsWithChildren<Props>> = ({
 
     setState((state) => ({
       ...state,
-      account: _wallet.accounts && _wallet.accounts.length > 0 ? _wallet.accounts[0] : undefined,
+      account:
+        _wallet.accounts && _wallet.accounts.length > 0
+          ? getAddress(_wallet.accounts[0])
+          : undefined,
       chainId: _wallet.chainId,
       provider: _wallet.provider
     }));

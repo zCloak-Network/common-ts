@@ -4305,6 +4305,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@zcloak/react-wallet@workspace:packages/react-wallet"
   dependencies:
+    "@ethersproject/address": ^5.6.1
     "@ethersproject/providers": ^5.6.8
     "@metamask/detect-provider": ^1.2.0
     "@walletconnect/ethereum-provider": ^1.7.8
