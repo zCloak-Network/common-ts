@@ -24,6 +24,16 @@ export class CredentialApi extends Request {
     });
   }
 
+  addMessage(body: {
+    receivedAt?: number;
+    ciphertext: string;
+    nonce: string;
+    senderKeyId: string;
+    receiverKeyId: string;
+  }) {
+    return this.post<ServerResponse<null>>('/message/add', { body });
+  }
+
   getAttestationStatus(params: { senderKeyId: string }) {
     return this.get<ServerResponse<{ attestationStatus: AttestationStatus }>>(
       '/admin-attester/attestation-status',
