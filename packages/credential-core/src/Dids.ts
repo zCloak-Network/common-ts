@@ -1,8 +1,9 @@
 import type { FullDidDetails, LightDidDetails } from '@kiltprotocol/did';
-import type { IEncryptedMessage } from '@kiltprotocol/types';
+import type { ICredential, IEncryptedMessage } from '@kiltprotocol/types';
 
 import {
   connect,
+  Credential,
   Did,
   EncryptionKeyType,
   IMessage,
@@ -91,5 +92,9 @@ export class Dids implements MessageHelper, WithPassphrase {
     assert(fullDid, 'The DID with the given identifier is not on chain.');
 
     return Message.decrypt(encryptMessage, this.keystore, fullDid);
+  }
+
+  public verifyCredential(credential: ICredential): Promise<boolean> {
+    return Credential.verify(credential);
   }
 }
