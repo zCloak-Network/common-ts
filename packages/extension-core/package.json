@@ -1,0 +1,21 @@
+{
+  "author": "zCloak",
+  "bugs": "https://github.com/zCloak-Network/common-ts/issues",
+  "contributors": [],
+  "description": "zCloak extension-core",
+  "homepage": "https://github.com/zCloak-Network/common-ts/tree/master/packages/extension-core#readme",
+  "license": "Apache-2.0",
+  "maintainers": [],
+  "name": "@zcloak/extension-core",
+  "repository": {
+    "directory": "packages/extension-core",
+    "type": "git",
+    "url": "https://github.com/zCloak-Network/common-ts.git"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "version": "0.0.2-9",
+  "dependencies": {
+    "eventemitter3": "^4.0.7"
+  }
+}

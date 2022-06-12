@@ -4301,6 +4301,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@zcloak/extension-core@workspace:packages/extension-core":
+  version: 0.0.0-use.local
+  resolution: "@zcloak/extension-core@workspace:packages/extension-core"
+  dependencies:
+    eventemitter3: ^4.0.7
+  languageName: unknown
+  linkType: soft
+
 "@zcloak/react-wallet@workspace:packages/react-wallet":
   version: 0.0.0-use.local
   resolution: "@zcloak/react-wallet@workspace:packages/react-wallet"
