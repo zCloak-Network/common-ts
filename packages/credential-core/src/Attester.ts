@@ -3,7 +3,7 @@ import type {
   FullDidDetails,
   FullDidUpdateBuilder
 } from '@kiltprotocol/did';
-import type { CTypeSchemaWithoutId, ICType, IRequestForAttestation } from '@kiltprotocol/types';
+import type { ICType, IRequestForAttestation } from '@kiltprotocol/types';
 
 import { Attestation, BlockchainUtils, CType, Did } from '@kiltprotocol/sdk-js';
 import { assert } from '@polkadot/util';
@@ -64,12 +64,12 @@ export class Attester extends Dids {
     });
   }
 
-  public async createCType(schema: CTypeSchemaWithoutId | ICType['schema']) {
+  public async createCType(ctype: ICType) {
     const fullDid = await this.getFullDidDetails();
 
     assert(fullDid, 'The DID with the given identifier is not on chain.');
 
-    const cType = CType.fromSchema(schema);
+    const cType = CType.fromCType(ctype);
     const tx = await cType.getStoreTx();
     const extrinsic = await fullDid.authorizeExtrinsic(tx, this.keystore, this.keystore.address);
 
