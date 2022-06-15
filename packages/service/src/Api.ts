@@ -1,4 +1,11 @@
-import type { AttestationStatus, Config, FaucetStatus, ServerResponse } from './types';
+import type {
+  AttestationStatus,
+  Config,
+  CTypeBody,
+  FaucetStatus,
+  MessageBody,
+  ServerResponse
+} from './types';
 
 import { combineConfig, Request } from './request';
 
@@ -22,16 +29,6 @@ export class CredentialApi extends Request {
     return this.post<ServerResponse<{}>>('/admin-attester/submit-claim', {
       body: { ...body }
     });
-  }
-
-  addMessage(body: {
-    receivedAt?: number;
-    ciphertext: string;
-    nonce: string;
-    senderKeyId: string;
-    receiverKeyId: string;
-  }) {
-    return this.post<ServerResponse<null>>('/message/add', { body });
   }
 
   getAttestationStatus(params: { senderKeyId: string }) {
@@ -64,5 +61,28 @@ export class CredentialApi extends Request {
 
   faucetStatus(params: { address: string }) {
     return this.get<ServerResponse<{ status: FaucetStatus }>>('/user/faucet-status', { params });
+  }
+
+  addCType(body: CTypeBody) {
+    return this.post<ServerResponse<null>>('/ctypes/add', { body });
+  }
+
+  allCTypes(params: { owner?: string }) {
+    return this.get<ServerResponse<CTypeBody[]>>('/ctypes/all', {
+      params
+    });
+  }
+
+  addMessage(body: MessageBody) {
+    return this.post<ServerResponse<null>>('/message', { body });
+  }
+
+  getMessages(params: {
+    receiverKeyId?: string;
+    senderKeyId?: string;
+    id_ge?: string;
+    count?: number;
+  }) {
+    return this.get<ServerResponse<(MessageBody & { id: string })[]>>('/message', { params });
   }
 }

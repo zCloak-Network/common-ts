@@ -110,3 +110,22 @@ export enum FaucetStatus {
   Fauceting = 2,
   Fauceted = 3
 }
+
+export interface CTypeBody {
+  metadata: {
+    $schema: string;
+    title: string;
+    properties: Record<string, unknown>;
+    type: string;
+    $id: string;
+  };
+  owner: string;
+  ctypeHash: string;
+}
+
+export interface MessageBody {
+  ciphertext: string;
+  nonce: string;
+  senderKeyId: string;
+  receiverKeyId: string;
+}
