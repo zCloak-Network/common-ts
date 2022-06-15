@@ -80,8 +80,8 @@ export class CredentialApi extends Request {
   getMessages(params: {
     receiverKeyId?: string;
     senderKeyId?: string;
-    id_ge?: string;
-    count?: number;
+    start_id?: string;
+    size?: number;
   }) {
     return this.get<ServerResponse<(MessageBody & { id: string })[]>>('/message', { params });
   }
