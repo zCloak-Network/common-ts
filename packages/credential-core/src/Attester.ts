@@ -12,6 +12,22 @@ import { Dids } from './Dids';
 import { DidKeystore } from './types';
 
 export class Attester extends Dids {
+  #isReadyPromise: Promise<this>;
+  public fullDidDetails: Did.FullDidDetails | null = null;
+
+  constructor(keystore: DidKeystore, endpoint: string) {
+    super(keystore, endpoint);
+    this.#isReadyPromise = super.isReady.then(async () => {
+      this.fullDidDetails = await this.getFullDidDetails();
+
+      return this;
+    });
+  }
+
+  public override get isReady(): Promise<this> {
+    return this.#isReadyPromise;
+  }
+
   public createFullDid(
     action: (
       didCreationBuilder: FullDidCreationBuilder,
