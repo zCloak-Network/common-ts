@@ -14,7 +14,7 @@
   },
   "sideEffects": false,
   "type": "module",
-  "version": "0.0.2-15",
+  "version": "0.0.2-16",
   "dependencies": {
     "eventemitter3": "^4.0.7"
   }
