@@ -64,13 +64,19 @@ export class CredentialApi extends Request {
   }
 
   addCType(body: CTypeBody) {
-    return this.post<ServerResponse<null>>('/ctypes/add', { body });
+    return this.post<ServerResponse<null>>('/ctypes', { body });
   }
 
-  allCTypes(params: { owner?: string }) {
-    return this.get<ServerResponse<CTypeBody[]>>('/ctypes/all', {
-      params
-    });
+  getUserCType(address: string) {
+    return this.get<ServerResponse<CTypeBody[]>>(`/ctypes/user/${address}`);
+  }
+
+  getCTypes() {
+    return this.get<ServerResponse<CTypeBody[]>>('/ctypes');
+  }
+
+  getCType(hash: string) {
+    return this.get<ServerResponse<CTypeBody>>(`/ctypes/${hash}`);
   }
 
   addMessage(body: MessageBody) {
