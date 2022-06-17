@@ -24,6 +24,12 @@ export enum AttestationStatus {
   attested = 3
 }
 
+export enum AttestationStatusV2 {
+  attestedFailed = -1,
+  submiting = 1,
+  attested = 2
+}
+
 export type MintPoap = {
   blockHash: string;
   blockNumber: number;

@@ -1,5 +1,6 @@
 import type {
   AttestationStatus,
+  AttestationStatusV2,
   Config,
   CTypeBody,
   FaucetStatus,
@@ -16,6 +17,24 @@ export class CredentialApi extends Request {
       combineConfig(config, {
         mode: 'cors'
       })
+    );
+  }
+
+  submitClaimV2(body: {
+    receivedAt?: number;
+    ciphertext: string;
+    nonce: string;
+    senderKeyId: string;
+    receiverKeyId: string;
+  }) {
+    return this.post<ServerResponse<{}>>('/admin-attester/claim', {
+      body
+    });
+  }
+
+  getAttestationStatusV2(rootHash: string) {
+    return this.get<ServerResponse<{ status: AttestationStatusV2; position: number }>>(
+      `/admin-attester/claim/${rootHash}/attested-status`
     );
   }
 
