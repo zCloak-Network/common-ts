@@ -26,6 +26,7 @@ export class CredentialApi extends Request {
     nonce: string;
     senderKeyId: string;
     receiverKeyId: string;
+    reCaptchaToken: string;
   }) {
     return this.post<ServerResponse<{}>>('/admin-attester/claim', {
       body
@@ -44,6 +45,7 @@ export class CredentialApi extends Request {
     nonce: string;
     senderKeyId: string;
     receiverKeyId: string;
+    reCaptchaToken: string;
   }) {
     return this.post<ServerResponse<{}>>('/admin-attester/submit-claim', {
       body: { ...body }
