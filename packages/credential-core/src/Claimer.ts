@@ -1,5 +1,6 @@
 import type {
   CTypeSchemaWithoutId,
+  DidUri,
   IClaim,
   IClaimContents,
   ICType,
@@ -19,30 +20,30 @@ export class Claimer extends Dids {
       ? CType.fromCType(ctypeInput)
       : CType.fromSchema(ctypeInput);
 
-    return Claim.fromCTypeAndClaimContents(ctype, claimContents, this.didDetails.did);
+    return Claim.fromCTypeAndClaimContents(ctype, claimContents, this.didDetails.uri);
   }
 
   public generateCredential(
     requestForAttestation: RequestForAttestation,
-    attesterDid: string
+    attesterUri: DidUri
   ): Credential {
     return Credential.fromRequestAndAttestation(
       requestForAttestation,
-      Attestation.fromRequestAndDid(requestForAttestation, attesterDid)
+      Attestation.fromRequestAndDid(requestForAttestation, attesterUri)
     );
   }
 
   public async requestForAttestation(claim: IClaim): Promise<RequestForAttestation> {
     const requestForAttestation = RequestForAttestation.fromClaim(claim);
 
-    if (!this.keystore.isLocked) {
-      return requestForAttestation.signWithDidKey(
-        this.keystore,
-        this.didDetails,
-        this.didDetails.authenticationKey.id
-      );
+    if (this.keystore.siningPair.isLocked) {
+      return requestForAttestation;
     }
 
-    return requestForAttestation;
+    return requestForAttestation.signWithDidKey(
+      this.keystore,
+      this.didDetails,
+      this.didDetails.authenticationKey.id
+    );
   }
 }

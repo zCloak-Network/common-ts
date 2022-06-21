@@ -32,11 +32,15 @@ describe('Claimer', (): void => {
   beforeAll(async () => {
     await init({ address: 'wss://peregrine.kilt.io/parachain-public-ws/' });
     await connect();
-    const json = JSON.parse(
-      '{"encoded":"VctjI8zwu8sYn0tOklPJq+tWsrjwaQ+GmC5Pe6f3wgoAgAAAAQAAAAgAAACISXxQRGJjnb0jcgtxGRHN6/MpAigft9zTpQvPkDV5PZKHZhFcP4vkURitwwiHtA9Bm7ONlJzYEZtsNcMRYo6xEi5WeYCPAh/a8cXwDIp02tOMz+tOvKC3l9lypB3dNRpTmmprF+0qCZDr7sLKnl15tp9N91Wo8odv9sVfcAZvMZ9MLdZHcnqqxUJkZohBdkxdIpOPjGJtqS0m+kLI","encoding":{"content":["pkcs8","sr25519"],"type":["scrypt","xsalsa20-poly1305"],"version":"3"},"address":"4rxBYczVcUWgmMWbFsGw7nQd6NaWXZDQLXcL1mYBzR9EpEsn","meta":{"genesisHash":"0xa0c6e3bac382b316a68bca7141af1fba507207594c761076847ce358aeedcc21","isHardware":false,"name":"aaa","tags":[],"whenCreated":1654611301280}}'
-    ) as KeyringPair$Json;
 
-    jsonKeystore = new JsonKeystore(json);
+    jsonKeystore = new JsonKeystore(
+      JSON.parse(
+        '{"encoded":"5+ThZ1O2aJaotrSYQjLkpNK+eIw/Yu4LlHvSCDt7FlMAgAAAAQAAAAgAAAA+QgT6qXflT4/tGpSvlenxKCutAKC928dqCujby+Ed13hWJ/G/BAOQefLqaLe1FfpBl6Di+os24YIa0Si7OIlHwv6im3yhl2tRls+nKSqXMQxTZmMBgFoUQEan9WcsjK86/VW/rZpnOhvrwCPgJsfxfYZ7o/DsLkDDl2hhb5QZnYlzKZXCwn2fYkKzWAv4+Nis12lOKKmXvMezxfYM","encoding":{"content":["pkcs8","sr25519"],"type":["scrypt","xsalsa20-poly1305"],"version":"3"},"address":"4r8yoQsPneNCRMzn79WwDaNR69cRMxM2MQQ346quzqwNnBD7","meta":{"genesisHash":"0xa0c6e3bac382b316a68bca7141af1fba507207594c761076847ce358aeedcc21","isHardware":false,"name":"a","tags":[],"whenCreated":1655811964724}}'
+      ) as KeyringPair$Json,
+      JSON.parse(
+        '{"encoded":"3IkvxsW6ZQkEhsHLg4+vPrLw9ABiUVRUe1XYov9CYUUAgAAAAQAAAAgAAABgvmfkJev7VlH+DFxemhAh3ukXnIB5e/bjheJs+Rmk2Nd4CxI7SBLTmFevxFwwD/emBHhjZ3sNDjdMclHvN27XojsuYs07EFAR5FB0P3rNGYjNIBeUi9Cd0RejCF2+H1vh4zrMfXgank+96cOlpxgIBWjawHS4D8UV1S1iK3HHGfICDCuaazjXtcJ0ebM1VVfJMW7w8mNOwpnt1OYo","encoding":{"content":["pkcs8","ed25519"],"type":["scrypt","xsalsa20-poly1305"],"version":"3"},"address":"4rgxQpHuk5c4LwQSWKKejrA3A6QfCCWkDLYas7YJtXn5YSda","meta":{"genesisHash":"0xa0c6e3bac382b316a68bca7141af1fba507207594c761076847ce358aeedcc21","isHardware":false,"name":"A1","tags":[],"whenCreated":1655813061290}}'
+      ) as KeyringPair$Json
+    );
   });
 
   afterAll(async () => {
@@ -46,7 +50,7 @@ describe('Claimer', (): void => {
   it('get did', () => {
     const claimer = new Claimer(jsonKeystore, 'wss://peregrine.kilt.io/parachain-public-ws/');
 
-    expect(claimer.didDetails.did).toEqual(`did:kilt:light:00${jsonKeystore.address}`);
+    console.log(claimer.didDetails.uri);
   });
 
   it('generateClaim', () => {
@@ -64,7 +68,7 @@ describe('Claimer', (): void => {
     );
   });
 
-  it('requestForAttestation with unlock', async () => {
+  it('requestForAttestation with locked', async () => {
     const claimer = new Claimer(jsonKeystore, 'wss://peregrine.kilt.io/parachain-public-ws/');
 
     const claim = claimer.generateClaim(CTYPE as any, {
@@ -84,7 +88,7 @@ describe('Claimer', (): void => {
     expect(await requestForAttestation.verifySignature()).toEqual(false);
   });
 
-  it('requestForAttestation with locked', async () => {
+  it('requestForAttestation with unlocked', async () => {
     const claimer = new Claimer(jsonKeystore, 'wss://peregrine.kilt.io/parachain-public-ws/');
 
     const claim = claimer.generateClaim(CTYPE as any, {
@@ -96,13 +100,13 @@ describe('Claimer', (): void => {
       weapon_rarity: 3
     });
 
-    jsonKeystore.unlock('1');
+    jsonKeystore.siningPair.unlock('1');
     const requestForAttestation = await claimer.requestForAttestation(claim);
 
     expect(requestForAttestation.verifyData()).toEqual(true);
     expect(requestForAttestation.verifyRootHash()).toEqual(true);
     expect(await requestForAttestation.verifySignature()).toEqual(true);
-    jsonKeystore.lock();
+    jsonKeystore.siningPair.lock();
   });
   it('generateCredential', async () => {
     const claimer = new Claimer(jsonKeystore, 'wss://peregrine.kilt.io/parachain-public-ws/');

@@ -1,4 +1,4 @@
-import type { FullDidDetails, LightDidDetails } from '@kiltprotocol/did';
+import type { DidDetails } from '@kiltprotocol/did';
 import type { ICredential, IEncryptedMessage } from '@kiltprotocol/types';
 
 import {
@@ -14,18 +14,27 @@ import {
 import { ApiPromise } from '@polkadot/api';
 import { assert } from '@polkadot/util';
 
-import { DidKeystore, MessageHelper, WithPassphrase } from './types';
+import { DidKeystore, MessageHelper } from './types';
 
-export class Dids implements MessageHelper, WithPassphrase {
+export class Dids implements MessageHelper {
   #isReadyPromise: Promise<this>;
   protected keystore: DidKeystore;
   protected api?: ApiPromise;
-  public didDetails: LightDidDetails;
+  public didDetails: DidDetails;
 
   constructor(keystore: DidKeystore, endpoint: string) {
     this.keystore = keystore;
 
-    this.didDetails = this.getLightDid(keystore);
+    this.didDetails = Did.LightDidDetails.fromDetails({
+      authenticationKey: {
+        type: VerificationKeyType.Sr25519,
+        publicKey: keystore.siningPair.publicKey
+      },
+      encryptionKey: {
+        type: EncryptionKeyType.X25519,
+        publicKey: keystore.encryptPair.publicKey
+      }
+    });
 
     this.#isReadyPromise = new Promise((resolve) => {
       init({ address: endpoint })
@@ -37,61 +46,26 @@ export class Dids implements MessageHelper, WithPassphrase {
     });
   }
 
-  public get isLocked(): boolean {
-    return this.keystore.isLocked;
-  }
-
   public get isReady(): Promise<this> {
     return this.#isReadyPromise;
   }
 
-  protected getLightDid(keystore: DidKeystore) {
-    return keystore.isLocked
-      ? Did.LightDidDetails.fromIdentifier(this.keystore.address)
-      : Did.LightDidDetails.fromDetails({
-          authenticationKey: {
-            type: VerificationKeyType.Sr25519,
-            publicKey: this.keystore.publicKey
-          },
-          encryptionKey: {
-            type: EncryptionKeyType.X25519,
-            publicKey: this.keystore.encryptPublicKey
-          }
-        });
-  }
-
-  public getFullDidDetails(): Promise<FullDidDetails | null> {
-    return Did.FullDidDetails.fromChainInfo(this.keystore.address);
-  }
-
-  public lock(): void {
-    this.keystore.lock();
-    this.didDetails = this.getLightDid(this.keystore);
-  }
-
-  public unlock(passphrase?: string): void {
-    this.keystore.unlock(passphrase);
-    this.didDetails = this.getLightDid(this.keystore);
-  }
-
-  public encryptMessage(message: Message, receiverKeyId: string): Promise<IEncryptedMessage> {
-    assert(!this.keystore.isLocked, 'Keystore is locked');
+  public encryptMessage(message: Message, receiver: DidDetails): Promise<IEncryptedMessage> {
     assert(this.didDetails.encryptionKey, 'No encryption key');
+    assert(receiver.encryptionKey?.id, 'Receiver has not encryption key');
 
     return message.encrypt(
       this.didDetails.encryptionKey.id,
       this.didDetails,
       this.keystore,
-      receiverKeyId
+      receiver.assembleKeyUri(receiver.encryptionKey.id)
     );
   }
 
   public async decryptMessage(encryptMessage: IEncryptedMessage): Promise<IMessage> {
-    const fullDid = await this.getFullDidDetails();
+    assert(this.didDetails.encryptionKey?.id, 'No encryption key');
 
-    assert(fullDid, 'The DID with the given identifier is not on chain.');
-
-    return Message.decrypt(encryptMessage, this.keystore, fullDid);
+    return Message.decrypt(encryptMessage, this.keystore, this.didDetails);
   }
 
   public verifyCredential(credential: ICredential): Promise<boolean> {

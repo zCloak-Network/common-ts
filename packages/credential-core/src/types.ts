@@ -1,3 +1,4 @@
+import type { DidDetails } from '@kiltprotocol/did';
 import type {
   IEncryptedMessage,
   IMessage,
@@ -19,19 +20,9 @@ export enum EncryptionAlgorithms {
   NaclBox = 'x25519-xsalsa20-poly1305'
 }
 
-export interface WithPassphrase {
-  isLocked: boolean;
-  lock: () => void;
-  unlock: (passphrase?: string) => void;
-}
-
-export interface DidKeystore
-  extends Keystore<SigningAlgorithms, EncryptionAlgorithms>,
-    WithPassphrase {
-  address: string;
-  publicKey: Uint8Array;
-  encryptPublicKey: Uint8Array;
+export interface DidKeystore extends Keystore<SigningAlgorithms, EncryptionAlgorithms> {
   siningPair: KeyringPair;
+  encryptPair: KeyringPair;
   encrypt<A extends 'x25519-xsalsa20-poly1305'>({
     alg,
     data,
@@ -53,6 +44,6 @@ export interface DidKeystore
 }
 
 export interface MessageHelper {
-  encryptMessage(message: Message, receiverKeyId: string): Promise<IEncryptedMessage>;
+  encryptMessage(message: Message, receiver: DidDetails): Promise<IEncryptedMessage>;
   decryptMessage(encryptMessage: IEncryptedMessage): Promise<IMessage>;
 }

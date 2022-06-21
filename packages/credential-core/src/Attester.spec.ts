@@ -1,13 +1,7 @@
 import type { KeyringPair$Json } from '@polkadot/keyring/types';
 
 import { jest } from '@jest/globals';
-import {
-  BlockchainUtils,
-  connect,
-  disconnect,
-  EncryptionKeyType,
-  init
-} from '@kiltprotocol/sdk-js';
+import { BlockchainUtils, connect, disconnect, init } from '@kiltprotocol/sdk-js';
 
 import { Attester } from './Attester';
 import { JsonKeystore } from './JsonKeystore';
@@ -23,63 +17,83 @@ describe('Attester', (): void => {
   beforeAll(async () => {
     await init({ address: 'wss://peregrine.kilt.io/parachain-public-ws/' });
     await connect();
-    const json = JSON.parse(
-      '{"encoded":"ukd7EnbnYtSmfScBxZT70+DjTu6YQ7xgey/wCqe+OsQAgAAAAQAAAAgAAAD2WB4C7epnxeNoEWUTCrED+Aes7Ij76v1tXc9L4Bcr2rQmyD/meWk2Nl8w+LDN0uxmznYQTwQckIApuc1DOXgifEtr11QMuaHuT1/wby4jsKXULsFmIQ6WaW/yt8vibtr6IgRxwFv3EwaGWsu1A4jtWkrrb9BxMAWkmw6yYWuXo0n6VTCget3xx8aW4Fipw6/ePr2lIwfLpFHwo92/","encoding":{"content":["pkcs8","sr25519"],"type":["scrypt","xsalsa20-poly1305"],"version":"3"},"address":"4swUiXZHJ4PiNL5E6VzzErrxyhzBSU52Tt77fp8NYznFq2is","meta":{"genesisHash":"0xa0c6e3bac382b316a68bca7141af1fba507207594c761076847ce358aeedcc21","isHardware":false,"name":"bbb","tags":[],"whenCreated":1654611523920}}'
-    ) as KeyringPair$Json;
-
-    jsonKeystore = new JsonKeystore(json);
+    jsonKeystore = new JsonKeystore(
+      JSON.parse(
+        '{"encoded":"zenhnYgJoetts+eMNKEowWrXtoUOnJzVnMsV6nSHvYgAgAAAAQAAAAgAAAA6E/aoq5T7hed0aJp1v6b/ayxCmHiypI62dErl02IIT7eI2QIt23+UtwpsRYaQvq26f+R2EavXg3CgJTwDRrJnsoLPewJqC+JcUD5qtihAhpZfkGsEs6PjOQenF43uBA0RV9CVsaQKCQjFjp+MdN53qWEwSSbBW6K0xp50XUfv2BqSK5qEFDhgJHDrzKPwOBxeIPM7jswkrA3Rcil5","encoding":{"content":["pkcs8","sr25519"],"type":["scrypt","xsalsa20-poly1305"],"version":"3"},"address":"4t5WoEr1Cc6RDr829RvsVea1svQ6GfvrotrJWYaabuK7tr33","meta":{"genesisHash":"0xa0c6e3bac382b316a68bca7141af1fba507207594c761076847ce358aeedcc21","isHardware":false,"name":"c","tags":[],"whenCreated":1655811993553}}'
+      ) as KeyringPair$Json,
+      JSON.parse(
+        '{"encoded":"HpXwOpobgx5MO8Ci4XMdiVUQaJ6ZeiCTNy0Xmb94bZkAgAAAAQAAAAgAAADqqdFcOcYfb8Dcek5e7ScoCgMKLuIM9B9zASkNlZfAWoqxnkRkcmg2DvIDMvvJ8FrK+cTGM6i0AXSNE5Bi3nOwz1C6M2iNHZz/7POcj5GiuVdZuj6JnusAJkj9iFl5C6L0YfJOXS9dYBrzttifxCeSLB8BZkYAs+m2+jD5iym1M2K7HeLmfhTRdXoq1HQZhv67xvJcSePqxxQPJDeR","encoding":{"content":["pkcs8","ed25519"],"type":["scrypt","xsalsa20-poly1305"],"version":"3"},"address":"4q5PgwPdg8owKhbLiAZJ26zhEA8BpqPZezWqyeKhwtKYHJCM","meta":{"genesisHash":"0xa0c6e3bac382b316a68bca7141af1fba507207594c761076847ce358aeedcc21","isHardware":false,"name":"C1","tags":[],"whenCreated":1655813084542}}'
+      ) as KeyringPair$Json
+    );
+    jsonKeystore.siningPair.unlock('1');
+    jsonKeystore.encryptPair.unlock('1');
   });
 
   afterAll(async () => {
     await disconnect();
   });
 
-  it('get did', () => {
-    const attester = new Attester(jsonKeystore, 'wss://peregrine.kilt.io/parachain-public-ws/');
-
-    expect(attester.didDetails.did).toEqual(`did:kilt:light:00${jsonKeystore.address}`);
-  });
-
   it('get full did', async () => {
     const attester = new Attester(jsonKeystore, 'wss://peregrine.kilt.io/parachain-public-ws/');
 
-    console.log(await attester.getFullDidDetails());
+    await attester.isReady;
+
+    console.log(attester.didDetails);
+
+    expect(attester.isFullDid).toEqual(true);
   });
 
   it.skip('createFullDid', async () => {
     const attester = new Attester(jsonKeystore, 'wss://peregrine.kilt.io/parachain-public-ws/');
 
     await attester.isReady;
-    jsonKeystore.unlock('1');
     const fullDid = await attester.createFullDid((didCreationBuilder, keystore) => {
-      return didCreationBuilder.consumeWithHandler(
-        keystore,
-        keystore.address,
-        async (creationTx) => {
-          await BlockchainUtils.signAndSubmitTx(creationTx, keystore.siningPair, {
-            reSign: true,
-            resolveOn: BlockchainUtils.IS_FINALIZED
-          });
-        }
+      return (
+        didCreationBuilder
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          .setAttestationKey(attester.didDetails.authenticationKey)
+          .setDelegationKey(attester.didDetails.authenticationKey)
+          .buildAndSubmit(keystore, keystore.siningPair.address, async (creationTx) => {
+            await BlockchainUtils.signAndSubmitTx(creationTx, keystore.siningPair, {
+              reSign: true,
+              resolveOn: BlockchainUtils.IS_FINALIZED
+            });
+          })
       );
     });
 
     console.log(fullDid);
   });
 
-  it.skip('updateFullDid', async () => {
+  it.skip('removeAllEncryptionKeys', async () => {
     const attester = new Attester(jsonKeystore, 'wss://peregrine.kilt.io/parachain-public-ws/');
 
     await attester.isReady;
-    jsonKeystore.unlock('1');
+    const fullDid = await attester.updateFullDid((didUpdateBuilder, keystore) => {
+      return didUpdateBuilder
+        .removeAllEncryptionKeys()
+        .buildAndSubmit(keystore, keystore.siningPair.address, async (updateTx) => {
+          await BlockchainUtils.signAndSubmitTx(updateTx, keystore.siningPair, {
+            reSign: true,
+            resolveOn: BlockchainUtils.IS_FINALIZED
+          });
+        });
+    });
 
+    console.log(fullDid);
+  });
+
+  it.skip('addEncryptionKey', async () => {
+    const attester = new Attester(jsonKeystore, 'wss://peregrine.kilt.io/parachain-public-ws/');
+
+    await attester.isReady;
     const fullDid = await attester.updateFullDid((didUpdateBuilder, keystore) => {
       return didUpdateBuilder
         .addEncryptionKey({
-          type: EncryptionKeyType.X25519,
-          publicKey: keystore.encryptPublicKey
+          type: 'x25519' as any,
+          publicKey: jsonKeystore.encryptPair.publicKey
         })
-        .consumeWithHandler(keystore, keystore.address, async (updateTx) => {
+        .buildAndSubmit(keystore, keystore.siningPair.address, async (updateTx) => {
           await BlockchainUtils.signAndSubmitTx(updateTx, keystore.siningPair, {
             reSign: true,
             resolveOn: BlockchainUtils.IS_FINALIZED
@@ -94,8 +108,6 @@ describe('Attester', (): void => {
     const attester = new Attester(jsonKeystore, 'wss://peregrine.kilt.io/parachain-public-ws/');
 
     await attester.isReady;
-    jsonKeystore.unlock('1');
-
     await attester.attestClaim({
       claim: {
         cTypeHash: '0xe21c5f437332f33db0e6f9cef958f2ff3fedfbcdeb60d4ff24db978b487aad1a',

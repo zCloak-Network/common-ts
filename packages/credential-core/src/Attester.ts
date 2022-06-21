@@ -1,10 +1,11 @@
-import type {
-  FullDidCreationBuilder,
-  FullDidDetails,
-  FullDidUpdateBuilder
-} from '@kiltprotocol/did';
 import type { ICType, IRequestForAttestation } from '@kiltprotocol/types';
 
+import {
+  FullDidCreationBuilder,
+  FullDidDetails,
+  FullDidUpdateBuilder,
+  LightDidDetails
+} from '@kiltprotocol/did';
 import { Attestation, BlockchainUtils, CType, Did } from '@kiltprotocol/sdk-js';
 import { assert } from '@polkadot/util';
 
@@ -13,12 +14,17 @@ import { DidKeystore } from './types';
 
 export class Attester extends Dids {
   #isReadyPromise: Promise<this>;
-  public fullDidDetails: Did.FullDidDetails | null = null;
 
   constructor(keystore: DidKeystore, endpoint: string) {
     super(keystore, endpoint);
     this.#isReadyPromise = super.isReady.then(async () => {
-      this.fullDidDetails = await this.getFullDidDetails();
+      const fullDidDetails = await Did.FullDidDetails.fromChainInfo(
+        `did:kilt:${keystore.siningPair.address}`
+      );
+
+      if (fullDidDetails) {
+        this.didDetails = fullDidDetails;
+      }
 
       return this;
     });
@@ -28,6 +34,10 @@ export class Attester extends Dids {
     return this.#isReadyPromise;
   }
 
+  public get isFullDid(): boolean {
+    return this.didDetails instanceof FullDidDetails;
+  }
+
   public createFullDid(
     action: (
       didCreationBuilder: FullDidCreationBuilder,
@@ -35,7 +45,10 @@ export class Attester extends Dids {
     ) => Promise<FullDidDetails>
   ): Promise<FullDidDetails> {
     assert(this.api, 'Api is not ready');
-    assert(!this.keystore.isLocked, 'Keystore is locked');
+    assert(
+      this.didDetails instanceof LightDidDetails,
+      'The DID with the given identifier is not on chain.'
+    );
 
     const creationBuilder = Did.FullDidCreationBuilder.fromLightDidDetails(
       this.api,
@@ -52,27 +65,31 @@ export class Attester extends Dids {
     ) => Promise<FullDidDetails>
   ): Promise<FullDidDetails> {
     assert(this.api, 'Api is not ready');
-    assert(!this.keystore.isLocked, 'Keystore is locked');
+    assert(
+      this.didDetails instanceof FullDidDetails,
+      'The DID with the given identifier is not on chain.'
+    );
 
-    const fullDid = await this.getFullDidDetails();
-
-    assert(fullDid, 'The DID with the given identifier is not on chain.');
-
-    const updateBuilder = new Did.FullDidUpdateBuilder(this.api, fullDid);
+    const updateBuilder = new Did.FullDidUpdateBuilder(this.api, this.didDetails);
 
     return action(updateBuilder, this.keystore);
   }
 
   public async attestClaim(request: IRequestForAttestation) {
-    const fullDid = await this.getFullDidDetails();
+    assert(
+      this.didDetails instanceof FullDidDetails,
+      'The DID with the given identifier is not on chain.'
+    );
 
-    assert(fullDid, 'The DID with the given identifier is not on chain.');
-
-    const attestation = Attestation.fromRequestAndDid(request, fullDid.did);
+    const attestation = Attestation.fromRequestAndDid(request, this.didDetails.uri);
 
     // form tx and authorized extrinsic
     const tx = await attestation.getStoreTx();
-    const extrinsic = await fullDid.authorizeExtrinsic(tx, this.keystore, this.keystore.address);
+    const extrinsic = await this.didDetails.authorizeExtrinsic(
+      tx,
+      this.keystore,
+      this.keystore.siningPair.address
+    );
 
     return BlockchainUtils.signAndSubmitTx(extrinsic, this.keystore.siningPair, {
       resolveOn: BlockchainUtils.IS_IN_BLOCK,
@@ -81,13 +98,18 @@ export class Attester extends Dids {
   }
 
   public async createCType(ctype: ICType) {
-    const fullDid = await this.getFullDidDetails();
-
-    assert(fullDid, 'The DID with the given identifier is not on chain.');
+    assert(
+      this.didDetails instanceof FullDidDetails,
+      'The DID with the given identifier is not on chain.'
+    );
 
     const cType = CType.fromCType(ctype);
     const tx = await cType.getStoreTx();
-    const extrinsic = await fullDid.authorizeExtrinsic(tx, this.keystore, this.keystore.address);
+    const extrinsic = await this.didDetails.authorizeExtrinsic(
+      tx,
+      this.keystore,
+      this.keystore.siningPair.address
+    );
 
     return BlockchainUtils.signAndSubmitTx(extrinsic, this.keystore.siningPair, {
       resolveOn: BlockchainUtils.IS_IN_BLOCK,
