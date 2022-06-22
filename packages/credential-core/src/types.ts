@@ -7,8 +7,7 @@ import type {
   ResponseData
 } from '@kiltprotocol/sdk-js';
 import type { Keystore } from '@kiltprotocol/types';
-
-import { KeyringPair } from '@polkadot/keyring/types';
+import type { KeyringPair, KeyringPair$Json } from '@polkadot/keyring/types';
 
 export enum SigningAlgorithms {
   Ed25519 = 'ed25519',
@@ -20,7 +19,15 @@ export enum EncryptionAlgorithms {
   NaclBox = 'x25519-xsalsa20-poly1305'
 }
 
-export interface DidKeystore extends Keystore<SigningAlgorithms, EncryptionAlgorithms> {
+export interface WithPassphrase {
+  isLocked: boolean;
+  lock: () => void;
+  unlock: (passphrase?: string) => void;
+}
+
+export interface DidKeystore
+  extends Keystore<SigningAlgorithms, EncryptionAlgorithms>,
+    WithPassphrase {
   siningPair: KeyringPair;
   encryptPair: KeyringPair;
   encrypt<A extends 'x25519-xsalsa20-poly1305'>({
@@ -46,4 +53,8 @@ export interface DidKeystore extends Keystore<SigningAlgorithms, EncryptionAlgor
 export interface MessageHelper {
   encryptMessage(message: Message, receiver: DidDetails): Promise<IEncryptedMessage>;
   decryptMessage(encryptMessage: IEncryptedMessage): Promise<IMessage>;
+}
+
+export interface KeyringPair$JsonExtra extends KeyringPair$Json {
+  extra?: KeyringPair$Json;
 }

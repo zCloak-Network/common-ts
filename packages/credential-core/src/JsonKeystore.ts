@@ -1,21 +1,40 @@
 import type { KeystoreSigningData, RequestData, ResponseData } from '@kiltprotocol/types';
-import type { KeyringPair, KeyringPair$Json } from '@polkadot/keyring/types';
+import type { KeyringPair } from '@polkadot/keyring/types';
 
 import { Keyring } from '@polkadot/keyring';
 import { assert, u8aEq } from '@polkadot/util';
 import { randomAsU8a } from '@polkadot/util-crypto';
 
-import { DidKeystore, EncryptionAlgorithms, SigningAlgorithms } from './types';
+import {
+  DidKeystore,
+  EncryptionAlgorithms,
+  KeyringPair$JsonExtra,
+  SigningAlgorithms
+} from './types';
 
 const supportedAlgs = { ...EncryptionAlgorithms, ...SigningAlgorithms };
 
 export class JsonKeystore extends Keyring implements DidKeystore {
-  constructor(siningJson: KeyringPair$Json, encryptJson: KeyringPair$Json) {
+  constructor(json: KeyringPair$JsonExtra) {
     super({ ss58Format: 38 });
     this.setSS58Format(38);
 
-    this.addFromJson(siningJson);
-    this.addFromJson(encryptJson);
+    this.addFromJson(json);
+    if (json.extra) this.addFromJson(json.extra);
+  }
+
+  public get isLocked(): boolean {
+    return this.getPairs()
+      .map((pair) => pair.isLocked)
+      .reduce((l, r) => l || r);
+  }
+
+  public lock(): void {
+    this.getPairs().forEach((pair) => pair.lock());
+  }
+
+  public unlock(passphrase?: string): void {
+    this.getPairs().forEach((pair) => pair.unlock(passphrase));
   }
 
   public get siningPair(): KeyringPair {
@@ -35,7 +54,7 @@ export class JsonKeystore extends Keyring implements DidKeystore {
     data,
     publicKey
   }: KeystoreSigningData<A>): Promise<ResponseData<A>> {
-    const keypair = this.siningPair;
+    const keypair = this.getPair(publicKey);
     const signature = keypair.sign(data, { withType: false });
 
     return Promise.resolve({ alg, data: signature });
@@ -49,7 +68,7 @@ export class JsonKeystore extends Keyring implements DidKeystore {
   }: RequestData<A> & { peerPublicKey: Uint8Array }): Promise<
     ResponseData<A> & { nonce: Uint8Array }
   > {
-    const keypair = this.encryptPair;
+    const keypair = this.getPair(publicKey);
     const nonce = randomAsU8a(24);
     const sealed = keypair.encryptMessage(data, peerPublicKey, nonce);
 
@@ -67,7 +86,7 @@ export class JsonKeystore extends Keyring implements DidKeystore {
     nonce: Uint8Array;
   }): Promise<ResponseData<A>> {
     assert(nonce.length === 24, 'Nonce length error, expect to 24');
-    const keypair = this.encryptPair;
+    const keypair = this.getPair(publicKey);
     const decrypted = keypair.decryptMessage(data, peerPublicKey);
 
     if (!decrypted) {

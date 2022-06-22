@@ -1,10 +1,9 @@
-import type { KeyringPair$Json } from '@polkadot/keyring/types';
-
 import { jest } from '@jest/globals';
 import { BlockchainUtils, connect, disconnect, init } from '@kiltprotocol/sdk-js';
 
 import { Attester } from './Attester';
 import { JsonKeystore } from './JsonKeystore';
+import { KeyringPair$JsonExtra } from './types';
 
 describe('Attester', (): void => {
   let jsonKeystore: JsonKeystore;
@@ -19,14 +18,10 @@ describe('Attester', (): void => {
     await connect();
     jsonKeystore = new JsonKeystore(
       JSON.parse(
-        '{"encoded":"zenhnYgJoetts+eMNKEowWrXtoUOnJzVnMsV6nSHvYgAgAAAAQAAAAgAAAA6E/aoq5T7hed0aJp1v6b/ayxCmHiypI62dErl02IIT7eI2QIt23+UtwpsRYaQvq26f+R2EavXg3CgJTwDRrJnsoLPewJqC+JcUD5qtihAhpZfkGsEs6PjOQenF43uBA0RV9CVsaQKCQjFjp+MdN53qWEwSSbBW6K0xp50XUfv2BqSK5qEFDhgJHDrzKPwOBxeIPM7jswkrA3Rcil5","encoding":{"content":["pkcs8","sr25519"],"type":["scrypt","xsalsa20-poly1305"],"version":"3"},"address":"4t5WoEr1Cc6RDr829RvsVea1svQ6GfvrotrJWYaabuK7tr33","meta":{"genesisHash":"0xa0c6e3bac382b316a68bca7141af1fba507207594c761076847ce358aeedcc21","isHardware":false,"name":"c","tags":[],"whenCreated":1655811993553}}'
-      ) as KeyringPair$Json,
-      JSON.parse(
-        '{"encoded":"HpXwOpobgx5MO8Ci4XMdiVUQaJ6ZeiCTNy0Xmb94bZkAgAAAAQAAAAgAAADqqdFcOcYfb8Dcek5e7ScoCgMKLuIM9B9zASkNlZfAWoqxnkRkcmg2DvIDMvvJ8FrK+cTGM6i0AXSNE5Bi3nOwz1C6M2iNHZz/7POcj5GiuVdZuj6JnusAJkj9iFl5C6L0YfJOXS9dYBrzttifxCeSLB8BZkYAs+m2+jD5iym1M2K7HeLmfhTRdXoq1HQZhv67xvJcSePqxxQPJDeR","encoding":{"content":["pkcs8","ed25519"],"type":["scrypt","xsalsa20-poly1305"],"version":"3"},"address":"4q5PgwPdg8owKhbLiAZJ26zhEA8BpqPZezWqyeKhwtKYHJCM","meta":{"genesisHash":"0xa0c6e3bac382b316a68bca7141af1fba507207594c761076847ce358aeedcc21","isHardware":false,"name":"C1","tags":[],"whenCreated":1655813084542}}'
-      ) as KeyringPair$Json
+        '{"encoded":"zenhnYgJoetts+eMNKEowWrXtoUOnJzVnMsV6nSHvYgAgAAAAQAAAAgAAAA6E/aoq5T7hed0aJp1v6b/ayxCmHiypI62dErl02IIT7eI2QIt23+UtwpsRYaQvq26f+R2EavXg3CgJTwDRrJnsoLPewJqC+JcUD5qtihAhpZfkGsEs6PjOQenF43uBA0RV9CVsaQKCQjFjp+MdN53qWEwSSbBW6K0xp50XUfv2BqSK5qEFDhgJHDrzKPwOBxeIPM7jswkrA3Rcil5","encoding":{"content":["pkcs8","sr25519"],"type":["scrypt","xsalsa20-poly1305"],"version":"3"},"address":"4t5WoEr1Cc6RDr829RvsVea1svQ6GfvrotrJWYaabuK7tr33","meta":{"genesisHash":"0xa0c6e3bac382b316a68bca7141af1fba507207594c761076847ce358aeedcc21","isHardware":false,"name":"c","tags":[],"whenCreated":1655811993553},"extra":{"encoded":"HpXwOpobgx5MO8Ci4XMdiVUQaJ6ZeiCTNy0Xmb94bZkAgAAAAQAAAAgAAADqqdFcOcYfb8Dcek5e7ScoCgMKLuIM9B9zASkNlZfAWoqxnkRkcmg2DvIDMvvJ8FrK+cTGM6i0AXSNE5Bi3nOwz1C6M2iNHZz/7POcj5GiuVdZuj6JnusAJkj9iFl5C6L0YfJOXS9dYBrzttifxCeSLB8BZkYAs+m2+jD5iym1M2K7HeLmfhTRdXoq1HQZhv67xvJcSePqxxQPJDeR","encoding":{"content":["pkcs8","ed25519"],"type":["scrypt","xsalsa20-poly1305"],"version":"3"},"address":"4q5PgwPdg8owKhbLiAZJ26zhEA8BpqPZezWqyeKhwtKYHJCM","meta":{"genesisHash":"0xa0c6e3bac382b316a68bca7141af1fba507207594c761076847ce358aeedcc21","isHardware":false,"name":"C1","tags":[],"whenCreated":1655813084542}}}'
+      ) as KeyringPair$JsonExtra
     );
-    jsonKeystore.siningPair.unlock('1');
-    jsonKeystore.encryptPair.unlock('1');
+    jsonKeystore.unlock('1');
   });
 
   afterAll(async () => {

@@ -14,9 +14,9 @@ import {
 import { ApiPromise } from '@polkadot/api';
 import { assert } from '@polkadot/util';
 
-import { DidKeystore, MessageHelper } from './types';
+import { DidKeystore, MessageHelper, WithPassphrase } from './types';
 
-export class Dids implements MessageHelper {
+export class Dids implements MessageHelper, WithPassphrase {
   #isReadyPromise: Promise<this>;
   protected keystore: DidKeystore;
   protected api?: ApiPromise;
@@ -44,6 +44,18 @@ export class Dids implements MessageHelper {
           resolve(this);
         });
     });
+  }
+
+  public get isLocked(): boolean {
+    return this.keystore.isLocked;
+  }
+
+  public lock(): void {
+    return this.keystore.lock();
+  }
+
+  public unlock(passphrase?: string): void {
+    return this.keystore.unlock(passphrase);
   }
 
   public get isReady(): Promise<this> {
