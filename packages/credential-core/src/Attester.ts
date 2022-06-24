@@ -1,4 +1,4 @@
-import type { ICType, IRequestForAttestation } from '@kiltprotocol/types';
+import type { IAttestation, ICType, IRequestForAttestation } from '@kiltprotocol/types';
 
 import {
   FullDidCreationBuilder,
@@ -75,6 +75,25 @@ export class Attester extends Dids {
     return action(updateBuilder, this.keystore);
   }
 
+  public async revokeAttestation(attestation: IAttestation) {
+    assert(
+      this.didDetails instanceof FullDidDetails,
+      'The DID with the given identifier is not on chain.'
+    );
+
+    const tx = await Attestation.fromAttestation(attestation).getRevokeTx(0);
+    const extrinsic = await this.didDetails.authorizeExtrinsic(
+      tx,
+      this.keystore,
+      this.keystore.siningPair.address
+    );
+
+    return BlockchainUtils.signAndSubmitTx(extrinsic, this.keystore.siningPair, {
+      resolveOn: BlockchainUtils.IS_FINALIZED,
+      reSign: true
+    });
+  }
+
   public async attestClaim(request: IRequestForAttestation) {
     assert(
       this.didDetails instanceof FullDidDetails,
@@ -92,7 +111,7 @@ export class Attester extends Dids {
     );
 
     return BlockchainUtils.signAndSubmitTx(extrinsic, this.keystore.siningPair, {
-      resolveOn: BlockchainUtils.IS_IN_BLOCK,
+      resolveOn: BlockchainUtils.IS_FINALIZED,
       reSign: true
     });
   }
@@ -112,7 +131,7 @@ export class Attester extends Dids {
     );
 
     return BlockchainUtils.signAndSubmitTx(extrinsic, this.keystore.siningPair, {
-      resolveOn: BlockchainUtils.IS_IN_BLOCK,
+      resolveOn: BlockchainUtils.IS_FINALIZED,
       reSign: true
     });
   }

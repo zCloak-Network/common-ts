@@ -16,6 +16,6 @@
   "type": "module",
   "version": "0.0.2-21",
   "dependencies": {
-    "@kiltprotocol/sdk-js": "^0.28.0-rc.1"
+    "@kiltprotocol/sdk-js": "^0.28.0-rc.2"
   }
 }
