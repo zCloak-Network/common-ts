@@ -26,8 +26,6 @@ export class RpcError extends Error {
   public code: number;
 
   constructor(code: number) {
-    super('');
-
     switch (code) {
       case -32700:
         super('Parse error: Invalid JSON');
