@@ -9,7 +9,7 @@ import { Contract } from '@ethersproject/contracts';
 import { JsonRpcProvider, JsonRpcSigner } from '@ethersproject/providers';
 import { keccak256 } from '@ethersproject/solidity';
 
-import { CallError, ContractError, OutOfGasError, UserRejectError } from './errors';
+import { CallError, OutOfGasError, RpcError } from './errors';
 
 export function shortenHash(hash?: string | null, chars = 8): string {
   if (!hash) {
@@ -121,12 +121,17 @@ export async function callMethod<T>(
     })
     .catch((error: any) => {
       // if the user rejected the tx, pass this along
-      if (error?.code === 4001) {
-        throw new UserRejectError();
+      if (
+        [
+          -32700, -32600, -32601, -32602, -32603, -32000, -32001, -32002, -32003, -32004, -32005,
+          -32006, 4001, 4100, 4200, 4900, 4901
+        ].includes(error?.code)
+      ) {
+        throw new RpcError(error.code);
       } else {
         // otherwise, the error was unexpected and we need to convey that
-        console.error(`${methodName} failed: ${error.message}`, error, methodName, args);
-        throw new ContractError(methodName, `${methodName} failed: ${error.message}`);
+        console.debug(`${methodName} failed: ${error.message}`, error, methodName, args);
+        throw new Error(`${methodName} failed: ${error.message}`);
       }
     });
 }
