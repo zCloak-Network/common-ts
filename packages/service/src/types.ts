@@ -15,6 +15,7 @@ export interface Config {
 export type ServerResponse<T> = {
   code: number;
   data: T;
+  message?: string;
 };
 
 export enum AttestationStatus {
@@ -39,11 +40,11 @@ export type MintPoap = {
   transactionHash: string;
   who: string;
   __v: number;
-  _id: string;
+  id: number;
 };
 
 export type ProofProcess = {
-  _id: string;
+  id: number;
   blockNumber: number;
   blockHash: string;
   transactionHash: string;
@@ -58,7 +59,7 @@ export type ProofProcess = {
   expectResult: number[];
   __v: number;
   verifying: {
-    _id: string;
+    id: number;
     blockNumber: number;
     blockHash: string;
     transactionHash: string;
@@ -68,7 +69,7 @@ export type ProofProcess = {
     outputHash: string;
     rootHash: string;
     attester: string;
-    isPassed: true;
+    isPassed: number;
     calcResult: number[];
     __v: number;
   }[];
@@ -93,7 +94,7 @@ export type Proof = {
   percent: string;
   status: ProofStatus;
   programDetails: {
-    _id: string;
+    id: number;
     programHash: string;
     programFieldName: string;
     programName: string;
@@ -134,4 +135,5 @@ export interface MessageBody {
   nonce: string;
   senderKeyId: string;
   receiverKeyId: string;
+  reCaptchaToken: string;
 }
