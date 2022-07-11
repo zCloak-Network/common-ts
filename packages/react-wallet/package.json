@@ -14,7 +14,7 @@
   },
   "sideEffects": false,
   "type": "module",
-  "version": "0.0.2-24",
+  "version": "0.0.2-25",
   "peerDependencies": {
     "react": "*",
     "react-dom": "*"
