@@ -1,3 +1,5 @@
+import type { ICredential } from '@kiltprotocol/types';
+
 export interface ZKIDExtensionRequests {
   OPEN_GENERATE_PROOF: {
     cTypeHash: string;
@@ -23,4 +25,18 @@ export interface ZKIDExtensionResponses {
   SEND_NEXT_TO_WEB: undefined;
   SEND_CREATE_PASSWORD_SUCCESS_TO_WEB: undefined;
   SEND_IMPORT_CREDENTIAL_SUCCESS: undefined;
+}
+
+export interface ZkidExtension {
+  zkID: {
+    getIfCreatePassword: () => Promise<boolean>;
+    getCredentialByCHash: (chash: string) => Promise<boolean>;
+    name: string;
+    openzkIDPopup: <Request extends keyof ZKIDExtensionRequests>(
+      request: Request,
+      values: ZKIDExtensionRequests[Request]
+    ) => void;
+    importCredential: (credential: ICredential) => Promise<void>;
+    version: string;
+  };
 }

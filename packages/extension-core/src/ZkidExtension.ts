@@ -1,8 +1,12 @@
+import type { ICredential } from '@kiltprotocol/types';
+
 import { Events } from './Events';
-import { ZKIDExtensionRequests, ZKIDExtensionResponses } from './types';
+import { ZKIDExtensionRequests, ZKIDExtensionResponses, ZkidExtensionType } from './types';
 import { documentReadyPromise } from './utils';
 
 export class ZkidExtension extends Events<ZKIDExtensionResponses> {
+  #window: { zCloak?: ZkidExtensionType } = window as any;
+
   constructor() {
     super();
 
@@ -15,7 +19,7 @@ export class ZkidExtension extends Events<ZKIDExtensionResponses> {
 
   public get isInstall(): Promise<boolean> {
     return this.isReady.then(() => {
-      if (window.zCloak) {
+      if (this.#window.zCloak) {
         return true;
       } else {
         return false;
@@ -24,26 +28,30 @@ export class ZkidExtension extends Events<ZKIDExtensionResponses> {
   }
 
   public get hasPassword(): Promise<boolean> {
-    return window.zCloak?.zkID.getIfCreatePassword() || Promise.resolve(false);
+    return this.#window.zCloak?.zkID.getIfCreatePassword() || Promise.resolve(false);
   }
 
   public get name(): string | undefined {
-    return window.zCloak?.zkID.name;
+    return this.#window.zCloak?.zkID.name;
   }
 
   public get version(): string | undefined {
-    return window.zCloak?.zkID.version;
+    return this.#window.zCloak?.zkID.version;
   }
 
   public getCredentialByCHash(chash: string) {
-    return window.zCloak?.zkID.getCredentialByCHash(chash);
+    return this.#window.zCloak?.zkID.getCredentialByCHash(chash);
   }
 
   public openzkIDPopup<Request extends keyof ZKIDExtensionRequests>(
     request: Request,
     values: ZKIDExtensionRequests[Request]
   ) {
-    return window.zCloak?.zkID.openzkIDPopup(request, values);
+    return this.#window.zCloak?.zkID.openzkIDPopup(request, values);
+  }
+
+  public async importCredential(credential: ICredential): Promise<void> {
+    await this.#window.zCloak?.zkID.importCredential(credential);
   }
 
   private handleMessage<K extends keyof ZKIDExtensionResponses>(
