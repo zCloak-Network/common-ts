@@ -27,7 +27,7 @@ export interface ZKIDExtensionResponses {
   SEND_IMPORT_CREDENTIAL_SUCCESS: undefined;
 }
 
-export interface ZkidExtension {
+export interface ZkidExtensionType {
   zkID: {
     getIfCreatePassword: () => Promise<boolean>;
     getCredentialByCHash: (chash: string) => Promise<boolean>;
