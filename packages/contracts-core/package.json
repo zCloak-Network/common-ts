@@ -14,9 +14,9 @@
   },
   "sideEffects": false,
   "type": "module",
-  "version": "0.0.2-26",
+  "version": "0.1.0",
   "dependencies": {
-    "@zcloak/web3-query": "^0.0.2-26",
+    "@zcloak/web3-query": "^0.1.0",
     "ethers": "^5.6.8",
     "eventemitter3": "^4.0.7"
   }

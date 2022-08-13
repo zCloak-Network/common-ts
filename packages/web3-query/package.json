@@ -14,7 +14,7 @@
   },
   "sideEffects": false,
   "type": "module",
-  "version": "0.0.2-26",
+  "version": "0.1.0",
   "dependencies": {
     "ethers": "^5.6.8"
   }
