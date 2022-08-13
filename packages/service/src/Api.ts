@@ -84,16 +84,24 @@ export class CredentialApi extends Request {
     return this.get<ServerResponse<{ status: FaucetStatus }>>('/user/faucet-status', { params });
   }
 
-  addCType(body: CTypeBody) {
+  getCtypes(address: string) {
+    return this.get<ServerResponse<CTypeBody[]>>(`/claimer/${address}/ctypes`);
+  }
+
+  importCtype(address: string, hash: string) {
+    return this.post<ServerResponse<any>>(`/claimer/${address}/ctypes/${hash}/import`);
+  }
+
+  deleteCtype(address: string, hash: string) {
+    return this.post<ServerResponse<any>>(`/claimer/${address}/ctypes/${hash}/unimport`);
+  }
+
+  createCtype(body: CTypeBody) {
     return this.post<ServerResponse<null>>('/ctypes', { body });
   }
 
-  getUserCType(address: string) {
+  getCreatedCtypes(address: string) {
     return this.get<ServerResponse<CTypeBody[]>>(`/ctypes/user/${address}`);
-  }
-
-  getCTypes() {
-    return this.get<ServerResponse<CTypeBody[]>>('/ctypes');
   }
 
   getCType(hash: string) {

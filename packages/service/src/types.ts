@@ -128,6 +128,7 @@ export interface CTypeBody {
   };
   owner: string;
   ctypeHash: string;
+  description: string;
 }
 
 export interface MessageBody {
