@@ -128,7 +128,8 @@ export interface CTypeBody {
   };
   owner: string;
   ctypeHash: string;
-  description: string;
+  description?: string;
+  type: 'import' | 'official';
 }
 
 export interface MessageBody {

@@ -96,12 +96,12 @@ export class CredentialApi extends Request {
     return this.post<ServerResponse<any>>(`/claimer/${address}/ctypes/${hash}/unimport`);
   }
 
-  createCtype(body: CTypeBody) {
+  createCtype(body: Omit<Required<CTypeBody>, 'type'>) {
     return this.post<ServerResponse<null>>('/ctypes', { body });
   }
 
   getCreatedCtypes(address: string) {
-    return this.get<ServerResponse<CTypeBody[]>>(`/ctypes/user/${address}`);
+    return this.get<ServerResponse<Omit<CTypeBody, 'type'>[]>>(`/ctypes/user/${address}`);
   }
 
   getCType(hash: string) {
