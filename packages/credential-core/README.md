@@ -1,3 +1,5 @@
+# DEPRECATED
+
 # @zcloak/credential-core
 
 This is package core for [kilt-sdk](https://www.npmjs.com/package/@kiltprotocol/sdk-js)

@@ -12,6 +12,8 @@
       "@zcloak/contracts-core/*": ["contracts-core/src/*"],
       "@zcloak/credential-core": ["credential-core/src"],
       "@zcloak/credential-core/*": ["credential-core/src/*"],
+      "@zcloak/did-keyring": ["did-keyring/src"],
+      "@zcloak/did-keyring/*": ["did-keyring/src/*"],
       "@zcloak/extension-core": ["extension-core/src"],
       "@zcloak/extension-core/*": ["extension-core/src/*"],
       "@zcloak/react-wallet": ["react-wallet/src"],
