@@ -14,10 +14,10 @@
   },
   "sideEffects": false,
   "type": "module",
-  "version": "0.2.1",
+  "version": "0.2.2-0",
   "main": "index.js",
   "dependencies": {
-    "@zcloak/web3-query": "^0.2.1",
+    "@zcloak/web3-query": "^0.2.2-0",
     "ethers": "^5.6.8",
     "eventemitter3": "^4.0.7"
   }
