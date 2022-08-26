@@ -2,16 +2,10 @@ import type { KeyringPair$Json } from '@polkadot/keyring/types';
 
 import store from 'store';
 
-export const ACCOUNT_PREFIX = 'account:';
-
-const accountRegex = new RegExp(`^${ACCOUNT_PREFIX}0x[0-9a-f]*`, '');
-
-export class AccountStore {
+export class BrowserStore {
   public all(fn: (key: string, value: KeyringPair$Json) => void): void {
     store.each((value: KeyringPair$Json, key: string): void => {
-      if (accountRegex.test(key)) {
-        fn(key, value);
-      }
+      fn(key, value);
     });
   }
 

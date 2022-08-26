@@ -2,7 +2,7 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { WalletProvider } from '@zcloak/react-wallet/WalletProvider';
-import { AccountStore } from '@zcloak/ui-store';
+import { BrowserStore } from '@zcloak/ui-store';
 
 import Root from './Root';
 
@@ -15,9 +15,9 @@ if (!rootElement) {
 
 const root = createRoot(rootElement);
 
-const accountStore = new AccountStore();
+const browserStore = new BrowserStore();
 
-accountStore.all(console.log);
+browserStore.all(console.log);
 export const endpoints = [
   {
     chainId: 1287,

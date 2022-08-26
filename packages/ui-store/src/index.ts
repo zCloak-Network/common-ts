@@ -1,1 +1,1 @@
-export * from './AccountStore';
+export * from './BrowserStore';
