@@ -3,9 +3,8 @@ import type { DidUri } from '@kiltprotocol/types';
 import type { KeyringOptions, KeyringPair$Json } from '@polkadot/keyring/types';
 import type { DidKeys$Json } from '@zcloak/did-keyring/types';
 
-import { BrowserStore } from 'ui-store/src';
-
 import { DidManager as DidManagerSuper } from '@zcloak/did-keyring/DidManager';
+import { BrowserStore } from '@zcloak/ui-store';
 
 import { accountKey, accountRegex, didKey, didRegex } from './defaults';
 
