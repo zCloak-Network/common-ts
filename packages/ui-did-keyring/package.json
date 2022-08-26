@@ -1,0 +1,26 @@
+{
+  "author": "zCloak",
+  "bugs": "https://github.com/zCloak-Network/common-ts/issues",
+  "contributors": [],
+  "description": "zCloak ui-did-keyring",
+  "homepage": "https://github.com/zCloak-Network/common-ts/tree/master/packages/ui-did-keyring#readme",
+  "license": "Apache-2.0",
+  "maintainers": [],
+  "name": "@zcloak/ui-did-keyring",
+  "repository": {
+    "directory": "packages/ui-did-keyring",
+    "type": "git",
+    "url": "https://github.com/zCloak-Network/common-ts.git"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "version": "0.2.1",
+  "main": "index.js",
+  "dependencies": {
+    "@kiltprotocol/did": "^0.28.0",
+    "@polkadot/keyring": "^10.1.6",
+    "@polkadot/util": "^10.1.6",
+    "@zcloak/did-keyring": "^0.2.1",
+    "@zcloak/ui-store": "^0.2.1"
+  }
+}

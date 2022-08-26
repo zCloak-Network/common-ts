@@ -25,7 +25,6 @@ export const endpoints = [
     explorer: 'https://moonbase.moonscan.io'
   }
 ];
-
 root.render(
   <WalletProvider supportedChainId={endpoints.map(({ chainId }) => chainId)}>
     <Root />
