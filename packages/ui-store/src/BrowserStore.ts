@@ -1,16 +1,14 @@
-import type { KeyringPair$Json } from '@polkadot/keyring/types';
-
 import store from 'store';
 
 export class BrowserStore {
-  public all(fn: (key: string, value: KeyringPair$Json) => void): void {
-    store.each((value: KeyringPair$Json, key: string): void => {
+  public all(fn: (key: string, value: unknown) => void): void {
+    store.each((value: unknown, key: string): void => {
       fn(key, value);
     });
   }
 
-  public get(key: string, fn: (value: KeyringPair$Json) => void): void {
-    fn(store.get(key) as KeyringPair$Json);
+  public get(key: string, fn: (value: unknown) => void): void {
+    fn(store.get(key) as unknown);
   }
 
   public remove(key: string, fn?: () => void): void {
@@ -18,7 +16,7 @@ export class BrowserStore {
     fn && fn();
   }
 
-  public set(key: string, value: KeyringPair$Json, fn?: () => void): void {
+  public set(key: string, value: unknown, fn?: () => void): void {
     store.set(key, value);
     fn && fn();
   }

@@ -2,7 +2,6 @@ import React from 'react';
 import { createRoot } from 'react-dom/client';
 
 import { WalletProvider } from '@zcloak/react-wallet/WalletProvider';
-import { BrowserStore } from '@zcloak/ui-store';
 
 import Root from './Root';
 
@@ -15,9 +14,6 @@ if (!rootElement) {
 
 const root = createRoot(rootElement);
 
-const browserStore = new BrowserStore();
-
-browserStore.all(console.log);
 export const endpoints = [
   {
     chainId: 1287,
@@ -29,7 +25,6 @@ export const endpoints = [
     explorer: 'https://moonbase.moonscan.io'
   }
 ];
-
 root.render(
   <WalletProvider supportedChainId={endpoints.map(({ chainId }) => chainId)}>
     <Root />
