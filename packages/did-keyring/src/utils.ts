@@ -5,7 +5,11 @@ import { validateKiltDidUri } from '@kiltprotocol/did/lib/cjs/Did.utils';
 export function isDidKeys$Json(json: unknown): json is DidKeys$Json {
   json as DidKeys$Json;
 
-  if ((json as DidKeys$Json).didUri && Array.isArray((json as DidKeys$Json).keys)) {
+  if (
+    (json as DidKeys$Json).didUri &&
+    Array.isArray((json as DidKeys$Json).keys) &&
+    (json as DidKeys$Json).keys.length === 2
+  ) {
     try {
       return validateKiltDidUri((json as DidKeys$Json).didUri);
     } catch {

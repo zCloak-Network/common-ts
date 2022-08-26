@@ -50,8 +50,21 @@ export class DidManager extends Keyring {
       pair.unlock(password);
       pair.lock();
     });
+    const pair1 = this.getPair(json.keys[0].address);
+    const pair2 = this.getPair(json.keys[1].address);
 
-    this.didUris.add(json.didUri);
+    this.didUris.add(
+      LightDidDetails.fromDetails({
+        authenticationKey: {
+          publicKey: pair1.publicKey,
+          type: pair1.type === 'sr25519' ? VerificationKeyType.Sr25519 : VerificationKeyType.Ed25519
+        },
+        encryptionKey: {
+          publicKey: pair2.publicKey,
+          type: EncryptionKeyType.X25519
+        }
+      }).uri
+    );
 
     return json;
   }
