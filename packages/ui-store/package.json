@@ -1,0 +1,18 @@
+{
+  "author": "zCloak",
+  "bugs": "https://github.com/zCloak-Network/common-ts/issues",
+  "contributors": [],
+  "description": "zCloak ui-store",
+  "homepage": "https://github.com/zCloak-Network/common-ts/tree/master/packages/ui-store#readme",
+  "license": "Apache-2.0",
+  "maintainers": [],
+  "name": "@zcloak/ui-store",
+  "repository": {
+    "directory": "packages/ui-store",
+    "type": "git",
+    "url": "https://github.com/zCloak-Network/common-ts.git"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "version": "0.2.1"
+}
