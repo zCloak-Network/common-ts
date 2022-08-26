@@ -4846,7 +4846,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zcloak/did-keyring@workspace:packages/did-keyring":
+"@zcloak/did-keyring@^0.2.1, @zcloak/did-keyring@workspace:packages/did-keyring":
   version: 0.0.0-use.local
   resolution: "@zcloak/did-keyring@workspace:packages/did-keyring"
   dependencies:
@@ -4929,7 +4929,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zcloak/ui-store@workspace:packages/ui-store":
+"@zcloak/ui-did-keyring@workspace:packages/ui-did-keyring":
+  version: 0.0.0-use.local
+  resolution: "@zcloak/ui-did-keyring@workspace:packages/ui-did-keyring"
+  dependencies:
+    "@zcloak/did-keyring": ^0.2.1
+    "@zcloak/ui-store": ^0.2.1
+  languageName: unknown
+  linkType: soft
+
+"@zcloak/ui-store@^0.2.1, @zcloak/ui-store@workspace:packages/ui-store":
   version: 0.0.0-use.local
   resolution: "@zcloak/ui-store@workspace:packages/ui-store"
   dependencies:
