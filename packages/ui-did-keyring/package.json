@@ -14,13 +14,13 @@
   },
   "sideEffects": false,
   "type": "module",
-  "version": "0.2.2-3",
+  "version": "0.2.2-4",
   "main": "index.js",
   "dependencies": {
     "@kiltprotocol/did": "^0.28.0",
     "@polkadot/keyring": "^10.1.6",
     "@polkadot/util": "^10.1.6",
-    "@zcloak/did-keyring": "^0.2.2-3",
-    "@zcloak/ui-store": "^0.2.2-3"
+    "@zcloak/did-keyring": "^0.2.2-4",
+    "@zcloak/ui-store": "^0.2.2-4"
   }
 }
