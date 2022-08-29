@@ -1,7 +1,9 @@
-import type { DidDetails } from '@kiltprotocol/did';
 import type { DidUri } from '@kiltprotocol/types';
 import type { KeyringOptions, KeyringPair$Json } from '@polkadot/keyring/types';
 import type { DidKeys$Json } from '@zcloak/did-keyring/types';
+
+import { DidDetails, LightDidDetails, Utils } from '@kiltprotocol/did';
+import { assert } from '@polkadot/util';
 
 import { DidManager as DidManagerSuper } from '@zcloak/did-keyring/DidManager';
 import { BrowserStore } from '@zcloak/ui-store';
@@ -49,12 +51,23 @@ export class DidManager extends DidManagerSuper {
   }
 
   public override removeDid(didUriOrDetails: DidUri | DidDetails): DidDetails {
-    const didDetails = super.removeDid(didUriOrDetails);
+    let didDetails: DidDetails;
+
+    if (didUriOrDetails instanceof DidDetails) {
+      didDetails = didUriOrDetails;
+    } else {
+      assert(Utils.validateKiltDidUri(didUriOrDetails), 'Not did uri');
+      assert(Utils.parseDidUri(didUriOrDetails).type === 'light', 'only light did uri backup');
+
+      didDetails = LightDidDetails.fromUri(didUriOrDetails);
+    }
 
     this.#store.remove(didKey(didDetails.uri));
     didDetails.getKeys().forEach((key) => {
       this.#store.remove(accountKey(this.getPair(key.publicKey).address));
     });
+
+    super.removeDid(didUriOrDetails);
 
     return didDetails;
   }
