@@ -2,7 +2,7 @@ import type { DidUri } from '@kiltprotocol/types';
 import type { KeyringOptions, KeyringPair$Json } from '@polkadot/keyring/types';
 import type { DidKeys$Json } from '@zcloak/did-keyring/types';
 
-import { DidDetails, LightDidDetails, Utils } from '@kiltprotocol/did';
+import { LightDidDetails, Utils } from '@kiltprotocol/did';
 import { assert } from '@polkadot/util';
 
 import { DidManager as DidManagerSuper } from '@zcloak/did-keyring/DidManager';
@@ -28,8 +28,11 @@ export class DidManager extends DidManagerSuper {
     });
   }
 
-  public override generateDid(mnemonic: string, password: string): DidKeys$Json {
-    const json = super.generateDid(mnemonic, password);
+  public override backupDid(
+    didUriOrDetails: DidUri | LightDidDetails,
+    password: string
+  ): DidKeys$Json {
+    const json = super.backupDid(didUriOrDetails, password);
 
     this.#store.set(didKey(json.didUri), json.didUri);
     json.keys.forEach((key) => {
@@ -39,21 +42,10 @@ export class DidManager extends DidManagerSuper {
     return json;
   }
 
-  public override restoreDid(textOrJson: string | DidKeys$Json): DidKeys$Json {
-    const json = super.restoreDid(textOrJson);
+  public override removeDid(didUriOrDetails: DidUri | LightDidDetails): LightDidDetails {
+    let didDetails: LightDidDetails;
 
-    this.#store.set(didKey(json.didUri), json.didUri);
-    json.keys.forEach((key) => {
-      this.#store.set(accountKey(key.address), key);
-    });
-
-    return json;
-  }
-
-  public override removeDid(didUriOrDetails: DidUri | DidDetails): DidDetails {
-    let didDetails: DidDetails;
-
-    if (didUriOrDetails instanceof DidDetails) {
+    if (didUriOrDetails instanceof LightDidDetails) {
       didDetails = didUriOrDetails;
     } else {
       assert(Utils.validateKiltDidUri(didUriOrDetails), 'Not did uri');

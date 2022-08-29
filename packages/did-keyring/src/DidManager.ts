@@ -1,6 +1,6 @@
 import type { DidKeys$Json } from './types';
 
-import { DidDetails, LightDidDetails, Utils } from '@kiltprotocol/did';
+import { LightDidDetails, Utils } from '@kiltprotocol/did';
 import { DidUri, EncryptionKeyType, VerificationKeyType } from '@kiltprotocol/types';
 import { assert } from '@polkadot/util';
 
@@ -10,7 +10,7 @@ import { isDidKeys$Json } from './utils';
 export class DidManager extends Keyring {
   public didUris: Set<DidUri> = new Set<DidUri>();
 
-  public generateDid(mnemonic: string, password: string): DidKeys$Json {
+  public addDidFromMnemonic(mnemonic: string, password?: string): DidUri {
     const pair1 = this.addFromMnemonic(mnemonic, {}, 'sr25519');
     const pair2 = this.addFromMnemonic(mnemonic, {}, 'ed25519');
 
@@ -27,13 +27,14 @@ export class DidManager extends Keyring {
 
     this.didUris.add(didUri);
 
-    return {
-      didUri,
-      keys: [pair1.toJson(password), pair2.toJson(password)]
-    };
+    if (password) {
+      this.backupDid(didUri, password);
+    }
+
+    return didUri;
   }
 
-  public restoreDid(textOrJson: string | DidKeys$Json): DidKeys$Json {
+  public addDidFromJson(textOrJson: string | DidKeys$Json, password?: string): DidUri {
     let json: DidKeys$Json;
 
     if (typeof textOrJson === 'string') {
@@ -49,26 +50,30 @@ export class DidManager extends Keyring {
     const pair1 = this.getPair(json.keys[0].address);
     const pair2 = this.getPair(json.keys[1].address);
 
-    this.didUris.add(
-      LightDidDetails.fromDetails({
-        authenticationKey: {
-          publicKey: pair1.publicKey,
-          type: pair1.type === 'sr25519' ? VerificationKeyType.Sr25519 : VerificationKeyType.Ed25519
-        },
-        encryptionKey: {
-          publicKey: pair2.publicKey,
-          type: EncryptionKeyType.X25519
-        }
-      }).uri
-    );
+    const didUri = LightDidDetails.fromDetails({
+      authenticationKey: {
+        publicKey: pair1.publicKey,
+        type: pair1.type === 'sr25519' ? VerificationKeyType.Sr25519 : VerificationKeyType.Ed25519
+      },
+      encryptionKey: {
+        publicKey: pair2.publicKey,
+        type: EncryptionKeyType.X25519
+      }
+    }).uri;
 
-    return json;
+    this.didUris.add(didUri);
+
+    if (password) {
+      this.backupDid(didUri, password);
+    }
+
+    return didUri;
   }
 
-  public backupDid(didUriOrDetails: DidUri | DidDetails, password: string): DidKeys$Json {
-    let didDetails: DidDetails;
+  public backupDid(didUriOrDetails: DidUri | LightDidDetails, password: string): DidKeys$Json {
+    let didDetails: LightDidDetails;
 
-    if (didUriOrDetails instanceof DidDetails) {
+    if (didUriOrDetails instanceof LightDidDetails) {
       didDetails = didUriOrDetails;
     } else {
       assert(Utils.validateKiltDidUri(didUriOrDetails), 'Not did uri');
@@ -83,10 +88,10 @@ export class DidManager extends Keyring {
     };
   }
 
-  public removeDid(didUriOrDetails: DidUri | DidDetails): DidDetails {
-    let didDetails: DidDetails;
+  public removeDid(didUriOrDetails: DidUri | LightDidDetails): LightDidDetails {
+    let didDetails: LightDidDetails;
 
-    if (didUriOrDetails instanceof DidDetails) {
+    if (didUriOrDetails instanceof LightDidDetails) {
       didDetails = didUriOrDetails;
     } else {
       assert(Utils.validateKiltDidUri(didUriOrDetails), 'Not did uri');
