@@ -14,7 +14,7 @@
   },
   "sideEffects": false,
   "type": "module",
-  "version": "0.2.2-6",
+  "version": "0.2.2-7",
   "main": "index.js",
   "dependencies": {
     "store": "^2.0.12"
