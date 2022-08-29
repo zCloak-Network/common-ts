@@ -1,40 +1,64 @@
+import type { KeyringPair } from '@polkadot/keyring/types';
 import type { DidKeys$Json } from './types';
 
 import { LightDidDetails, Utils } from '@kiltprotocol/did';
 import { DidUri, EncryptionKeyType, VerificationKeyType } from '@kiltprotocol/types';
 import { assert } from '@polkadot/util';
 
-import { Keyring } from './Keyring';
+import { Events } from './Events';
 import { isDidKeys$Json } from './utils';
 
-export class DidManager extends Keyring {
+export class DidManager extends Events {
   public didUris: Set<DidUri> = new Set<DidUri>();
+  public didDetails: Map<DidUri, LightDidDetails> = new Map<DidUri, LightDidDetails>();
 
-  public addDidFromMnemonic(mnemonic: string, password?: string): DidUri {
-    const pair1 = this.addFromMnemonic(mnemonic, {}, 'sr25519');
-    const pair2 = this.addFromMnemonic(mnemonic, {}, 'ed25519');
+  public addDid(didUriOrDetails: DidUri | LightDidDetails, pairs: KeyringPair[]): void {
+    pairs.forEach((pair) => this.addPair(pair));
 
-    const didUri = LightDidDetails.fromDetails({
-      authenticationKey: {
-        publicKey: pair1.publicKey,
-        type: pair1.type === 'sr25519' ? VerificationKeyType.Sr25519 : VerificationKeyType.Ed25519
-      },
-      encryptionKey: {
-        publicKey: pair2.publicKey,
-        type: EncryptionKeyType.X25519
-      }
-    }).uri;
+    let didDetails: LightDidDetails;
 
-    this.didUris.add(didUri);
+    if (didUriOrDetails instanceof LightDidDetails) {
+      didDetails = didUriOrDetails;
+    } else {
+      assert(Utils.validateKiltDidUri(didUriOrDetails), 'Not did uri');
+      assert(Utils.parseDidUri(didUriOrDetails).type === 'light', 'only light did uri backup');
 
-    if (password) {
-      this.backupDid(didUri, password);
+      didDetails = LightDidDetails.fromUri(didUriOrDetails);
     }
 
-    return didUri;
+    this.didUris.add(didDetails.uri);
+    this.didDetails.set(didDetails.uri, didDetails);
+    this.emit('add');
   }
 
-  public addDidFromJson(textOrJson: string | DidKeys$Json, password?: string): DidUri {
+  public addDidFromMnemonic(mnemonic: string, password?: string): LightDidDetails {
+    const pairs = [
+      this.createFromUri(mnemonic, {}, 'sr25519'),
+      this.createFromUri(mnemonic, {}, 'ed25519')
+    ];
+
+    const didDetails = LightDidDetails.fromDetails({
+      authenticationKey: {
+        publicKey: pairs[0].publicKey,
+        type:
+          pairs[0].type === 'sr25519' ? VerificationKeyType.Sr25519 : VerificationKeyType.Ed25519
+      },
+      encryptionKey: {
+        publicKey: pairs[1].publicKey,
+        type: EncryptionKeyType.X25519
+      }
+    });
+
+    this.addDid(didDetails, pairs);
+
+    if (password) {
+      this.backupDid(didDetails, password);
+    }
+
+    return didDetails;
+  }
+
+  public addDidFromJson(textOrJson: string | DidKeys$Json, password?: string): LightDidDetails {
     let json: DidKeys$Json;
 
     if (typeof textOrJson === 'string') {
@@ -44,30 +68,27 @@ export class DidManager extends Keyring {
       json = textOrJson;
     }
 
-    json.keys.forEach((j) => {
-      this.addFromJson(j);
-    });
-    const pair1 = this.getPair(json.keys[0].address);
-    const pair2 = this.getPair(json.keys[1].address);
+    const pairs = json.keys.map((key) => this.createFromJson(key));
 
-    const didUri = LightDidDetails.fromDetails({
+    const didDetails = LightDidDetails.fromDetails({
       authenticationKey: {
-        publicKey: pair1.publicKey,
-        type: pair1.type === 'sr25519' ? VerificationKeyType.Sr25519 : VerificationKeyType.Ed25519
+        publicKey: pairs[0].publicKey,
+        type:
+          pairs[0].type === 'sr25519' ? VerificationKeyType.Sr25519 : VerificationKeyType.Ed25519
       },
       encryptionKey: {
-        publicKey: pair2.publicKey,
+        publicKey: pairs[1].publicKey,
         type: EncryptionKeyType.X25519
       }
-    }).uri;
+    });
 
-    this.didUris.add(didUri);
+    this.addDid(didDetails, pairs);
 
     if (password) {
-      this.backupDid(didUri, password);
+      this.backupDid(didDetails, password);
     }
 
-    return didUri;
+    return didDetails;
   }
 
   public backupDid(didUriOrDetails: DidUri | LightDidDetails, password: string): DidKeys$Json {
@@ -88,7 +109,7 @@ export class DidManager extends Keyring {
     };
   }
 
-  public removeDid(didUriOrDetails: DidUri | LightDidDetails): LightDidDetails {
+  public removeDid(didUriOrDetails: DidUri | LightDidDetails): void {
     let didDetails: LightDidDetails;
 
     if (didUriOrDetails instanceof LightDidDetails) {
@@ -103,7 +124,7 @@ export class DidManager extends Keyring {
     didDetails.getKeys().forEach((key) => this.removePair(key.publicKey));
 
     this.didUris.delete(didDetails.uri);
-
-    return didDetails;
+    this.didDetails.delete(didDetails.uri);
+    this.emit('remove');
   }
 }

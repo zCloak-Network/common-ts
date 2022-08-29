@@ -12,3 +12,5 @@ export type DidKeys$Json = {
   didUri: DidUri;
   keys: KeyringPair$Json[];
 };
+
+export type DidEvents = 'add' | 'remove';

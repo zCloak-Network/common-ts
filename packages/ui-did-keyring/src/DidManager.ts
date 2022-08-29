@@ -42,7 +42,7 @@ export class DidManager extends DidManagerSuper {
     return json;
   }
 
-  public override removeDid(didUriOrDetails: DidUri | LightDidDetails): LightDidDetails {
+  public override removeDid(didUriOrDetails: DidUri | LightDidDetails): void {
     let didDetails: LightDidDetails;
 
     if (didUriOrDetails instanceof LightDidDetails) {
@@ -60,7 +60,5 @@ export class DidManager extends DidManagerSuper {
     });
 
     super.removeDid(didUriOrDetails);
-
-    return didDetails;
   }
 }
