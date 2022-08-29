@@ -37,8 +37,8 @@ export class DidManager extends DidManagerSuper {
     return json;
   }
 
-  public override restoreDid(textOrJson: string | DidKeys$Json, password: string): DidKeys$Json {
-    const json = super.restoreDid(textOrJson, password);
+  public override restoreDid(textOrJson: string | DidKeys$Json): DidKeys$Json {
+    const json = super.restoreDid(textOrJson);
 
     this.#store.set(didKey(json.didUri), json.didUri);
     json.keys.forEach((key) => {

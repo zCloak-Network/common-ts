@@ -33,7 +33,7 @@ export class DidManager extends Keyring {
     };
   }
 
-  public restoreDid(textOrJson: string | DidKeys$Json, password: string): DidKeys$Json {
+  public restoreDid(textOrJson: string | DidKeys$Json): DidKeys$Json {
     let json: DidKeys$Json;
 
     if (typeof textOrJson === 'string') {
@@ -44,11 +44,7 @@ export class DidManager extends Keyring {
     }
 
     json.keys.forEach((j) => {
-      const pair = this.addFromJson(j);
-
-      // try unlock
-      pair.unlock(password);
-      pair.lock();
+      this.addFromJson(j);
     });
     const pair1 = this.getPair(json.keys[0].address);
     const pair2 = this.getPair(json.keys[1].address);
