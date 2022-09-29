@@ -6,7 +6,7 @@ import {
   SigningAlgorithms
 } from '@kiltprotocol/types';
 import { Keyring as PolkadotKeyring } from '@polkadot/keyring';
-import { assert, u8aEq } from '@polkadot/util';
+import { u8aEq } from '@polkadot/util';
 import { randomAsU8a } from '@polkadot/util-crypto';
 
 import { KiltKeystore } from './types';
@@ -49,14 +49,12 @@ export class Keyring extends PolkadotKeyring implements KiltKeystore {
   public async decrypt<A extends 'x25519-xsalsa20-poly1305'>({
     alg,
     data,
-    nonce,
     peerPublicKey,
     publicKey
   }: RequestData<A> & {
     peerPublicKey: Uint8Array;
     nonce: Uint8Array;
   }): Promise<ResponseData<A>> {
-    assert(nonce.length === 24, 'Nonce length error, expect to 24');
     const pair = this.getPair(publicKey);
 
     const decrypted = pair.decryptMessage(data, peerPublicKey);
