@@ -7,7 +7,6 @@
     { "path": "./packages/contracts-core/tsconfig.build.json" },
     { "path": "./packages/credential-core/tsconfig.build.json" },
     { "path": "./packages/did-keyring/tsconfig.build.json" },
-    { "path": "./packages/example/tsconfig.build.json" },
     { "path": "./packages/extension-core/tsconfig.build.json" },
     { "path": "./packages/react-wallet/tsconfig.build.json" },
     { "path": "./packages/service/tsconfig.build.json" },
