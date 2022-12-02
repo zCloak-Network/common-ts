@@ -1,5 +1,18 @@
 # CHANGELOG
 
+# [0.4.0](https://github.com/zCloak-Network/common-ts/compare/v0.3.1...v0.4.0) (2022-12-02)
+
+
+### Bug Fixes
+
+* **build:** fix error when build tsc ([a203705](https://github.com/zCloak-Network/common-ts/commit/a2037052a59a361ed25e659fcb13c5670fc5dc89))
+
+
+### Features
+
+* update @zcloak/dev and fix lint ([6e0a901](https://github.com/zCloak-Network/common-ts/commit/6e0a9019d435a6a1e90febe16f4b52e4a8d1f4b8))
+
+
 ## 0.3.1 Sep 29, 2022
 
 Changes:
