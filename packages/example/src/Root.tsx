@@ -1,16 +1,19 @@
+// Copyright 2021-2022 zcloak authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import React, { useEffect, useState } from 'react';
 
 import { useEagerConnect } from '@zcloak/react-wallet';
 import { MetaMaskWallet } from '@zcloak/react-wallet/MetaMaskWallet';
-import { WalletConnectWallet } from '@zcloak/react-wallet/WalletConnectWallet';
+// import { WalletConnectWallet } from '@zcloak/react-wallet/WalletConnectWallet';
 import { useWallet } from '@zcloak/react-wallet/WalletProvider';
 
 import { endpoints } from '.';
 
 const metaMaskWallet = new MetaMaskWallet();
-const walletConnectWallet = new WalletConnectWallet({
-  rpc: { 1287: 'https://rpc.api.moonbase.moonbeam.network' }
-});
+// const walletConnectWallet = new WalletConnectWallet({
+//   rpc: { 1287: 'https://rpc.api.moonbase.moonbeam.network' }
+// });
 
 const Root: React.FC = () => {
   const { account, chainId, connect, disconnect, error, provider, wallet } = useWallet();

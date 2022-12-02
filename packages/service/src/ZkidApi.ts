@@ -1,3 +1,6 @@
+// Copyright 2021-2022 zcloak authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import type { Activity, Config, MintPoap, Proof, ProofProcess, ServerResponse } from './types';
 
 import { combineConfig, Request } from './request';

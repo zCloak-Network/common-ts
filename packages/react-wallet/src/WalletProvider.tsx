@@ -1,3 +1,6 @@
+// Copyright 2021-2022 zcloak authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import type { JsonRpcProvider } from '@ethersproject/providers';
 
 import { getAddress } from '@ethersproject/address';
@@ -82,7 +85,7 @@ export const WalletProvider: React.FC<React.PropsWithChildren<Props>> = ({
     useMemo(
       (): WalletState => ({
         ...(error ? {} : state),
-        error: error,
+        error,
         active: !error && !!state.account,
         wallet: wallet.current,
         connect,

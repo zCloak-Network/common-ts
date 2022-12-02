@@ -1,4 +1,8 @@
-import { ethers } from 'ethers';
+// Copyright 2021-2022 zcloak authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
+import { Contract } from '@ethersproject/contracts';
+import { Provider } from '@ethersproject/providers';
 
 import { multicallAbi } from './abi/multicall';
 import { Abi } from './abi';
@@ -7,9 +11,9 @@ import { ContractCall } from './types';
 export async function all<T extends any[] = any[]>(
   calls: ContractCall[],
   multicallAddress: string,
-  provider: ethers.providers.Provider
+  provider: Provider
 ): Promise<T> {
-  const multicall = new ethers.Contract(multicallAddress, multicallAbi, provider);
+  const multicall = new Contract(multicallAddress, multicallAbi, provider);
   const callRequests = calls.map((call) => {
     const callData = Abi.encode(call.name, call.inputs, call.params);
 

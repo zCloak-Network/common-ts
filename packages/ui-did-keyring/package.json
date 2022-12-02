@@ -22,5 +22,8 @@
     "@polkadot/util": "^10.1.7",
     "@zcloak/did-keyring": "^0.3.1",
     "@zcloak/ui-store": "^0.3.1"
+  },
+  "devDependencies": {
+    "@kiltprotocol/types": "^0.28.0"
   }
 }

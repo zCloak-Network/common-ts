@@ -1,10 +1,8 @@
 {
   "extends": "@zcloak/dev/config/tsconfig.json",
   "compilerOptions": {
-    "noUnusedParameters": false,
-    "noUnusedLocals": false,
-    "composite": false,
-    "jsx": "react",
+    "composite": true,
+    "jsx": "react-jsx",
     "paths": {
       "@zcloak/example": ["example/src"],
       "@zcloak/example/*": ["example/src/*"],
@@ -27,6 +25,7 @@
       "@zcloak/web3-query": ["web3-query/src"],
       "@zcloak/web3-query/*": ["web3-query/src/*"],
     },
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "resolveJsonModule": true
   }
 }

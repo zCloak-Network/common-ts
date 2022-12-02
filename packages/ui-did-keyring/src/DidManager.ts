@@ -1,3 +1,6 @@
+// Copyright 2021-2022 zcloak authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import type { DidUri } from '@kiltprotocol/types';
 import type { KeyringOptions, KeyringPair$Json } from '@polkadot/keyring/types';
 import type { DidKeys$Json } from '@zcloak/did-keyring/types';

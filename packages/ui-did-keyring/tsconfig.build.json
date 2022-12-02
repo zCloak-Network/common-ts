@@ -6,7 +6,11 @@
     "rootDir": "./src"
   },
   "exclude": [
-    "**/mod.ts"
+    "**/*.spec.ts",
+    "**/test/**/*"
   ],
-  "references": []
+  "references": [
+    { "path": "../did-keyring/tsconfig.build.json" },
+    { "path": "../ui-store/tsconfig.build.json" }
+  ]
 }

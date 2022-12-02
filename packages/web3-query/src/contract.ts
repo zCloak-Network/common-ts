@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
+// Copyright 2021-2022 zcloak authors & contributors
+// SPDX-License-Identifier: Apache-2.0
 
 import { Fragment, FunctionFragment, JsonFragment } from '@ethersproject/abi';
-import { utils } from 'ethers';
 
 export class Contract {
   private _address: string;
@@ -46,14 +46,16 @@ export class Contract {
 }
 
 function toFragment(abi: JsonFragment[] | string[] | Fragment[]): Fragment[] {
-  return abi.map((item: JsonFragment | string | Fragment) => utils.Fragment.from(item));
+  return abi.map((item: JsonFragment | string | Fragment) => Fragment.from(item));
 }
 
 function makeCallFunction(contract: Contract, name: string) {
   return (...params: any[]) => {
     const { address } = contract;
-    const { inputs } = contract.functions.find((f) => f.name === name)!;
-    const { outputs } = contract.functions.find((f) => f.name === name)!;
+    const FunctionFragment = contract.functions.find((f) => f.name === name);
+
+    if (!FunctionFragment) throw new Error(`Function with ${name} not found`);
+    const { inputs, outputs } = FunctionFragment;
 
     return {
       contract: {

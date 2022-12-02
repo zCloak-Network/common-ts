@@ -17,6 +17,7 @@
   "version": "0.3.1",
   "main": "index.js",
   "dependencies": {
+    "@kiltprotocol/did": "^0.28.0",
     "@kiltprotocol/types": "^0.28.0",
     "@polkadot/keyring": "^10.1.7",
     "@polkadot/util": "^10.1.7",

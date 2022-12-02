@@ -1,3 +1,6 @@
+// Copyright 2021-2022 zcloak authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import type { CallOverrides } from '@ethersproject/contracts';
 import type { TransactionResponse } from '@ethersproject/providers';
 import type { RequestDetails } from './types';

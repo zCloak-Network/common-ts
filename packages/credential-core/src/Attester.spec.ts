@@ -1,3 +1,6 @@
+// Copyright 2021-2022 zcloak authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import { jest } from '@jest/globals';
 import { BlockchainUtils, connect, disconnect, init } from '@kiltprotocol/sdk-js';
 

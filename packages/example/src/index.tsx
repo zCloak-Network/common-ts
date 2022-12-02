@@ -1,4 +1,6 @@
-import React from 'react';
+// Copyright 2021-2022 zcloak authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import { createRoot } from 'react-dom/client';
 
 import { WalletProvider } from '@zcloak/react-wallet/WalletProvider';

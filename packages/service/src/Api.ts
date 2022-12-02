@@ -1,3 +1,6 @@
+// Copyright 2021-2022 zcloak authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import type {
   AttestationStatus,
   AttestationStatusV2,
@@ -28,7 +31,7 @@ export class CredentialApi extends Request {
     receiverKeyId: string;
     reCaptchaToken: string;
   }) {
-    return this.post<ServerResponse<{}>>('/admin-attester/claim', {
+    return this.post<ServerResponse<any>>('/admin-attester/claim', {
       body
     });
   }
@@ -47,7 +50,7 @@ export class CredentialApi extends Request {
     receiverKeyId: string;
     reCaptchaToken: string;
   }) {
-    return this.post<ServerResponse<{}>>('/admin-attester/submit-claim', {
+    return this.post<ServerResponse<any>>('/admin-attester/submit-claim', {
       body: { ...body }
     });
   }

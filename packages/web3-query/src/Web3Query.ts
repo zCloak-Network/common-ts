@@ -1,4 +1,7 @@
-import { ethers } from 'ethers';
+// Copyright 2021-2022 zcloak authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
+import type { Provider } from '@ethersproject/providers';
 
 import { all } from './call';
 import {
@@ -13,11 +16,11 @@ import {
 import { ContractCall } from './types';
 
 export class Web3Query {
-  private _provider: ethers.providers.Provider;
+  private _provider: Provider;
   #blockNumber = 0;
   #callbacks: (() => void)[] = [];
 
-  constructor(provider: ethers.providers.Provider) {
+  constructor(provider: Provider) {
     this._provider = provider;
 
     this._provider.on('block', this.blockNumberCallback);
@@ -76,7 +79,7 @@ export class Web3Query {
     const results = await all<T>(calls, await getAddress(this._provider), this._provider);
 
     if (callback) {
-      // eslint-disable-next-line node/no-callback-literal
+      // eslint-disable-next-line n/no-callback-literal
       callback(await this.all<T>(calls));
 
       const func = async () => {
@@ -108,7 +111,7 @@ export class Web3Query {
     const [result] = await all<[TOne]>([call], await getAddress(this._provider), this._provider);
 
     if (callback) {
-      // eslint-disable-next-line node/no-callback-literal
+      // eslint-disable-next-line n/no-callback-literal
       callback(await this.one<TOne>(call));
 
       const func = async () => {
@@ -141,7 +144,7 @@ function getAddressForChainId(chainId: number) {
   return multicallAddresses[chainId];
 }
 
-async function getAddress(provider: ethers.providers.Provider) {
+async function getAddress(provider: Provider) {
   const { chainId } = await provider.getNetwork();
 
   return getAddressForChainId(chainId);

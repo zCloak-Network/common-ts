@@ -1,3 +1,6 @@
+// Copyright 2021-2022 zcloak authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
 export const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export const toFormData = (data: Record<string, any>): FormData => {

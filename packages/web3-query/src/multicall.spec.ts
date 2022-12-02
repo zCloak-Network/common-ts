@@ -1,5 +1,7 @@
+// Copyright 2021-2022 zcloak authors & contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import { JsonRpcProvider } from '@ethersproject/providers';
-import { jest } from '@jest/globals';
 
 import { Web3Query } from './Web3Query';
 

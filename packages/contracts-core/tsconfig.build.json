@@ -6,7 +6,10 @@
     "rootDir": "./src"
   },
   "exclude": [
-    "**/mod.ts"
+    "**/*.spec.ts",
+    "**/test/**/*"
   ],
-  "references": []
+  "references": [
+    { "path": "../web3-query/tsconfig.build.json" }
+  ]
 }
