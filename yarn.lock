@@ -4301,9 +4301,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zcloak/dev@npm:^0.8.1":
-  version: 0.8.1
-  resolution: "@zcloak/dev@npm:0.8.1"
+"@zcloak/dev@npm:^0.10.5":
+  version: 0.10.5
+  resolution: "@zcloak/dev@npm:0.10.5"
   dependencies:
     "@babel/cli": ^7.19.3
     "@babel/core": ^7.20.2
@@ -4331,7 +4331,7 @@ __metadata:
     "@rushstack/eslint-patch": ^1.2.0
     "@typescript-eslint/eslint-plugin": ^5.42.1
     "@typescript-eslint/parser": ^5.42.1
-    "@zcloak/lint": 0.8.1
+    "@zcloak/lint": 0.10.5
     babel-jest: ^29.3.1
     babel-plugin-module-extension-resolver: ^1.0.0-rc.2
     babel-plugin-module-resolver: ^4.1.0
@@ -4399,7 +4399,7 @@ __metadata:
     zcloak-exec-rollup: scripts/zcloak-exec-rollup.mjs
     zcloak-exec-tsc: scripts/zcloak-exec-tsc.mjs
     zcloak-exec-webpack: scripts/zcloak-exec-webpack.mjs
-  checksum: 23f824a21af86544d870bf526a278a4830a78102a23f27cf09af6d91da67af4f81afcb13eee2391ea64fbb7422eff06d3cc9d84d8be3cb45c32cb116f0192e25
+  checksum: 594cdbdca5d5f871eaf5b10c58a0b23472a69e3dfca86feec8d62570486e45047dc67d60a142338cc79b7a7d0ac8829cc53de2e260e45fe373fefb613a615b7a
   languageName: node
   linkType: hard
 
@@ -4425,15 +4425,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@zcloak/lint@npm:0.8.1":
-  version: 0.8.1
-  resolution: "@zcloak/lint@npm:0.8.1"
+"@zcloak/lint@npm:0.10.5":
+  version: 0.10.5
+  resolution: "@zcloak/lint@npm:0.10.5"
   dependencies:
     chalk: ^5.1.2
     glob: ^8.0.3
     parse-imports-ts: ^1.0.2
     throat: ^6.0.1
-  checksum: cb886601e8c728ea8bbc0c1ac88b79b40451e4b03a5783cbcf4d94970b391bd0c6b0d6c405bf9b45232a209469868770627c113c2513a84f29c3c9770030a215
+  checksum: 1159b9d7fcc6185bbc272e31a25c463ecb438abf00ea8e4b48c8f47f54a0ee603a38cc8797ff004b6625d56e16e83e8b51ff298b1c365b14a648bf2ac64833c5
   languageName: node
   linkType: hard
 
@@ -8278,7 +8278,7 @@ __metadata:
     "@babel/polyfill": ^7.12.1
     "@babel/runtime": ^7.20.1
     "@types/punycode": ^2.1.0
-    "@zcloak/dev": ^0.8.1
+    "@zcloak/dev": ^0.10.5
     assert: ^2.0.0
     babel-loader: ^9.1.0
     buffer: ^6.0.3
@@ -14245,7 +14245,7 @@ __metadata:
     "@types/jest": ^29.2.3
     "@types/react": ^18.0.25
     "@types/react-dom": ^18.0.9
-    "@zcloak/dev": ^0.8.1
+    "@zcloak/dev": ^0.10.5
     concurrently: ^7.6.0
     devtron: ^1.4.0
     humps: ^2.0.1
