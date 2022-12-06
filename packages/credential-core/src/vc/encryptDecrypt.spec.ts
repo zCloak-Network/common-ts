@@ -53,6 +53,9 @@ describe('encrypt and decrypt', () => {
     const decrypted = vcDecrypt(encrypted, '1234');
 
     expect(decrypted).toEqual(kiltVC);
+    expect(() => vcDecrypt(encrypted, '123')).toThrow(
+      'Unable to decrypt using the supplied passphrase'
+    );
   });
 
   it('encrypt zkid vc and descrypt', () => {
@@ -100,5 +103,8 @@ describe('encrypt and decrypt', () => {
     const decrypted = vcDecrypt(encrypted, '1234');
 
     expect(decrypted).toEqual(zkidVC);
+    expect(() => vcDecrypt(encrypted, '123')).toThrow(
+      'Unable to decrypt using the supplied passphrase'
+    );
   });
 });
