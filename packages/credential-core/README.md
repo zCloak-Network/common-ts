@@ -1,8 +1,20 @@
-# DEPRECATED
-
 # @zcloak/credential-core
 
-This is package core for [kilt-sdk](https://www.npmjs.com/package/@kiltprotocol/sdk-js)
+This is a package wrap kilt and zkid credential. It provide such functions:
 
-some external resources:
-- [docs.kilt.io](https://docs.kilt.io/docs/sdk/introduction)
+- `vcEncrypt`, encrypt credential(kilt|zkid) with supplied passpharse.
+- `vcDecrypt`, decrypt encrypted credential(kilt|zkid) with supplied passpharse.
+
+## Usage
+
+Installation
+
+```
+yarn add @zcloak/credential-core
+```
+
+Classes and Functions can be imported as follows:
+
+```js
+import { vcEncrypt, vcDecrypt } from '@zcloak/credential-core';
+```
