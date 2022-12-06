@@ -12,10 +12,10 @@ export class DidManager extends DidBase {
   public zk: ZkDid;
   public default: DidBase;
 
-  constructor() {
+  constructor(_zk?: ZkDid, _kilt?: KiltDid) {
     super();
-    this.kilt = new KiltDid();
-    this.zk = new ZkDid();
+    this.kilt = _kilt ?? new KiltDid();
+    this.zk = _zk ?? new ZkDid();
     this.default = this.zk;
   }
 
