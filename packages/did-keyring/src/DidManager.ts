@@ -1,184 +1,77 @@
 // Copyright 2021-2022 zcloak authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import type { KeyringPair } from '@polkadot/keyring/types';
-import type { DidKeys$Json } from './types';
+import { KiltDid } from './kilt/KiltDid';
+import { ZkDid } from './zk/ZkDid';
+import { DidBase } from './Base';
+import { isKiltDidKeys$Json, isZkDidKeys$Json } from './utils';
 
-import { LightDidDetails, Utils } from '@kiltprotocol/did';
-import { DidUri, EncryptionKeyType, VerificationKeyType } from '@kiltprotocol/types';
-import { assert } from '@polkadot/util';
+type DidTypes = 'kilt' | 'zk';
+export class DidManager extends DidBase {
+  public kilt: KiltDid;
+  public zk: ZkDid;
+  public default: DidBase;
 
-import { Events } from './Events';
-import { isDidKeys$Json } from './utils';
-
-export class DidManager extends Events {
-  public didUris: Set<DidUri> = new Set<DidUri>();
-  public didDetails: Map<DidUri, LightDidDetails> = new Map<DidUri, LightDidDetails>();
-
-  public addDid(didUriOrDetails: DidUri | LightDidDetails, pairs: KeyringPair[]): void {
-    pairs.forEach((pair) => this.addPair(pair));
-
-    let didDetails: LightDidDetails;
-
-    if (didUriOrDetails instanceof LightDidDetails) {
-      didDetails = didUriOrDetails;
-    } else {
-      assert(Utils.validateKiltDidUri(didUriOrDetails), 'Not did uri');
-      assert(Utils.parseDidUri(didUriOrDetails).type === 'light', 'only light did uri backup');
-
-      didDetails = LightDidDetails.fromUri(didUriOrDetails);
-    }
-
-    this.didUris.add(didDetails.uri);
-    this.didDetails.set(didDetails.uri, didDetails);
-    this.emit('add');
+  constructor() {
+    super();
+    this.kilt = new KiltDid();
+    this.zk = new ZkDid();
+    this.default = this.zk;
   }
 
-  /**
-   * @description add a new did from mnemonic
-   * @param mnemonic 12 words mnemonic
-   * @param password (optional) if passed password, will call `backupDid` method
-   * @returns a [[LightDidDetails]] object
-   */
-  public addDidFromMnemonic(mnemonic: string, password?: string): LightDidDetails {
-    const pairs = [
-      this.createFromUri(mnemonic, {}, 'sr25519'),
-      this.createFromUri(mnemonic, {}, 'ed25519')
-    ];
-
-    const didDetails = LightDidDetails.fromDetails({
-      authenticationKey: {
-        publicKey: pairs[0].publicKey,
-        type:
-          pairs[0].type === 'sr25519' ? VerificationKeyType.Sr25519 : VerificationKeyType.Ed25519
-      },
-      encryptionKey: {
-        publicKey: pairs[1].publicKey,
-        type: EncryptionKeyType.X25519
-      }
-    });
-
-    this.addDid(didDetails, pairs);
-
-    if (password) {
-      this.backupDid(didDetails, password);
-    }
-
-    return didDetails;
+  addDidFromMnemonic(mnemonic: string, password: string): void {
+    this.default.addDidFromMnemonic(mnemonic, password);
   }
 
-  /**
-   * @description add a new did from a [[DidKeys$Json]] or [[string]], if pass string, will covert to [[DidKeys$Json]]
-   * @param textOrJson [[DidKeys$Json]] or stringify(DidKeys$Json)
-   * @param password (optional) if passed password, will call `backupDid` method
-   * @returns a [[LightDidDetails]] object
-   */
-  public addDidFromJson(textOrJson: string | DidKeys$Json, password?: string): LightDidDetails {
-    let json: DidKeys$Json;
+  addDidFromJson(jsonKeys: string, newPass: string, oldPass: string): string {
+    let json: any;
 
-    if (typeof textOrJson === 'string') {
-      json = JSON.parse(textOrJson);
-      assert(isDidKeys$Json(json), 'Not a validate did-keys json');
+    if (typeof jsonKeys === 'string') {
+      json = JSON.parse(jsonKeys);
     } else {
-      json = textOrJson;
+      json = jsonKeys;
     }
 
-    const pairs = json.keys.map((key) => this.createFromJson(key));
+    const isZk = isZkDidKeys$Json(json);
+    const isKilt = isKiltDidKeys$Json(json);
 
-    const didDetails = LightDidDetails.fromDetails({
-      authenticationKey: {
-        publicKey: pairs[0].publicKey,
-        type:
-          pairs[0].type === 'sr25519' ? VerificationKeyType.Sr25519 : VerificationKeyType.Ed25519
-      },
-      encryptionKey: {
-        publicKey: pairs[1].publicKey,
-        type: EncryptionKeyType.X25519
-      }
-    });
-
-    this.addDid(didDetails, pairs);
-
-    if (password) {
-      this.backupDid(didDetails, password);
+    if (isZk) {
+      return this.zk.addDidFromJson(jsonKeys, newPass, oldPass);
     }
 
-    return didDetails;
+    if (isKilt) {
+      return this.kilt.addDidFromJson(jsonKeys, newPass, oldPass);
+    }
+
+    throw new Error('Not a valid Json key file.');
   }
 
-  /**
-   * @description backup did, use password to encrypt did json
-   * @param didUriOrDetails kilt didUri or LightDidDetails
-   * @param password did json file password
-   * @returns A [[DidKeysJson]] object.
-   */
-  public backupDid(didUriOrDetails: DidUri | LightDidDetails, password: string): DidKeys$Json {
-    let didDetails: LightDidDetails;
-
-    if (didUriOrDetails instanceof LightDidDetails) {
-      didDetails = didUriOrDetails;
-    } else {
-      assert(Utils.validateKiltDidUri(didUriOrDetails), 'Not did uri');
-      assert(Utils.parseDidUri(didUriOrDetails).type === 'light', 'only light did uri backup');
-
-      didDetails = LightDidDetails.fromUri(didUriOrDetails);
-    }
-
-    return {
-      didUri: didDetails.uri,
-      keys: didDetails.getKeys().map((key) => this.getPair(key.publicKey).toJson(password))
-    };
+  remove(didUrl: string): void {
+    this.default.remove(didUrl);
   }
 
-  /**
-   * @description set a new password for did
-   * will call `backupDid` method
-   * @param didUriOrDetails kilt didUri or LightDidDetails
-   * @param currentPassword current password of passed did
-   * @param password new password for did
-   */
-  public setPassword(
-    didUriOrDetails: DidUri | LightDidDetails,
-    currentPassword: string,
-    password: string
-  ): void {
-    let didDetails: LightDidDetails;
-
-    if (didUriOrDetails instanceof LightDidDetails) {
-      didDetails = didUriOrDetails;
-    } else {
-      assert(Utils.validateKiltDidUri(didUriOrDetails), 'Not did uri');
-      assert(Utils.parseDidUri(didUriOrDetails).type === 'light', 'only light did uri backup');
-
-      didDetails = LightDidDetails.fromUri(didUriOrDetails);
-    }
-
-    didDetails.getKeys().forEach((key) => {
-      const pair = this.getPair(key.publicKey);
-
-      pair.unlock(currentPassword);
-      pair.encodePkcs8(password);
-    });
-
-    this.backupDid(didDetails, password);
+  getAll(): string[] {
+    return this.zk.getAll().concat(this.kilt.getAll());
   }
 
-  public removeDid(didUriOrDetails: DidUri | LightDidDetails): void {
-    let didDetails: LightDidDetails;
+  lock(didUrl: string): void {
+    this.default.lock(didUrl);
+  }
 
-    if (didUriOrDetails instanceof LightDidDetails) {
-      didDetails = didUriOrDetails;
-    } else {
-      assert(Utils.validateKiltDidUri(didUriOrDetails), 'Not did uri');
-      assert(Utils.parseDidUri(didUriOrDetails).type === 'light', 'only light did uri backup');
+  unlock(didUrl: string, password: string): void {
+    this.default.unlock(didUrl, password);
+  }
 
-      didDetails = LightDidDetails.fromUri(didUriOrDetails);
+  changeDefaultDid(type: DidTypes) {
+    switch (type) {
+      case 'kilt':
+        this.default = this.kilt;
+        break;
+      case 'zk':
+        this.default = this.zk;
+        break;
+      default:
+        throw new Error('Unsupported did type.');
     }
-
-    didDetails.getKeys().forEach((key) => this.removePair(key.publicKey));
-
-    this.didUris.delete(didDetails.uri);
-    this.didDetails.delete(didDetails.uri);
-    this.emit('remove');
   }
 }
