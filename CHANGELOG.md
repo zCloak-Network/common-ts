@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [0.5.1](https://github.com/zCloak-Network/common-ts/compare/v0.5.0...v0.5.1) (2022-12-07)
+
+
+### Bug Fixes
+
+* **ui-did-keyring:** The did uri is not saved when setDid is called. ([52e040c](https://github.com/zCloak-Network/common-ts/commit/52e040c1cc99aa1a9c05ce066cc1eb4108ad8c01))
+
+
 ## [0.5.0](https://github.com/zCloak-Network/common-ts/compare/v0.4.0...v0.5.0) (2022-12-07)
 
 

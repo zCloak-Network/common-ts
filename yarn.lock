@@ -4318,7 +4318,7 @@ __metadata:
     "@ethersproject/contracts": ^5.7.0
     "@ethersproject/providers": ^5.7.2
     "@ethersproject/solidity": ^5.7.0
-    "@zcloak/web3-query": ^0.5.1-1
+    "@zcloak/web3-query": ^0.5.1
     eventemitter3: ^4.0.7
   languageName: unknown
   linkType: soft
@@ -4467,7 +4467,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zcloak/did-keyring@^0.5.1-1, @zcloak/did-keyring@workspace:packages/did-keyring":
+"@zcloak/did-keyring@^0.5.1, @zcloak/did-keyring@workspace:packages/did-keyring":
   version: 0.0.0-use.local
   resolution: "@zcloak/did-keyring@workspace:packages/did-keyring"
   dependencies:
@@ -4568,14 +4568,14 @@ __metadata:
     "@polkadot/keyring": ^10.1.12
     "@polkadot/util": ^10.1.12
     "@zcloak/did": ^0.6.0
-    "@zcloak/did-keyring": ^0.5.1-1
+    "@zcloak/did-keyring": ^0.5.1
     "@zcloak/did-resolver": ^0.6.0
     "@zcloak/keyring": ^0.6.0
-    "@zcloak/ui-store": ^0.5.1-1
+    "@zcloak/ui-store": ^0.5.1
   languageName: unknown
   linkType: soft
 
-"@zcloak/ui-store@^0.5.1-1, @zcloak/ui-store@workspace:packages/ui-store":
+"@zcloak/ui-store@^0.5.1, @zcloak/ui-store@workspace:packages/ui-store":
   version: 0.0.0-use.local
   resolution: "@zcloak/ui-store@workspace:packages/ui-store"
   dependencies:
@@ -4610,7 +4610,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zcloak/web3-query@^0.5.1-1, @zcloak/web3-query@workspace:packages/web3-query":
+"@zcloak/web3-query@^0.5.1, @zcloak/web3-query@workspace:packages/web3-query":
   version: 0.0.0-use.local
   resolution: "@zcloak/web3-query@workspace:packages/web3-query"
   dependencies:
