@@ -3,7 +3,9 @@
 
 import store from 'store';
 
-export class BrowserStore {
+import { BaseStore } from './BaseStore';
+
+export class BrowserStore extends BaseStore {
   public all(fn: (key: string, value: unknown) => void): void {
     store.each((value: unknown, key: string): void => {
       fn(key, value);

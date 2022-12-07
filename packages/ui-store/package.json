@@ -20,6 +20,7 @@
     "store": "^2.0.12"
   },
   "devDependencies": {
+    "@types/chrome": "^0.0.203",
     "@types/store": "^2.0.2"
   }
 }

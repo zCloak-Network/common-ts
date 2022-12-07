@@ -14,7 +14,7 @@ import { Keyring } from './Keyring';
 export class KiltDid extends DidBase {
   public didUris: Set<DidUri> = new Set<DidUri>();
   public didDetails: Map<DidUri, LightDidDetails> = new Map<DidUri, LightDidDetails>();
-  private keyring: Keyring;
+  protected keyring: Keyring;
 
   constructor(_keyring?: Keyring) {
     super();

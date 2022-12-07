@@ -19,7 +19,7 @@ import { ZkDidKeys$Json } from '../types';
 export class ZkDid extends DidBase {
   public dids: Map<DidUrl, Did>;
   private resolver: ArweaveDidResolver;
-  private keyring: Keyring;
+  protected keyring: Keyring;
 
   constructor(_keyring?: Keyring, _resolver?: ArweaveDidResolver) {
     super();
@@ -31,7 +31,7 @@ export class ZkDid extends DidBase {
   addDidFromMnemonic(mnemonic: string, password?: string): void {
     const did = helpers.createEcdsaFromMnemonic(mnemonic, this.keyring);
 
-    this.addDid(did);
+    this.addDid(did, password);
   }
 
   addDidFromJson(jsonKeys: string, newPass: string, oldPass: string): string {
@@ -104,10 +104,10 @@ export class ZkDid extends DidBase {
       keyAgreement: Array.from(did.keyAgreement ?? []),
       capabilityInvocation: Array.from(did.capabilityInvocation ?? []),
       capabilityDelegation: Array.from(did.capabilityDelegation ?? [])
-    };
+    } as ZkDidKeys$Json;
   }
 
-  private getIdentifierPair(didUrl: string): KeyringPair | undefined {
+  protected getIdentifierPair(didUrl: string): KeyringPair | undefined {
     const { identifier } = this.resolver.parseDid(didUrl);
 
     const identifierPair = this.keyring
@@ -153,8 +153,26 @@ export class ZkDid extends DidBase {
     return this.keyring.getPair(publicKey);
   }
 
-  private addDid(did: Did) {
+  addDid(did: Did, password?: string) {
     this.dids.set(did.id, did);
+    this.saveDid(did.id, password);
+  }
+
+  saveDid(didUrl: string, password?: string) {
+    const did = this.dids.get(didUrl as DidUrl);
+
+    assert(did, 'no did found');
+
+    Array.from(did.keyRelationship.values()).forEach(({ publicKey }) => {
+      this.keyring.addFromJson(did.getPair(publicKey).toJson(password));
+    });
+
+    const identifierPair = this.getIdentifierPair(didUrl);
+
+    assert(identifierPair, 'identifierPair not found');
+
+    this.keyring.addFromJson(identifierPair.toJson(password));
+
     this.emit('add');
   }
 }
