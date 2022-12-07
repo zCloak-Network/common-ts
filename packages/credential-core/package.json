@@ -14,17 +14,13 @@
   },
   "sideEffects": false,
   "type": "module",
-  "version": "0.4.0",
+  "version": "0.4.1-0",
   "main": "index.js",
   "dependencies": {
-    "@kiltprotocol/did": "^0.28.0",
-    "@kiltprotocol/sdk-js": "^0.28.0",
-    "@polkadot/api": "^9.9.4",
-    "@polkadot/keyring": "^10.1.7",
-    "@polkadot/util": "^10.1.7",
-    "@polkadot/util-crypto": "^10.1.7"
-  },
-  "devDependencies": {
-    "@kiltprotocol/types": "^0.28.0"
+    "@kiltprotocol/core": "^0.28.2",
+    "@kiltprotocol/types": "^0.28.2",
+    "@polkadot/util": "^10.1.12",
+    "@zcloak/crypto": "^0.6.0",
+    "@zcloak/vc": "^0.6.0"
   }
 }
