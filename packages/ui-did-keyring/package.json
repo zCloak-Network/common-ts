@@ -14,17 +14,17 @@
   },
   "sideEffects": false,
   "type": "module",
-  "version": "0.4.1-1",
+  "version": "0.4.1-2",
   "main": "index.js",
   "dependencies": {
     "@kiltprotocol/did": "^0.28.0",
     "@polkadot/keyring": "^10.1.7",
     "@polkadot/util": "^10.1.7",
     "@zcloak/did": "^0.6.0",
-    "@zcloak/did-keyring": "^0.4.1-1",
+    "@zcloak/did-keyring": "^0.4.1-2",
     "@zcloak/did-resolver": "^0.6.0",
     "@zcloak/keyring": "^0.6.0",
-    "@zcloak/ui-store": "^0.4.1-1"
+    "@zcloak/ui-store": "^0.4.1-2"
   },
   "devDependencies": {
     "@kiltprotocol/types": "^0.28.0"
