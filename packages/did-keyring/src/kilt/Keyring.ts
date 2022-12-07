@@ -10,7 +10,8 @@ import {
 } from '@kiltprotocol/types';
 import { Keyring as PolkadotKeyring } from '@polkadot/keyring';
 import { u8aEq } from '@polkadot/util';
-import { randomAsU8a } from '@polkadot/util-crypto';
+
+import { randomAsU8a } from '@zcloak/crypto';
 
 import { KiltKeystore } from './types';
 

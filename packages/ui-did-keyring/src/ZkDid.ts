@@ -30,9 +30,7 @@ export class ZkDid extends ZkDidSuper {
     });
     this.#store.all((key, val) => {
       if (zkDidRegex.test(key)) {
-        const document: DidDocument = JSON.parse(val as string);
-
-        const did = helpers.fromDidDocument(document, this.keyring);
+        const did = helpers.fromDidDocument(val as DidDocument, this.keyring);
 
         this.dids.set(did.id, did);
       }
