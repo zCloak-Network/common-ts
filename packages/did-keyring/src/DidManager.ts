@@ -22,6 +22,14 @@ export class DidManager extends DidBase<ZkidDidKeys$Json | KiltDidKeys$Json> {
     super();
     this.kilt = _kilt ?? new KiltDid();
     this.zk = _zk ?? new ZkDid();
+
+    const onAdd = () => this.emit('add');
+    const onRemove = () => this.emit('remove');
+
+    this.zk.on('add', () => onAdd);
+    this.zk.on('remove', () => onRemove);
+    this.kilt.on('add', () => onAdd);
+    this.kilt.on('remove', () => onRemove);
   }
 
   public override addDidFromMnemonic(

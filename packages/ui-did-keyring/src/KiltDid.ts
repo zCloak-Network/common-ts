@@ -55,7 +55,9 @@ export class KiltDid extends KiltDidSuper {
 
     this.#store.set(kiltDidKey(didDetails.uri), didDetails.uri);
     didDetails.getKeys().forEach((key) => {
-      this.#store.set(kiltPairKey(this.keyring.getPair(key.publicKey).address), key);
+      const pair = this.keyring.getPair(key.publicKey);
+
+      this.#store.set(kiltPairKey(pair.address), pair.toJson(password));
     });
 
     return didDetails;

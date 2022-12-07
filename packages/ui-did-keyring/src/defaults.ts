@@ -10,7 +10,7 @@ import { DidUrl } from '@zcloak/did-resolver/types';
 
 const KILT_PAIR_PREFIX = 'kilt:pair:';
 const KILT_DID_PREFIX = 'did:kilt';
-const ZK_PAIR_PREFIX = 'zk:pair:';
+const ZK_PAIR_PREFIX = 'zkid:pair:';
 const ZK_DID_PREFIX = 'did:zk:';
 
 function toHex(address: string): string {
