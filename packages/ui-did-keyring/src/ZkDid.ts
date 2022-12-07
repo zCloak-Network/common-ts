@@ -74,5 +74,7 @@ export class ZkDid extends ZkDidSuper {
     Array.from(did.keyRelationship.values()).forEach(({ publicKey }) => {
       this.#store.set(zkPairKey(publicKey), this.keyring.getPair(publicKey).toJson(password));
     });
+
+    this.#store.set(zkDidKey(did.id), did.getDocument());
   }
 }

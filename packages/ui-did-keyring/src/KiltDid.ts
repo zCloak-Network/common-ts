@@ -37,10 +37,10 @@ export class KiltDid extends KiltDidSuper {
     const didDetails = this.didDetails.get(didUrl);
 
     if (didDetails) {
-      this.#store.remove(kiltDidKey(didDetails.uri));
       didDetails.getKeys().forEach((key) => {
         this.#store.remove(kiltPairKey(this.keyring.getPair(key.publicKey).address));
       });
+      this.#store.remove(kiltDidKey(didDetails.uri));
     }
 
     super.remove(didUrl);
@@ -58,6 +58,8 @@ export class KiltDid extends KiltDidSuper {
 
       this.#store.set(kiltPairKey(pair.address), pair.toJson(password));
     });
+
+    this.#store.set(kiltDidKey(didDetails.uri), didDetails.uri);
 
     return didDetails;
   }
