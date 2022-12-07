@@ -1,15 +1,14 @@
 // Copyright 2021-2022 zcloak authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import type { LightDidDetails } from '@kiltprotocol/did';
 import type { DidUri } from '@kiltprotocol/types';
 import type { KeyringPair$Json } from '@polkadot/keyring/types';
+import type { Keyring } from '@zcloak/did-keyring/kilt/Keyring';
+import type { BaseStore } from '@zcloak/ui-store/BaseStore';
 
-import { LightDidDetails } from '@kiltprotocol/did';
-
-import { Keyring } from '@zcloak/did-keyring/kilt/Keyring';
 import { KiltDid as KiltDidSuper } from '@zcloak/did-keyring/kilt/KiltDid';
 import { BrowserStore } from '@zcloak/ui-store';
-import { BaseStore } from '@zcloak/ui-store/BaseStore';
 
 import { kiltDidKey, kiltDidRegex, kiltPairKey, kiltPairKeyRegex } from './defaults';
 

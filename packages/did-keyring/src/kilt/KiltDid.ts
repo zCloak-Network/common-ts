@@ -25,7 +25,7 @@ export class KiltDid extends DidBase<DidKeys$Json> {
    * @param password (optional)
    * @returns a [[LightDidDetails]] object
    */
-  public override addDidFromMnemonic(mnemonic: string, password: string): LightDidDetails {
+  public override addDidFromMnemonic(mnemonic: string, password: string): DidUri {
     const pairs = [
       this.keyring.addFromUri(mnemonic, {}, 'sr25519'),
       this.keyring.addFromUri(mnemonic, {}, 'ed25519')
@@ -45,7 +45,7 @@ export class KiltDid extends DidBase<DidKeys$Json> {
 
     this.addDid(didDetails, password);
 
-    return didDetails;
+    return didDetails.uri;
   }
 
   public override addDidFromJson(json: DidKeys$Json, newPass: string, oldPass: string): DidUri {

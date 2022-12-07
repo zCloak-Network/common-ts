@@ -36,11 +36,11 @@ export class DidManager extends DidBase<ZkidDidKeys$Json | KiltDidKeys$Json> {
     mnemonic: string,
     password: string,
     type: 'zk' | 'kilt' = 'zk'
-  ): void {
+  ): string {
     if (type === 'zk') {
-      this.zk.addDidFromMnemonic(mnemonic, password);
+      return this.zk.addDidFromMnemonic(mnemonic, password);
     } else {
-      this.kilt.addDidFromMnemonic(mnemonic, password);
+      return this.kilt.addDidFromMnemonic(mnemonic, password);
     }
   }
 

@@ -2231,7 +2231,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@kiltprotocol/did@npm:0.28.3, @kiltprotocol/did@npm:^0.28.0":
+"@kiltprotocol/did@npm:0.28.3, @kiltprotocol/did@npm:^0.28.2":
   version: 0.28.3
   resolution: "@kiltprotocol/did@npm:0.28.3"
   dependencies:
@@ -2250,7 +2250,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@kiltprotocol/types@npm:0.28.3, @kiltprotocol/types@npm:^0.28.0, @kiltprotocol/types@npm:^0.28.2":
+"@kiltprotocol/types@npm:0.28.3, @kiltprotocol/types@npm:^0.28.2":
   version: 0.28.3
   resolution: "@kiltprotocol/types@npm:0.28.3"
   dependencies:
@@ -4471,8 +4471,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@zcloak/did-keyring@workspace:packages/did-keyring"
   dependencies:
-    "@kiltprotocol/did": ^0.28.0
-    "@kiltprotocol/types": ^0.28.0
+    "@kiltprotocol/did": ^0.28.2
+    "@kiltprotocol/types": ^0.28.2
     "@polkadot/keyring": ^10.1.7
     "@polkadot/util": ^10.1.7
     "@polkadot/util-crypto": ^10.1.7
@@ -4508,7 +4508,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@zcloak/extension-core@workspace:packages/extension-core"
   dependencies:
-    "@kiltprotocol/types": ^0.28.0
+    "@kiltprotocol/types": ^0.28.2
     eventemitter3: ^4.0.7
   languageName: unknown
   linkType: soft
@@ -4563,8 +4563,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@zcloak/ui-did-keyring@workspace:packages/ui-did-keyring"
   dependencies:
-    "@kiltprotocol/did": ^0.28.0
-    "@kiltprotocol/types": ^0.28.0
+    "@kiltprotocol/did": ^0.28.2
+    "@kiltprotocol/types": ^0.28.2
     "@polkadot/keyring": ^10.1.7
     "@polkadot/util": ^10.1.7
     "@zcloak/did": ^0.6.0

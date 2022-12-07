@@ -23,10 +23,12 @@ export class ZkDid extends DidBase<DidKeys$Json> {
     this.keyring = _keyring ?? new Keyring();
   }
 
-  public override addDidFromMnemonic(mnemonic: string, password: string): void {
+  public override addDidFromMnemonic(mnemonic: string, password: string): DidUrl {
     const did = helpers.createEcdsaFromMnemonic(mnemonic, this.keyring);
 
     this.addDid(did, password);
+
+    return did.id;
   }
 
   public override addDidFromJson(json: DidKeys$Json, newPass: string, oldPass: string): DidUrl {

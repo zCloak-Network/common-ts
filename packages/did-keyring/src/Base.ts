@@ -4,7 +4,7 @@
 import { Events } from './Events';
 
 export abstract class DidBase<KeyJson extends Record<string, any>> extends Events {
-  abstract addDidFromMnemonic(mnemonic: string, password: string, type?: 'zk' | 'kilt'): void;
+  abstract addDidFromMnemonic(mnemonic: string, password: string, type?: 'zk' | 'kilt'): string;
   abstract addDidFromJson(jsonKeys: KeyJson, newPass: string, oldPass: string): string;
   abstract backupDid(didUrl: string, password: string): KeyJson;
   abstract remove(didUrl: string): void;

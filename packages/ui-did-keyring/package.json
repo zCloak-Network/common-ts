@@ -17,7 +17,6 @@
   "version": "0.4.1-2",
   "main": "index.js",
   "dependencies": {
-    "@kiltprotocol/did": "^0.28.0",
     "@polkadot/keyring": "^10.1.7",
     "@polkadot/util": "^10.1.7",
     "@zcloak/did": "^0.6.0",
@@ -27,6 +26,7 @@
     "@zcloak/ui-store": "^0.4.1-2"
   },
   "devDependencies": {
-    "@kiltprotocol/types": "^0.28.0"
+    "@kiltprotocol/did": "^0.28.2",
+    "@kiltprotocol/types": "^0.28.2"
   }
 }

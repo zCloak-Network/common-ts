@@ -1,14 +1,14 @@
 // Copyright 2021-2022 zcloak authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import type { DidDocument, DidUrl } from '@zcloak/did-resolver/types';
 import type { Keyring } from '@zcloak/keyring';
 import type { KeyringPair$Json } from '@zcloak/keyring/types';
+import type { BaseStore } from '@zcloak/ui-store/BaseStore';
 
 import { Did, helpers, keys } from '@zcloak/did';
 import { ZkDid as ZkDidSuper } from '@zcloak/did-keyring/zk/ZkDid';
-import { DidDocument, DidUrl } from '@zcloak/did-resolver/types';
 import { BrowserStore } from '@zcloak/ui-store';
-import { BaseStore } from '@zcloak/ui-store/BaseStore';
 
 import { zkDidKey, zkDidRegex, zkPairKey, zkPairKeyRegex } from './defaults';
 
