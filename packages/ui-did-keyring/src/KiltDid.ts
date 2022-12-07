@@ -3,10 +3,9 @@
 
 import type { DidUri } from '@kiltprotocol/types';
 import type { KeyringPair$Json } from '@polkadot/keyring/types';
-import type { KiltDidKeys$Json } from '@zcloak/did-keyring/types';
+import type { DidKeys$Json } from '@zcloak/did-keyring/kilt/types';
 
-import { LightDidDetails, Utils } from '@kiltprotocol/did';
-import { assert } from '@polkadot/util';
+import { LightDidDetails } from '@kiltprotocol/did';
 
 import { Keyring } from '@zcloak/did-keyring/kilt/Keyring';
 import { KiltDid as KiltDidSuper } from '@zcloak/did-keyring/kilt/KiltDid';
@@ -15,7 +14,7 @@ import { BaseStore } from '@zcloak/ui-store/BaseStore';
 
 import { kiltDidKey, kiltDidRegex, kiltPairKey, kiltPairKeyRegex } from './defaults';
 
-export class KisltDid extends KiltDidSuper {
+export class KiltDid extends KiltDidSuper {
   #store: BaseStore;
 
   constructor(_keyring?: Keyring, store?: BaseStore) {
@@ -27,17 +26,17 @@ export class KisltDid extends KiltDidSuper {
     this.#store.all((key, value) => {
       if (kiltPairKeyRegex.test(key)) {
         this.keyring.addFromJson(value as KeyringPair$Json);
-      } else if (kiltDidRegex.test(key)) {
-        this.didUris.add(value as DidUri);
+      }
+    });
+    this.#store.all((key, value) => {
+      if (kiltDidRegex.test(key)) {
+        this.addDid(value as DidUri);
       }
     });
   }
 
-  public override backupDid(
-    didUriOrDetails: DidUri | LightDidDetails,
-    password: string
-  ): KiltDidKeys$Json {
-    const json = super.backupDid(didUriOrDetails, password);
+  public override backupDid(didUrl: DidUri, password: string): DidKeys$Json {
+    const json = super.backupDid(didUrl, password);
 
     this.#store.set(kiltDidKey(json.didUri), json.didUri);
     json.keys.forEach((key) => {
@@ -47,23 +46,30 @@ export class KisltDid extends KiltDidSuper {
     return json;
   }
 
-  public override removeDid(didUriOrDetails: DidUri | LightDidDetails): void {
-    let didDetails: LightDidDetails;
+  public override remove(didUrl: DidUri): void {
+    const didDetails = this.didDetails.get(didUrl);
 
-    if (didUriOrDetails instanceof LightDidDetails) {
-      didDetails = didUriOrDetails;
-    } else {
-      assert(Utils.validateKiltDidUri(didUriOrDetails), 'Not did uri');
-      assert(Utils.parseDidUri(didUriOrDetails).type === 'light', 'only light did uri backup');
-
-      didDetails = LightDidDetails.fromUri(didUriOrDetails);
+    if (didDetails) {
+      this.#store.remove(kiltDidKey(didDetails.uri));
+      didDetails.getKeys().forEach((key) => {
+        this.#store.remove(kiltPairKey(this.keyring.getPair(key.publicKey).address));
+      });
     }
 
-    this.#store.remove(kiltDidKey(didDetails.uri));
+    super.remove(didUrl);
+  }
+
+  protected override addDid(
+    didUriOrDetails: DidUri | LightDidDetails,
+    password?: string | undefined
+  ): LightDidDetails {
+    const didDetails = super.addDid(didUriOrDetails, password);
+
+    this.#store.set(kiltDidKey(didDetails.uri), didDetails.uri);
     didDetails.getKeys().forEach((key) => {
-      this.#store.remove(kiltPairKey(this.keyring.getPair(key.publicKey).address));
+      this.#store.set(kiltPairKey(this.keyring.getPair(key.publicKey).address), key);
     });
 
-    super.removeDid(didUriOrDetails);
+    return didDetails;
   }
 }

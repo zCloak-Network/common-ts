@@ -1,13 +1,12 @@
 // Copyright 2021-2022 zcloak authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import type { Keyring } from '@zcloak/keyring';
 import type { KeyringPair$Json } from '@zcloak/keyring/types';
 
-import { assert } from '@polkadot/util';
-
-import { helpers } from '@zcloak/did';
+import { Did, helpers, keys } from '@zcloak/did';
 import { ZkDid as ZkDidSuper } from '@zcloak/did-keyring/zk/ZkDid';
-import { DidUrl } from '@zcloak/did-resolver/types';
+import { DidDocument, DidUrl } from '@zcloak/did-resolver/types';
 import { BrowserStore } from '@zcloak/ui-store';
 import { BaseStore } from '@zcloak/ui-store/BaseStore';
 
@@ -15,8 +14,8 @@ import { zkDidKey, zkDidRegex, zkPairKey, zkPairKeyRegex } from './defaults';
 
 export class ZkDid extends ZkDidSuper {
   #store: BaseStore;
-  constructor(store?: BaseStore) {
-    super();
+  constructor(_keyring?: Keyring, store?: BaseStore) {
+    super(_keyring);
     this.#store = store ?? new BrowserStore();
   }
 
@@ -26,55 +25,55 @@ export class ZkDid extends ZkDidSuper {
         const json = val as KeyringPair$Json;
 
         this.keyring.addFromJson(json);
-      } else if (zkDidRegex.test(key)) {
-        const did: any = helpers.fromDidDocument(JSON.parse(val as string), this.keyring);
+      }
+    });
+    this.#store.all((key, val) => {
+      if (zkDidRegex.test(key)) {
+        const document: DidDocument = JSON.parse(val as string);
+
+        const did = helpers.fromDidDocument(document, this.keyring);
 
         this.dids.set(did.id, did);
       }
     });
   }
 
-  override saveDid(didUrl: string, password?: string): void {
-    const did = this.dids.get(didUrl as DidUrl);
+  public override remove(didUrl: DidUrl): void {
+    const did = this.dids.get(didUrl);
 
-    assert(did, 'did not found');
+    if (did) {
+      // remove identifier key
+      const identifierPair = keys.getEcdsaIdentifierPair(this.keyring, did);
 
-    this.#store.set(did.id, JSON.stringify(did.getDocument()));
+      if (identifierPair) {
+        this.keyring.removePair(identifierPair.publicKey);
+        this.#store.remove(zkPairKey(identifierPair.publicKey));
+      }
 
-    const identifierPair = this.getIdentifierPair(did.id);
-
-    if (password && identifierPair) {
+      // remove keys
       Array.from(did.keyRelationship.values()).forEach(({ publicKey }) => {
-        const pair = did.getPair(publicKey);
-
-        this.#store.set(zkPairKey(publicKey), pair.toJson(password));
+        this.keyring.removePair(publicKey);
+        this.#store.remove(zkPairKey(publicKey));
       });
-
-      this.#store.set(zkPairKey(identifierPair.publicKey), identifierPair.toJson(password));
-
-      super.saveDid(didUrl, password);
+      this.#store.remove(zkDidKey(did.id));
     }
-  }
-
-  override remove(didUrl: string): void {
-    const did = this.dids.get(didUrl as DidUrl);
-
-    assert(did, 'did not found');
-
-    const identifierPair = this.getIdentifierPair(did.id);
-
-    if (identifierPair) {
-      Array.from(did.keyRelationship.values()).forEach(({ publicKey }) => {
-        const pair = did.getPair(publicKey);
-
-        this.#store.remove(zkPairKey(pair.publicKey));
-      });
-
-      this.#store.remove(zkPairKey(identifierPair.publicKey));
-    }
-
-    this.#store.remove(zkDidKey(didUrl as DidUrl));
 
     super.remove(didUrl);
+  }
+
+  protected override addDid(did: Did, password?: string | undefined): void {
+    super.addDid(did, password);
+
+    // save identifier
+    const identifierPair = keys.getEcdsaIdentifierPair(this.keyring, did);
+
+    if (identifierPair) {
+      this.#store.set(zkPairKey(identifierPair.publicKey), identifierPair.toJson(password));
+    }
+
+    // save key
+    Array.from(did.keyRelationship.values()).forEach(({ publicKey }) => {
+      this.#store.set(zkPairKey(publicKey), this.keyring.getPair(publicKey).toJson(password));
+    });
   }
 }

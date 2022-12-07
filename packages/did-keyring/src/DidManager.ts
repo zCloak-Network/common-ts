@@ -1,77 +1,98 @@
 // Copyright 2021-2022 zcloak authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
+import type { DidUri } from '@kiltprotocol/types';
+import type { DidKeys$Json as ZkidDidKeys$Json } from '@zcloak/did/keys/types';
+import type { DidKeys$Json as KiltDidKeys$Json } from './kilt/types';
+
+import { Utils } from '@kiltprotocol/did';
+
+import { isDidUrl } from '@zcloak/did/utils';
+
 import { KiltDid } from './kilt/KiltDid';
 import { ZkDid } from './zk/ZkDid';
 import { DidBase } from './Base';
 import { isKiltDidKeys$Json, isZkDidKeys$Json } from './utils';
 
-type DidTypes = 'kilt' | 'zk';
-export class DidManager extends DidBase {
+export class DidManager extends DidBase<ZkidDidKeys$Json | KiltDidKeys$Json> {
   public kilt: KiltDid;
   public zk: ZkDid;
-  public default: DidBase;
 
   constructor(_zk?: ZkDid, _kilt?: KiltDid) {
     super();
     this.kilt = _kilt ?? new KiltDid();
     this.zk = _zk ?? new ZkDid();
-    this.default = this.zk;
   }
 
-  addDidFromMnemonic(mnemonic: string, password: string): void {
-    this.default.addDidFromMnemonic(mnemonic, password);
-  }
-
-  addDidFromJson(jsonKeys: string, newPass: string, oldPass: string): string {
-    let json: any;
-
-    if (typeof jsonKeys === 'string') {
-      json = JSON.parse(jsonKeys);
+  public override addDidFromMnemonic(
+    mnemonic: string,
+    password: string,
+    type: 'zk' | 'kilt' = 'zk'
+  ): void {
+    if (type === 'zk') {
+      this.zk.addDidFromMnemonic(mnemonic, password);
     } else {
-      json = jsonKeys;
+      this.kilt.addDidFromMnemonic(mnemonic, password);
+    }
+  }
+
+  public override addDidFromJson(
+    json: ZkidDidKeys$Json | KiltDidKeys$Json,
+    newPass: string,
+    oldPass: string
+  ): string {
+    if (isZkDidKeys$Json(json)) {
+      return this.zk.addDidFromJson(json, newPass, oldPass);
     }
 
-    const isZk = isZkDidKeys$Json(json);
-    const isKilt = isKiltDidKeys$Json(json);
-
-    if (isZk) {
-      return this.zk.addDidFromJson(jsonKeys, newPass, oldPass);
-    }
-
-    if (isKilt) {
-      return this.kilt.addDidFromJson(jsonKeys, newPass, oldPass);
+    if (isKiltDidKeys$Json(json)) {
+      return this.kilt.addDidFromJson(json, newPass, oldPass);
     }
 
     throw new Error('Not a valid Json key file.');
   }
 
-  remove(didUrl: string): void {
-    this.default.remove(didUrl);
-  }
-
-  getAll(): string[] {
-    return this.zk.getAll().concat(this.kilt.getAll());
-  }
-
-  lock(didUrl: string): void {
-    this.default.lock(didUrl);
-  }
-
-  unlock(didUrl: string, password: string): void {
-    this.default.unlock(didUrl, password);
-  }
-
-  changeDefaultDid(type: DidTypes) {
-    switch (type) {
-      case 'kilt':
-        this.default = this.kilt;
-        break;
-      case 'zk':
-        this.default = this.zk;
-        break;
-      default:
-        throw new Error('Unsupported did type.');
+  public override backupDid(didUrl: string, password: string): ZkidDidKeys$Json | KiltDidKeys$Json {
+    if (isDidUrl(didUrl)) {
+      return this.zk.backupDid(didUrl, password);
+    } else if (Utils.isUri(didUrl)) {
+      return this.kilt.backupDid(didUrl as DidUri, password);
     }
+
+    throw new Error(`Unknown didUrl: ${didUrl}`);
+  }
+
+  public override remove(didUrl: string): void {
+    if (isDidUrl(didUrl)) {
+      return this.zk.remove(didUrl);
+    } else if (Utils.isUri(didUrl)) {
+      return this.kilt.remove(didUrl as DidUri);
+    }
+
+    throw new Error(`Unknown didUrl: ${didUrl}`);
+  }
+
+  public override getAll(): string[] {
+    return (this.zk.getAll() as string[]).concat(this.kilt.getAll());
+  }
+
+  public override lock(didUrl: string): void {
+    if (isDidUrl(didUrl)) {
+      return this.zk.lock(didUrl);
+    } else if (Utils.isUri(didUrl)) {
+      return this.kilt.lock(didUrl as DidUri);
+    }
+
+    throw new Error(`Unknown didUrl: ${didUrl}`);
+  }
+
+  public override unlock(didUrl: string, password: string): void {
+    if (isDidUrl(didUrl)) {
+      return this.zk.unlock(didUrl, password);
+    } else if (Utils.isUri(didUrl)) {
+      return this.kilt.unlock(didUrl as DidUri, password);
+    }
+
+    throw new Error(`Unknown didUrl: ${didUrl}`);
   }
 }

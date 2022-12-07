@@ -8,9 +8,7 @@ import type {
   SigningAlgorithms
 } from '@kiltprotocol/types';
 import type { KeyringPair$Json as KiltKeyringPair$Json } from '@polkadot/keyring/types';
-import type { KeyringPair$Json as ZkKeyringPair$Json } from '@zcloak/keyring/types';
-
-import { DidUrl } from '@zcloak/did-resolver/types';
+import type { DidKeys$Json } from '@zcloak/did/keys/types';
 
 export type KiltKeystore = Keystore<SigningAlgorithms, EncryptionAlgorithms>;
 
@@ -19,18 +17,6 @@ export type KiltDidKeys$Json = {
   keys: KiltKeyringPair$Json[];
 };
 
-type DidKeys$JsonVersion = '1';
-
-export interface ZkDidKeys$Json {
-  didUrl: DidUrl;
-  version: DidKeys$JsonVersion;
-  identifierKey: ZkKeyringPair$Json;
-  keys: ZkKeyringPair$Json[];
-  authentication: DidUrl[];
-  assertionMethod: DidUrl[];
-  keyAgreement: DidUrl[];
-  capabilityInvocation: DidUrl[];
-  capabilityDelegation: DidUrl[];
-}
+export type ZkDidKeys$Json = DidKeys$Json;
 
 export type DidEvents = 'add' | 'remove';
