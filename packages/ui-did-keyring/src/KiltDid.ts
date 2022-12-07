@@ -3,7 +3,6 @@
 
 import type { DidUri } from '@kiltprotocol/types';
 import type { KeyringPair$Json } from '@polkadot/keyring/types';
-import type { DidKeys$Json } from '@zcloak/did-keyring/kilt/types';
 
 import { LightDidDetails } from '@kiltprotocol/did';
 
@@ -33,17 +32,6 @@ export class KiltDid extends KiltDidSuper {
         this.addDid(value as DidUri);
       }
     });
-  }
-
-  public override backupDid(didUrl: DidUri, password: string): DidKeys$Json {
-    const json = super.backupDid(didUrl, password);
-
-    this.#store.set(kiltDidKey(json.didUri), json.didUri);
-    json.keys.forEach((key) => {
-      this.#store.set(kiltPairKey(key.address), key);
-    });
-
-    return json;
   }
 
   public override remove(didUrl: DidUri): void {

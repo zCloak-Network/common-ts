@@ -22,7 +22,7 @@ export class KiltDid extends DidBase<DidKeys$Json> {
   /**
    * @description add a new did from mnemonic
    * @param mnemonic 12 words mnemonic
-   * @param password (optional) if passed password, will call `backupDid` method
+   * @param password (optional)
    * @returns a [[LightDidDetails]] object
    */
   public override addDidFromMnemonic(mnemonic: string, password: string): LightDidDetails {

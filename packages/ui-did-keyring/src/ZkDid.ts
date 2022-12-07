@@ -14,6 +14,7 @@ import { zkDidKey, zkDidRegex, zkPairKey, zkPairKeyRegex } from './defaults';
 
 export class ZkDid extends ZkDidSuper {
   #store: BaseStore;
+
   constructor(_keyring?: Keyring, store?: BaseStore) {
     super(_keyring);
     this.#store = store ?? new BrowserStore();
