@@ -1,5 +1,20 @@
 # CHANGELOG
 
+## [0.5.0](https://github.com/zCloak-Network/common-ts/compare/v0.4.0...v0.5.0) (2022-12-07)
+
+
+### Bug Fixes
+
+* **ui-did-keyring:** kilt keypair save wrong ([65d3708](https://github.com/zCloak-Network/common-ts/commit/65d3708d5b49922dcc27190e18f86d2d50957b04))
+
+
+### Features
+
+* add encrypt and decrypt for credential ([#9](https://github.com/zCloak-Network/common-ts/issues/9)) ([1492c09](https://github.com/zCloak-Network/common-ts/commit/1492c09dc21fea7cf859ca75888b6bbff74e5d6d))
+* **did-keyring, ui-did-keyring:** add zkid did keyring ([11beb2b](https://github.com/zCloak-Network/common-ts/commit/11beb2bd6982fd813d14ab162a6431a4c6d247d6))
+* **did-keyring:** return didurl when call addDidFromMnemonic method. ([6b601ce](https://github.com/zCloak-Network/common-ts/commit/6b601ceb4b13753a61a963427b90c5a652d5a4c8))
+
+
 # [0.4.0](https://github.com/zCloak-Network/common-ts/compare/v0.3.1...v0.4.0) (2022-12-02)
 
 
