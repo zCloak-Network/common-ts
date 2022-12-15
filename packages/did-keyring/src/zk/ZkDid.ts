@@ -58,7 +58,7 @@ export class ZkDid extends DidBase<DidKeys$Json> {
     assert(did, 'did not found');
 
     Array.from(did.keyRelationship.values()).forEach(({ publicKey }) => {
-      const pair = did.getPair(publicKey);
+      const pair = this.keyring.getPair(publicKey);
 
       pair.unlock(password);
     });
@@ -70,7 +70,7 @@ export class ZkDid extends DidBase<DidKeys$Json> {
     assert(did, 'did not found');
 
     Array.from(did.keyRelationship.values()).forEach(({ publicKey }) => {
-      const pair = did.getPair(publicKey);
+      const pair = this.keyring.getPair(publicKey);
 
       pair.lock();
     });
