@@ -33,7 +33,7 @@
     "@types/jest": "^29.2.3",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
-    "@zcloak/dev": "^0.10.5",
+    "@zcloak/dev": "^0.12.0",
     "concurrently": "^7.6.0",
     "devtron": "^1.4.0",
     "humps": "^2.0.1",

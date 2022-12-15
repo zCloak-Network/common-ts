@@ -7,7 +7,7 @@ import { Web3Query } from './Web3Query';
 
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-describe('multicall', (): void => {
+describe.skip('multicall', (): void => {
   let provider: JsonRpcProvider;
   let web3Query: Web3Query;
 
