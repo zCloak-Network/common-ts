@@ -46,7 +46,7 @@ export class KiltDid extends KiltDidSuper {
     super.remove(didUrl);
   }
 
-  protected override addDid(
+  public override addDid(
     didUriOrDetails: DidUri | LightDidDetails,
     password?: string | undefined
   ): LightDidDetails {

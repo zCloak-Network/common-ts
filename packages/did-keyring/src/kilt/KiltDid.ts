@@ -124,8 +124,7 @@ export class KiltDid extends DidBase<DidKeys$Json> {
     this.emit('remove');
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected addDid(didUriOrDetails: DidUri | LightDidDetails, password?: string): LightDidDetails {
+  public addDid(didUriOrDetails: DidUri | LightDidDetails, password?: string): LightDidDetails {
     let didDetails: LightDidDetails;
 
     if (didUriOrDetails instanceof LightDidDetails) {

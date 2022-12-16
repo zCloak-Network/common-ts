@@ -89,8 +89,7 @@ export class ZkDid extends DidBase<DidKeys$Json> {
     return this.keyring.getPair(publicKey);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected addDid(did: Did, password?: string) {
+  public addDid(did: Did, password?: string) {
     this.dids.set(did.id, did);
 
     this.emit('add');

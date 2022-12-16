@@ -60,7 +60,7 @@ export class ZkDid extends ZkDidSuper {
     super.remove(didUrl);
   }
 
-  protected override addDid(did: Did, password?: string | undefined): void {
+  public override addDid(did: Did, password?: string | undefined): void {
     super.addDid(did, password);
 
     // save identifier
