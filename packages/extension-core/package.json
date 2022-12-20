@@ -16,7 +16,7 @@
   "type": "module",
   "version": "0.5.2-1",
   "dependencies": {
-    "eventemitter3": "^4.0.7"
+    "eventemitter3": "^5.0.0"
   },
   "devDependencies": {
     "@kiltprotocol/types": "^0.28.2"

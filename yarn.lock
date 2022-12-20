@@ -4286,7 +4286,7 @@ __metadata:
     "@ethersproject/providers": ^5.7.2
     "@ethersproject/solidity": ^5.7.0
     "@zcloak/web3-query": ^0.5.2-1
-    eventemitter3: ^4.0.7
+    eventemitter3: ^5.0.0
   languageName: unknown
   linkType: soft
 
@@ -4448,7 +4448,7 @@ __metadata:
     "@zcloak/did": ^0.6.2-1
     "@zcloak/did-resolver": ^0.6.2-1
     "@zcloak/keyring": ^0.6.2-1
-    eventemitter3: ^4.0.7
+    eventemitter3: ^5.0.0
   languageName: unknown
   linkType: soft
 
@@ -4478,7 +4478,7 @@ __metadata:
   resolution: "@zcloak/extension-core@workspace:packages/extension-core"
   dependencies:
     "@kiltprotocol/types": ^0.28.2
-    eventemitter3: ^4.0.7
+    eventemitter3: ^5.0.0
   languageName: unknown
   linkType: soft
 
@@ -4513,7 +4513,7 @@ __metadata:
     "@metamask/detect-provider": ^1.2.0
     "@walletconnect/ethereum-provider": ^1.7.8
     "@walletconnect/types": ^1.7.8
-    eventemitter3: ^4.0.7
+    eventemitter3: ^5.0.0
     react: ^18.1.0
     react-dom: ^18.1.0
   peerDependencies:
@@ -8498,6 +8498,13 @@ __metadata:
   version: 4.0.7
   resolution: "eventemitter3@npm:4.0.7"
   checksum: 1875311c42fcfe9c707b2712c32664a245629b42bb0a5a84439762dd0fd637fc54d078155ea83c2af9e0323c9ac13687e03cfba79b03af9f40c89b4960099374
+  languageName: node
+  linkType: hard
+
+"eventemitter3@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "eventemitter3@npm:5.0.0"
+  checksum: b974bafbab860e0a5bbb21add4c4e82f9d5691c583c03f2e4c5d44a2d6c4556d79223621bdcfc6c8e14366a4af9df6b5ea9d6caf65fbffc80b66f3e1dceacbc9
   languageName: node
   linkType: hard
 

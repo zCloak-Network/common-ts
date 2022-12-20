@@ -18,5 +18,3 @@ export type KiltDidKeys$Json = {
 };
 
 export type ZkDidKeys$Json = DidKeys$Json;
-
-export type DidEvents = 'add' | 'remove';

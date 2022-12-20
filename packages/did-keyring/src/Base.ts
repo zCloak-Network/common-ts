@@ -1,9 +1,9 @@
 // Copyright 2021-2022 zcloak authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Events } from './Events';
+import { EventEmitter } from 'eventemitter3';
 
-export abstract class DidBase<KeyJson extends Record<string, any>> extends Events {
+export abstract class DidBase<KeyJson extends Record<string, any>> extends EventEmitter {
   abstract addDidFromMnemonic(mnemonic: string, password: string, type?: 'zk' | 'kilt'): string;
   abstract addDidFromJson(jsonKeys: KeyJson, newPass: string, oldPass: string): string;
   abstract backupDid(didUrl: string, password: string): KeyJson;
