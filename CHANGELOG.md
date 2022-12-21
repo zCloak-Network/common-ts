@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## [0.6.0](https://github.com/zCloak-Network/common-ts/compare/v0.5.1...v0.6.0) (2022-12-21)
+
+
+### Features
+
+* addDid to public method ([7682640](https://github.com/zCloak-Network/common-ts/commit/768264060adc208cc5c9a3b9426fdea09dc7bac7))
+* upgrade eventemitter3 and use any events type ([1a8226e](https://github.com/zCloak-Network/common-ts/commit/1a8226e456cce69d8e40953bfb0e76e3d7904aa2))
+* upgrade sdk and fix error. ([6a50e19](https://github.com/zCloak-Network/common-ts/commit/6a50e190861f954cee00262164ad523562c09cf2))
+
+
 ## [0.5.1](https://github.com/zCloak-Network/common-ts/compare/v0.5.0...v0.5.1) (2022-12-07)
 
 
