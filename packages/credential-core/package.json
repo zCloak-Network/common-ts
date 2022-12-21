@@ -20,11 +20,11 @@
     "@kiltprotocol/core": "^0.28.2",
     "@kiltprotocol/types": "^0.28.2",
     "@polkadot/util": "^10.2.1",
-    "@zcloak/crypto": "^0.6.2-1",
-    "@zcloak/vc": "^0.6.2-1"
+    "@zcloak/crypto": "^0.7.0",
+    "@zcloak/vc": "^0.7.0"
   },
   "devDependencies": {
-    "@zcloak/wasm": "^0.6.2-1",
-    "@zcloak/wasm-asm": "^0.6.2-1"
+    "@zcloak/wasm": "^0.7.0",
+    "@zcloak/wasm-asm": "^0.7.0"
   }
 }
