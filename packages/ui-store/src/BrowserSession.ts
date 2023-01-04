@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import storage from 'store/storages/sessionStorage';
+
 import { BaseStore } from './BaseStore';
 
 export class BrowserStore extends BaseStore {
