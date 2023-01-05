@@ -1,7 +1,7 @@
 // Copyright 2021-2022 zcloak authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { LocalStorage } from './store/localStorage';
+import { LocalStorage } from './store/LocalStorage';
 import { BaseStore } from './BaseStore';
 
 export class BrowserStore extends BaseStore {
