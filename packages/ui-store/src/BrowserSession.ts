@@ -5,7 +5,7 @@ import storage from 'store/storages/sessionStorage';
 
 import { BaseStore } from './BaseStore';
 
-export class BrowserStore extends BaseStore {
+export class BrowserSession extends BaseStore {
   public all(fn: (key: string, value: unknown) => void): void {
     storage.each((value: unknown, key: string): void => {
       fn(key, value);
