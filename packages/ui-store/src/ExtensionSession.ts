@@ -23,10 +23,12 @@ export class ExtensionSession extends BaseStore {
   public remove(key: string, fn?: () => void) {
     session.remove(key);
     fn && fn();
+    this.emit('store_changed', key);
   }
 
   public set(key: string, value: unknown, fn?: () => void) {
     session.set({ [key]: value });
     fn && fn();
+    this.emit('store_changed', key, value);
   }
 }

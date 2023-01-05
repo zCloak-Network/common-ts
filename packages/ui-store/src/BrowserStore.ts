@@ -1,28 +1,36 @@
 // Copyright 2021-2022 zcloak authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import store from 'store';
-
+import { LocalStorage } from './store/localStorage';
 import { BaseStore } from './BaseStore';
 
 export class BrowserStore extends BaseStore {
+  #store: LocalStorage;
+
+  constructor() {
+    super();
+    this.#store = new LocalStorage();
+  }
+
   public all(fn: (key: string, value: unknown) => void): void {
-    store.each((value: unknown, key: string): void => {
+    this.#store.each((key: string, value: unknown): void => {
       fn(key, value);
     });
   }
 
   public get(key: string, fn: (value: unknown) => void): void {
-    fn(store.get(key) as unknown);
+    fn(this.#store.get(key) as unknown);
   }
 
   public remove(key: string, fn?: () => void): void {
-    store.remove(key);
+    this.#store.remove(key);
     fn && fn();
+    this.emit('store_changed', key);
   }
 
   public set(key: string, value: unknown, fn?: () => void): void {
-    store.set(key, value);
+    this.#store.set(key, value);
     fn && fn();
+    this.emit('store_changed', key, value);
   }
 }

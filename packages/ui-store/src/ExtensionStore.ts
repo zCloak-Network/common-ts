@@ -23,10 +23,12 @@ export class ExtensionStore extends BaseStore {
   public remove(key: string, fn?: () => void) {
     storage.remove(key);
     fn && fn();
+    this.emit('store_changed', key);
   }
 
   public set(key: string, value: unknown, fn?: () => void) {
     storage.set({ [key]: value });
     fn && fn();
+    this.emit('store_changed', key, value);
   }
 }
