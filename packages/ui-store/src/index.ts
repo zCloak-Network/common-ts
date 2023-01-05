@@ -4,3 +4,5 @@
 export * from './BaseStore';
 export * from './BrowserStore';
 export * from './ExtensionStore';
+export * from './BrowserSession';
+export * from './ExtensionSession';
