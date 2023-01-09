@@ -10,6 +10,10 @@ export class BrowserStore extends BaseStore {
   constructor() {
     super();
     this.#store = new LocalStorage();
+
+    window.addEventListener('storage', (event) => {
+      event.key && this.emit('store_changed', event.key, event.newValue);
+    });
   }
 
   public all(fn: (key: string, value: unknown) => void): void {
