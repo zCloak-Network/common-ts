@@ -1,28 +1,36 @@
 // Copyright 2021-2022 zcloak authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import storage from 'store/storages/sessionStorage';
-
+import { SessionStorage } from './store/SessionStorage';
 import { BaseStore } from './BaseStore';
 
 export class BrowserSession extends BaseStore {
+  #session: SessionStorage;
+
+  constructor() {
+    super();
+    this.#session = new SessionStorage();
+  }
+
   public all(fn: (key: string, value: unknown) => void): void {
-    storage.each((value: unknown, key: string): void => {
+    this.#session.each((key: string, value: unknown): void => {
       fn(key, value);
     });
   }
 
   public get(key: string, fn: (value: unknown) => void): void {
-    fn(storage.read(key) as unknown);
+    fn(this.#session.get(key) as unknown);
   }
 
   public remove(key: string, fn?: () => void): void {
-    storage.remove(key);
+    this.#session.remove(key);
     fn && fn();
+    this.emit('store_changed', key);
   }
 
   public set(key: string, value: unknown, fn?: () => void): void {
-    storage.write(key, value as string);
+    this.#session.set(key, value as string);
     fn && fn();
+    this.emit('store_changed', key, value);
   }
 }

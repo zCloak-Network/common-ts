@@ -17,10 +17,9 @@
   "version": "0.6.1-1",
   "main": "index.js",
   "dependencies": {
-    "store": "^2.0.12"
+    "eventemitter3": "^5.0.0"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.203",
-    "@types/store": "^2.0.2"
+    "@types/chrome": "^0.0.203"
   }
 }
