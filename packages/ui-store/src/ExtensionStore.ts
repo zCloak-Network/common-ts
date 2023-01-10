@@ -33,12 +33,10 @@ export class ExtensionStore extends BaseStore {
   }
 
   public remove(key: string, fn?: () => void) {
-    storage.remove(key);
-    fn && fn();
+    storage.remove(key, fn);
   }
 
   public set(key: string, value: unknown, fn?: () => void) {
-    storage.set({ [key]: value });
-    fn && fn();
+    storage.set({ [key]: value }, fn);
   }
 }
