@@ -32,11 +32,11 @@ export class ExtensionStore extends BaseStore {
     });
   }
 
-  public async remove(key: string) {
-    await storage.remove(key);
+  public remove(key: string, fn?: () => void) {
+    storage.remove(key, fn);
   }
 
-  public async set(key: string, value: unknown) {
-    await storage.set({ [key]: value });
+  public set(key: string, value: unknown, fn?: () => void) {
+    storage.set({ [key]: value }, fn);
   }
 }
