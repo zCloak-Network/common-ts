@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## [0.7.0](https://github.com/zCloak-Network/common-ts/compare/v0.6.0...v0.7.0) (2023-01-10)
+
+
+### Features
+
+* add browser and extension session ([#11](https://github.com/zCloak-Network/common-ts/issues/11)) ([7030584](https://github.com/zCloak-Network/common-ts/commit/7030584a1f09a940358fb0fb84cb72320716538b))
+* add export session in index ([#12](https://github.com/zCloak-Network/common-ts/issues/12)) ([0de6feb](https://github.com/zCloak-Network/common-ts/commit/0de6feb0233a5c4b966ef807a67c5b7193f28972))
+* add localStorage and sessionStorage with store_changed event ([#13](https://github.com/zCloak-Network/common-ts/issues/13)) ([856bcfc](https://github.com/zCloak-Network/common-ts/commit/856bcfc6f178ba745f0bdff4bbcc6b7ed93e4c9f))
+* extension store use the async callback ([#14](https://github.com/zCloak-Network/common-ts/issues/14)) ([d4978c5](https://github.com/zCloak-Network/common-ts/commit/d4978c56aabca3c786f08638d6ee78fd211ce5ec))
+* **ui-did-keyring:** make loadAll method return Promise ([372f516](https://github.com/zCloak-Network/common-ts/commit/372f516dfe35717c2d832afdc9a0a4bac28cc766))
+
+
 ## [0.6.0](https://github.com/zCloak-Network/common-ts/compare/v0.5.1...v0.6.0) (2022-12-21)
 
 
