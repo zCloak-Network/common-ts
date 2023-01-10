@@ -32,13 +32,11 @@ export class ExtensionSession extends BaseStore {
     });
   }
 
-  public remove(key: string, fn?: () => void) {
-    session.remove(key);
-    fn && fn();
+  public async remove(key: string) {
+    await session.remove(key);
   }
 
-  public set(key: string, value: unknown, fn?: () => void) {
-    session.set({ [key]: value });
-    fn && fn();
+  public async set(key: string, value: unknown) {
+    await session.set({ [key]: value });
   }
 }
