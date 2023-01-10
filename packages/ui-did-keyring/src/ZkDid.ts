@@ -20,20 +20,27 @@ export class ZkDid extends ZkDidSuper {
     this.#store = store ?? new BrowserStore();
   }
 
-  loadAll() {
-    this.#store.all((key, val) => {
-      if (zkPairKeyRegex.test(key)) {
-        const json = val as KeyringPair$Json;
+  public loadAll(): Promise<void> {
+    return new Promise((resolve) => {
+      this.#store.all((key, val) => {
+        const jsons: KeyringPair$Json[] = [];
+        const documents: DidDocument[] = [];
 
-        this.keyring.addFromJson(json);
-      }
-    });
-    this.#store.all((key, val) => {
-      if (zkDidRegex.test(key)) {
-        const did = helpers.fromDidDocument(val as DidDocument, this.keyring);
+        if (zkPairKeyRegex.test(key)) {
+          jsons.push(val as KeyringPair$Json);
+        } else if (zkDidRegex.test(key)) {
+          documents.push(val as DidDocument);
+        }
 
-        this.dids.set(did.id, did);
-      }
+        jsons.forEach((json) => this.keyring.addFromJson(json));
+        documents.forEach((document) => {
+          const did = helpers.fromDidDocument(document, this.keyring);
+
+          this.dids.set(did.id, did);
+        });
+
+        resolve();
+      });
     });
   }
 
