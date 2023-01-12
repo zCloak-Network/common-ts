@@ -18,11 +18,13 @@ export class ExtensionSession extends BaseStore {
     });
   }
 
-  public all(fn: (key: string, value: string) => void) {
+  public all(fn: (key: string, value: string) => void, done?: () => void) {
     session.get(null, (items) => {
       for (const key in items) {
         fn(key, items[key]);
       }
+
+      done?.();
     });
   }
 

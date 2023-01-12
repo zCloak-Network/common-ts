@@ -4,8 +4,8 @@
 import { Events } from './event/Event';
 
 export abstract class BaseStore extends Events {
-  abstract all(fn: (key: string, value: unknown) => void): void;
-  abstract get(key: string, fn: (value: unknown) => void): void;
-  abstract set(key: string, value: unknown, fn?: () => void): void;
-  abstract remove(key: string, fn?: () => void): void;
+  public abstract all(fn: (key: string, value: unknown) => void, done?: () => void): void;
+  public abstract get(key: string, fn: (value: unknown) => void): void;
+  public abstract set(key: string, value: unknown, fn?: () => void): void;
+  public abstract remove(key: string, fn?: () => void): void;
 }

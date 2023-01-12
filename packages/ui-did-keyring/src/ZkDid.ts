@@ -38,9 +38,7 @@ export class ZkDid extends ZkDidSuper {
 
           this.dids.set(did.id, did);
         });
-
-        resolve();
-      });
+      }, resolve);
     });
   }
 

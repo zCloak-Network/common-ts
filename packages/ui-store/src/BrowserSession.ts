@@ -12,10 +12,11 @@ export class BrowserSession extends BaseStore {
     this.#session = new SessionStorage();
   }
 
-  public all(fn: (key: string, value: unknown) => void): void {
+  public all(fn: (key: string, value: unknown) => void, done?: () => void): void {
     this.#session.each((key: string, value: unknown): void => {
       fn(key, value);
     });
+    done?.();
   }
 
   public get(key: string, fn: (value: unknown) => void): void {

@@ -34,9 +34,7 @@ export class KiltDid extends KiltDidSuper {
 
         jsons.forEach((json) => this.keyring.addFromJson(json));
         dids.forEach((did) => super.addDid(did));
-
-        resolve();
-      });
+      }, resolve);
     });
   }
 
