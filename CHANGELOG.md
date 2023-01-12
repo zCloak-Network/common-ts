@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## [0.8.0](https://github.com/zCloak-Network/common-ts/compare/v0.7.0...v0.8.0) (2023-01-12)
+
+
+### Features
+
+* **ui-store:** add done callback for BaseStore all method ([f22d72c](https://github.com/zCloak-Network/common-ts/commit/f22d72c826d6e4d8c114231315dc051fb5c3cb16))
+
+
 ## [0.7.0](https://github.com/zCloak-Network/common-ts/compare/v0.6.0...v0.7.0) (2023-01-10)
 
 
