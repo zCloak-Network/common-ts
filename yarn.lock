@@ -4899,7 +4899,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zcloak/did-keyring@^0.8.0, @zcloak/did-keyring@workspace:packages/did-keyring":
+"@zcloak/did-keyring@^1.0.0, @zcloak/did-keyring@workspace:packages/did-keyring":
   version: 0.0.0-use.local
   resolution: "@zcloak/did-keyring@workspace:packages/did-keyring"
   dependencies:
@@ -5000,7 +5000,7 @@ __metadata:
     "@polkadot/keyring": ^10.1.12
     "@polkadot/util": ^10.2.1
     "@zcloak/did": ^1.0.0
-    "@zcloak/did-keyring": ^0.8.0
+    "@zcloak/did-keyring": ^1.0.0
     "@zcloak/did-resolver": ^1.0.0
     "@zcloak/keyring": ^1.0.0
     "@zcloak/ui-store": ^0.8.0
