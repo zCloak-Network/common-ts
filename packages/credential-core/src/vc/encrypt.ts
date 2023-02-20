@@ -1,4 +1,4 @@
-// Copyright 2021-2022 zcloak authors & contributors
+// Copyright 2021-2023 zcloak authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import type { ICredential as KiltVC } from '@kiltprotocol/types';
@@ -8,15 +8,15 @@ import { Credential } from '@kiltprotocol/core';
 import { numberToU8a, stringToU8a, u8aConcat, u8aFixLength } from '@polkadot/util';
 
 import { naclEncrypt, scryptEncode, scryptToU8a } from '@zcloak/crypto';
-import { isVC } from '@zcloak/vc/utils';
+import { isVC } from '@zcloak/vc/is';
 
 import { DEFAULT_ENCRYPT_VERSION, TYPE_BYTE_LENGTH, VERSION_BYTE_LENGTH } from './defualts';
 import { EncryptEnum } from './types';
 
 export function vcEncrypt(kiltVC: KiltVC, passphrase?: string): Uint8Array;
-export function vcEncrypt(zkidVC: ZkidVC, passphrase?: string): Uint8Array;
+export function vcEncrypt(zkidVC: ZkidVC<boolean>, passphrase?: string): Uint8Array;
 
-export function vcEncrypt(vc: KiltVC | ZkidVC, passphrase?: string): Uint8Array {
+export function vcEncrypt(vc: KiltVC | ZkidVC<boolean>, passphrase?: string): Uint8Array {
   let data: string;
   let type: EncryptEnum;
 

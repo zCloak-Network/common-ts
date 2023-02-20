@@ -1,4 +1,4 @@
-// Copyright 2021-2022 zcloak authors & contributors
+// Copyright 2021-2023 zcloak authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
 import type { ICredential as KiltVC } from '@kiltprotocol/types';
@@ -59,7 +59,7 @@ describe('encrypt and decrypt', () => {
   });
 
   it('encrypt zkid vc and descrypt', () => {
-    const zkidVC: ZkidVC = {
+    const zkidVC: ZkidVC<false> = {
       '@context': ['https://www.w3.org/2018/credentials/v1'],
       version: '0',
       ctype: '0x4394e5a3f6d7e18957d02095d46e37558e2502bce59aacd407b074781d7d6b5b',
