@@ -29,7 +29,7 @@
     "@ethersproject/contracts": "^5.7.0",
     "@ethersproject/providers": "^5.7.2",
     "@ethersproject/solidity": "^5.7.0",
-    "@zcloak/web3-query": "^0.8.0",
+    "@zcloak/web3-query": "workspace:^",
     "eventemitter3": "^5.0.0"
   }
 }
