@@ -3,10 +3,13 @@
   "bugs": "https://github.com/zCloak-Network/common-ts/issues",
   "contributors": [],
   "description": "zCloak did-keyring",
-  "homepage": "https://github.com/zCloak-Network/common-ts/tree/master/packages/did-keyring#readme",
+  "homepage": "https://github.com/zCloak-Network/common-ts#readme",
   "license": "Apache-2.0",
   "maintainers": [],
   "name": "@zcloak/did-keyring",
+  "publishConfig": {
+    "directory": "build"
+  },
   "repository": {
     "directory": "packages/did-keyring",
     "type": "git",

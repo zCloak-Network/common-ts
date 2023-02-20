@@ -3,10 +3,13 @@
   "bugs": "https://github.com/zCloak-Network/common-ts/issues",
   "contributors": [],
   "description": "zCloak extension-core",
-  "homepage": "https://github.com/zCloak-Network/common-ts/tree/master/packages/extension-core#readme",
+  "homepage": "https://github.com/zCloak-Network/common-ts#readme",
   "license": "Apache-2.0",
   "maintainers": [],
   "name": "@zcloak/extension-core",
+  "publishConfig": {
+    "directory": "build"
+  },
   "repository": {
     "directory": "packages/extension-core",
     "type": "git",

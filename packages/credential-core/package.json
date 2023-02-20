@@ -3,10 +3,13 @@
   "bugs": "https://github.com/zCloak-Network/common-ts/issues",
   "contributors": [],
   "description": "zCloak credential-core",
-  "homepage": "https://github.com/zCloak-Network/common-ts/tree/master/packages/credential-core#readme",
+  "homepage": "https://github.com/zCloak-Network/common-ts#readme",
   "license": "Apache-2.0",
   "maintainers": [],
   "name": "@zcloak/credential-core",
+  "publishConfig": {
+    "directory": "build"
+  },
   "repository": {
     "directory": "packages/credential-core",
     "type": "git",

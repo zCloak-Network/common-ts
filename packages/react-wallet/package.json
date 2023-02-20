@@ -3,10 +3,13 @@
   "bugs": "https://github.com/zCloak-Network/common-ts/issues",
   "contributors": [],
   "description": "zCloak react-wallet",
-  "homepage": "https://github.com/zCloak-Network/common-ts/tree/master/packages/react-wallet#readme",
+  "homepage": "https://github.com/zCloak-Network/common-ts#readme",
   "license": "Apache-2.0",
   "maintainers": [],
   "name": "@zcloak/react-wallet",
+  "publishConfig": {
+    "directory": "build"
+  },
   "repository": {
     "directory": "packages/react-wallet",
     "type": "git",
