@@ -1,5 +1,16 @@
 # @zcloak/ui-did-keyring
 
+## 1.1.0
+
+### Minor Changes
+
+- [`776cef5`](https://github.com/zCloak-Network/common-ts/commit/776cef5cb776479ce12626af056836df3671aaad) Thanks [@zzcwoshizz](https://github.com/zzcwoshizz)! - BaseStore returns Promise object
+
+### Patch Changes
+
+- Updated dependencies [[`776cef5`](https://github.com/zCloak-Network/common-ts/commit/776cef5cb776479ce12626af056836df3671aaad)]:
+  - @zcloak/ui-store@0.9.0
+
 ## 1.0.1
 
 ### Patch Changes
