@@ -1,11 +1,14 @@
 // Copyright 2021-2023 zcloak authors & contributors
 // SPDX-License-Identifier: Apache-2.0
 
-import { Events } from './event/Event';
+import type { StorageEvent } from './types';
 
-export abstract class BaseStore extends Events {
-  public abstract all(fn: (key: string, value: unknown) => void, done?: () => void): void;
-  public abstract get(key: string, fn: (value: unknown) => void): void;
-  public abstract set(key: string, value: unknown, fn?: () => void): void;
-  public abstract remove(key: string, fn?: () => void): void;
+import Events from 'eventemitter3';
+
+export abstract class BaseStore extends Events<StorageEvent> {
+  public abstract each(fn: (key: string, value: any) => void): Promise<void>;
+  public abstract all(): Promise<[string, any][]>;
+  public abstract get(key: string): Promise<any>;
+  public abstract set(key: string, value: any): Promise<void>;
+  public abstract remove(key: string): Promise<any>;
 }

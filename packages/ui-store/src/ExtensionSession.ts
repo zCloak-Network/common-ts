@@ -3,8 +3,6 @@
 
 import { BaseStore } from './BaseStore';
 
-const session = chrome.storage.session;
-
 export class ExtensionSession extends BaseStore {
   constructor() {
     super();
@@ -13,32 +11,36 @@ export class ExtensionSession extends BaseStore {
       if (namespace === 'session') {
         const key = Object.keys(event)[0];
 
-        this.emit('store_changed', key, event[key]?.newValue);
+        this.emit('store_changed', key, event[key]?.oldValue, event[key]?.newValue);
       }
     });
   }
 
-  public all(fn: (key: string, value: string) => void, done?: () => void) {
-    session.get(null, (items) => {
-      for (const key in items) {
-        fn(key, items[key]);
-      }
+  public async all(): Promise<[string, any][]> {
+    const values: [string, any][] = [];
 
-      done?.();
-    });
+    await this.each((key, value) => values.push([key, value]));
+
+    return values;
   }
 
-  public get(key: string, fn: (value: unknown) => void) {
-    session.get(key, (item) => {
-      fn(item[key] as unknown);
-    });
+  public async each(fn: (key: string, value: string) => void): Promise<void> {
+    const items = await chrome.storage.session.get(null);
+
+    for (const key in items) {
+      fn(key, items[key]);
+    }
   }
 
-  public remove(key: string, fn?: () => void) {
-    session.remove(key, fn);
+  public get(key: string): Promise<any> {
+    return chrome.storage.session.get(key);
   }
 
-  public set(key: string, value: unknown, fn?: () => void) {
-    session.set({ [key]: value }, fn);
+  public remove(key: string): Promise<void> {
+    return chrome.storage.session.remove(key);
+  }
+
+  public set(key: string, value: any): Promise<void> {
+    return chrome.storage.session.set({ [key]: value });
   }
 }

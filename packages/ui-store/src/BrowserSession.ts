@@ -10,28 +10,41 @@ export class BrowserSession extends BaseStore {
   constructor() {
     super();
     this.#session = new SessionStorage();
+    this.#session.on('clear', this.emit);
+    this.#session.on('store_changed', this.emit);
   }
 
-  public all(fn: (key: string, value: unknown) => void, done?: () => void): void {
-    this.#session.each((key: string, value: unknown): void => {
+  public async all(): Promise<[string, any][]> {
+    const values: [string, any][] = [];
+
+    await this.each((key, value) => values.push([key, value]));
+
+    return values;
+  }
+
+  public each(fn: (key: string, value: any) => void): Promise<void> {
+    this.#session.each((key: string, value: any): void => {
       fn(key, value);
     });
-    done?.();
+
+    return Promise.resolve();
   }
 
-  public get(key: string, fn: (value: unknown) => void): void {
-    fn(this.#session.get(key) as unknown);
+  public get(key: string): Promise<any> {
+    return Promise.resolve(this.#session.get(key));
   }
 
-  public remove(key: string, fn?: () => void): void {
+  public remove(key: string): Promise<void> {
     this.#session.remove(key);
-    fn && fn();
     this.emit('store_changed', key);
+
+    return Promise.resolve();
   }
 
-  public set(key: string, value: unknown, fn?: () => void): void {
-    this.#session.set(key, value as string);
-    fn && fn();
+  public set(key: string, value: any): Promise<void> {
+    this.#session.set(key, value);
     this.emit('store_changed', key, value);
+
+    return Promise.resolve();
   }
 }

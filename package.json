@@ -3,7 +3,7 @@
   "bugs": "https://github.com/zCloak-Network/common-ts/issues",
   "homepage": "https://github.com/zCloak-Network/common-ts#readme",
   "license": "Apache-2.0",
-  "packageManager": "yarn@3.2.3",
+  "packageManager": "yarn@3.3.0",
   "private": true,
   "repository": {
     "type": "git",
@@ -36,7 +36,7 @@
     "@types/jest": "^29.2.3",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
-    "@zcloak/dev": "^0.21.1",
+    "@zcloak/dev": "^0.22.0",
     "concurrently": "^7.6.0",
     "devtron": "^1.4.0",
     "humps": "^2.0.1",

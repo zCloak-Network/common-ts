@@ -20,22 +20,20 @@ export class KiltDid extends KiltDidSuper {
     this.#store = store ?? new BrowserStore();
   }
 
-  public loadAll(): Promise<void> {
-    return new Promise((resolve) => {
-      this.#store.all((key, value) => {
-        const jsons: KeyringPair$Json[] = [];
-        const dids: DidUri[] = [];
+  public async loadAll(): Promise<void> {
+    const jsons: KeyringPair$Json[] = [];
+    const dids: DidUri[] = [];
 
-        if (kiltPairKeyRegex.test(key)) {
-          jsons.push(value as KeyringPair$Json);
-        } else if (kiltDidRegex.test(key)) {
-          dids.push(value as DidUri);
-        }
-
-        jsons.forEach((json) => this.keyring.addFromJson(json));
-        dids.forEach((did) => super.addDid(did));
-      }, resolve);
+    await this.#store.each((key, value) => {
+      if (kiltPairKeyRegex.test(key)) {
+        jsons.push(value as KeyringPair$Json);
+      } else if (kiltDidRegex.test(key)) {
+        dids.push(value as DidUri);
+      }
     });
+
+    jsons.forEach((json) => this.keyring.addFromJson(json));
+    dids.forEach((did) => super.addDid(did));
   }
 
   public override remove(didUrl: DidUri): void {

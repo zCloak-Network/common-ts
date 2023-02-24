@@ -10,32 +10,41 @@ export class BrowserStore extends BaseStore {
   constructor() {
     super();
     this.#store = new LocalStorage();
-
-    window.addEventListener('storage', (event) => {
-      event.key && this.emit('store_changed', event.key, event.newValue);
-    });
+    this.#store.on('clear', this.emit);
+    this.#store.on('store_changed', this.emit);
   }
 
-  public all(fn: (key: string, value: unknown) => void, done?: () => void): void {
-    this.#store.each((key: string, value: unknown): void => {
+  public async all(): Promise<[string, any][]> {
+    const values: [string, any][] = [];
+
+    await this.each((key, value) => values.push([key, value]));
+
+    return values;
+  }
+
+  public each(fn: (key: string, value: any) => void): Promise<void> {
+    this.#store.each((key: string, value: any): void => {
       fn(key, value);
     });
-    done?.();
+
+    return Promise.resolve();
   }
 
-  public get(key: string, fn: (value: unknown) => void): void {
-    fn(this.#store.get(key) as unknown);
+  public get(key: string): Promise<any> {
+    return Promise.resolve(this.#store.get(key));
   }
 
-  public remove(key: string, fn?: () => void): void {
+  public remove(key: string): Promise<void> {
     this.#store.remove(key);
-    fn && fn();
     this.emit('store_changed', key);
+
+    return Promise.resolve();
   }
 
-  public set(key: string, value: unknown, fn?: () => void): void {
+  public set(key: string, value: any): Promise<void> {
     this.#store.set(key, value);
-    fn && fn();
     this.emit('store_changed', key, value);
+
+    return Promise.resolve();
   }
 }
