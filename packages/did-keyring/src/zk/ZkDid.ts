@@ -7,7 +7,7 @@ import type { KeyringPair } from '@zcloak/keyring/types';
 import { assert } from '@polkadot/util';
 import { HexString } from '@polkadot/util/types';
 
-import { Did, helpers, keys } from '@zcloak/did';
+import { Did, keys } from '@zcloak/did';
 import { isDidUrl } from '@zcloak/did/utils';
 import { DidUrl } from '@zcloak/did-resolver/types';
 import { Keyring } from '@zcloak/keyring';
@@ -24,7 +24,7 @@ export class ZkDid extends DidBase<DidKeys$Json> {
   }
 
   public override addDidFromMnemonic(mnemonic: string, password: string): DidUrl {
-    const did = helpers.createEcdsaFromMnemonic(mnemonic, this.keyring);
+    const did = keys.fromMnemonic(this.keyring, mnemonic);
 
     this.addDid(did, password);
 

@@ -23,8 +23,8 @@
     "@kiltprotocol/core": "^0.28.2",
     "@kiltprotocol/types": "^0.28.2",
     "@polkadot/util": "^10.2.1",
-    "@zcloak/crypto": "^1.0.0",
-    "@zcloak/vc": "^1.0.0"
+    "@zcloak/crypto": "^1.1.0",
+    "@zcloak/vc": "^1.1.0"
   },
   "devDependencies": {
     "@zcloak/wasm": "^1.0.0",
