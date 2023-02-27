@@ -1,5 +1,14 @@
 # @zcloak/ui-did-keyring
 
+## 1.1.1
+
+### Patch Changes
+
+- [`0954b04`](https://github.com/zCloak-Network/common-ts/commit/0954b04b95fc03e24697a210f9b85a334dbff000) Thanks [@zzcwoshizz](https://github.com/zzcwoshizz)! - upgrade zkid-sdk
+
+- Updated dependencies [[`0954b04`](https://github.com/zCloak-Network/common-ts/commit/0954b04b95fc03e24697a210f9b85a334dbff000)]:
+  - @zcloak/did-keyring@1.0.2
+
 ## 1.1.0
 
 ### Minor Changes

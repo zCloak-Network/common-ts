@@ -1,5 +1,11 @@
 # @zcloak/credential-core
 
+## 1.0.2
+
+### Patch Changes
+
+- [`0954b04`](https://github.com/zCloak-Network/common-ts/commit/0954b04b95fc03e24697a210f9b85a334dbff000) Thanks [@zzcwoshizz](https://github.com/zzcwoshizz)! - upgrade zkid-sdk
+
 ## 1.0.1
 
 ### Patch Changes
