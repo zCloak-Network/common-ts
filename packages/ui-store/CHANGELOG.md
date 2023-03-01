@@ -1,5 +1,11 @@
 # @zcloak/ui-store
 
+## 0.9.2
+
+### Patch Changes
+
+- [`f44079b`](https://github.com/zCloak-Network/common-ts/commit/f44079bac4d53d191a8db0d4ea6630fc7695d24e) Thanks [@zzcwoshizz](https://github.com/zzcwoshizz)! - fix the ExtensionSession get method
+
 ## 0.9.1
 
 ### Patch Changes
