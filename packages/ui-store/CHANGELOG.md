@@ -1,5 +1,11 @@
 # @zcloak/ui-store
 
+## 0.9.1
+
+### Patch Changes
+
+- [`439129b`](https://github.com/zCloak-Network/common-ts/commit/439129b09ec0523e9bd7de803943f6e879d95c55) Thanks [@zzcwoshizz](https://github.com/zzcwoshizz)! - fix chrome store and session get is wrong
+
 ## 0.9.0
 
 ### Minor Changes
