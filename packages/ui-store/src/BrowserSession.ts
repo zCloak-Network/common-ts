@@ -14,23 +14,23 @@ export class BrowserSession extends BaseStore {
     this.#session.on('store_changed', this.emit);
   }
 
-  public async all(): Promise<[string, any][]> {
-    const values: [string, any][] = [];
+  public async all(): Promise<[string, unknown][]> {
+    const values: [string, unknown][] = [];
 
     await this.each((key, value) => values.push([key, value]));
 
     return values;
   }
 
-  public each(fn: (key: string, value: any) => void): Promise<void> {
-    this.#session.each((key: string, value: any): void => {
+  public each(fn: (key: string, value: unknown) => void): Promise<void> {
+    this.#session.each((key: string, value: unknown): void => {
       fn(key, value);
     });
 
     return Promise.resolve();
   }
 
-  public get(key: string): Promise<any> {
+  public get(key: string): Promise<unknown> {
     return Promise.resolve(this.#session.get(key));
   }
 

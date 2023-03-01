@@ -16,15 +16,15 @@ export class ExtensionSession extends BaseStore {
     });
   }
 
-  public async all(): Promise<[string, any][]> {
-    const values: [string, any][] = [];
+  public async all(): Promise<[string, unknown][]> {
+    const values: [string, unknown][] = [];
 
     await this.each((key, value) => values.push([key, value]));
 
     return values;
   }
 
-  public async each(fn: (key: string, value: string) => void): Promise<void> {
+  public async each(fn: (key: string, value: unknown) => void): Promise<void> {
     const items = await chrome.storage.session.get(null);
 
     for (const key in items) {
@@ -32,8 +32,10 @@ export class ExtensionSession extends BaseStore {
     }
   }
 
-  public get(key: string): Promise<any> {
-    return chrome.storage.session.get(key);
+  public async get(key: string): Promise<unknown> {
+    const values = await chrome.storage.local.get(key);
+
+    return values?.[key] || null;
   }
 
   public remove(key: string): Promise<void> {
