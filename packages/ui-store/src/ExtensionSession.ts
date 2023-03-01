@@ -33,7 +33,7 @@ export class ExtensionSession extends BaseStore {
   }
 
   public async get(key: string): Promise<unknown> {
-    const values = await chrome.storage.local.get(key);
+    const values = await chrome.storage.session.get(key);
 
     return values?.[key] || null;
   }
