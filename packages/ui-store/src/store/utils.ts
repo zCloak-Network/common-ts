@@ -26,7 +26,7 @@ export function getAllItems(storage: Storage): Map<string, any> {
     const key = storage.key(i);
 
     if (key) {
-      items.set(key, storage.getItem(key));
+      items.set(key, deserialize(storage.getItem(key)));
     }
   }
 
