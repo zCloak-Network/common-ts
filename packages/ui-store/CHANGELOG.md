@@ -1,5 +1,12 @@
 # @zcloak/ui-store
 
+## 0.9.4
+
+### Patch Changes
+
+- [`433d9a7`](https://github.com/zCloak-Network/common-ts/commit/433d9a7c97eea4d0767427ab3f3e4b17196c74c2) Thanks [@zzcwoshizz](https://github.com/zzcwoshizz)! - fix emit not trigger in browser
+  deserialize value before emit event
+
 ## 0.9.3
 
 ### Patch Changes
