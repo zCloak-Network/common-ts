@@ -5,17 +5,29 @@ import type { StorageEvent } from '../types';
 
 import Events from 'eventemitter3';
 
-import { deserialize, serialize } from './utils';
+import { deserialize, getAllItems, serialize } from './utils';
 
 export class LocalStorage extends Events<StorageEvent> {
+  #items: Map<string, any> = new Map();
+
   constructor() {
     super();
+
+    this.#items = getAllItems(localStorage);
     window.addEventListener('storage', (event) => {
       if (event.storageArea === localStorage) {
-        if (sessionStorage.length === 0) {
-          this.emit('clear');
+        if (localStorage.length === 0) {
+          // clear storage
+
+          for (const [key, value] of this.#items) {
+            this.#items.delete(key);
+            this.emit('store_changed', key, value, null);
+          }
         } else {
-          this.emit('store_changed', event.key, event.oldValue, event.newValue);
+          if (event.key) {
+            this.#items.set(event.key, event.newValue);
+            this.emit('store_changed', event.key, event.oldValue, event.newValue);
+          }
         }
       }
     });
@@ -33,10 +45,16 @@ export class LocalStorage extends Events<StorageEvent> {
     const val = serialize(value);
 
     localStorage.setItem(key, val);
+    const oldValue = this.#items.get(key);
+
+    this.#items.set(key, val);
+    this.emit('store_changed', key, oldValue, value);
   }
 
   public remove(key: string) {
     localStorage.removeItem(key);
+    this.#items.delete(key);
+    this.emit('store_changed', key, this.#items.get(key), null);
   }
 
   public each(fn: (key: string, val: any) => void): void {

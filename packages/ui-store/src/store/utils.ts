@@ -18,3 +18,17 @@ export function deserialize(strVal: string | null) {
 
   return val;
 }
+
+export function getAllItems(storage: Storage): Map<string, any> {
+  const items: Map<string, any> = new Map();
+
+  for (let i = 0; i < storage.length; i++) {
+    const key = storage.key(i);
+
+    if (key) {
+      items.set(key, storage.getItem(key));
+    }
+  }
+
+  return items;
+}

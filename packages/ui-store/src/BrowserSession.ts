@@ -10,7 +10,6 @@ export class BrowserSession extends BaseStore {
   constructor() {
     super();
     this.#session = new SessionStorage();
-    this.#session.on('clear', this.emit);
     this.#session.on('store_changed', this.emit);
   }
 
@@ -36,14 +35,12 @@ export class BrowserSession extends BaseStore {
 
   public remove(key: string): Promise<void> {
     this.#session.remove(key);
-    this.emit('store_changed', key);
 
     return Promise.resolve();
   }
 
   public set(key: string, value: any): Promise<void> {
     this.#session.set(key, value);
-    this.emit('store_changed', key, value);
 
     return Promise.resolve();
   }

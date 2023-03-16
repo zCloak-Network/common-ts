@@ -10,7 +10,6 @@ export class BrowserStore extends BaseStore {
   constructor() {
     super();
     this.#store = new LocalStorage();
-    this.#store.on('clear', this.emit);
     this.#store.on('store_changed', this.emit);
   }
 
@@ -36,14 +35,12 @@ export class BrowserStore extends BaseStore {
 
   public remove(key: string): Promise<void> {
     this.#store.remove(key);
-    this.emit('store_changed', key);
 
     return Promise.resolve();
   }
 
   public set(key: string, value: any): Promise<void> {
     this.#store.set(key, value);
-    this.emit('store_changed', key, value);
 
     return Promise.resolve();
   }
