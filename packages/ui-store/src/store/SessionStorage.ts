@@ -50,8 +50,8 @@ export class SessionStorage extends Events<StorageEvent> {
     sessionStorage.setItem(key, val);
     const oldValue = this.#items.get(key);
 
-    this.#items.set(key, val);
-    this.emit('store_changed', key, oldValue, val);
+    this.#items.set(key, value);
+    this.emit('store_changed', key, oldValue, value);
   }
 
   public remove(key: string) {
