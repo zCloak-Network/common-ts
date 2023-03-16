@@ -1,5 +1,11 @@
 # @zcloak/ui-store
 
+## 0.9.6
+
+### Patch Changes
+
+- [`d0ac7b2`](https://github.com/zCloak-Network/common-ts/commit/d0ac7b2d62b46535d5b74aeb7ea08cde2cd4617d) Thanks [@zzcwoshizz](https://github.com/zzcwoshizz)! - deserialize value when get all items
+
 ## 0.9.5
 
 ### Patch Changes
