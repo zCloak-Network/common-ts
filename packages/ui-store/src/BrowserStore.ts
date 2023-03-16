@@ -10,7 +10,7 @@ export class BrowserStore extends BaseStore {
   constructor() {
     super();
     this.#store = new LocalStorage();
-    this.#store.on('store_changed', this.emit);
+    this.#store.on('store_changed', (event, ...args) => this.emit(event, ...args));
   }
 
   public async all(): Promise<[string, unknown][]> {

@@ -10,7 +10,7 @@ export class BrowserSession extends BaseStore {
   constructor() {
     super();
     this.#session = new SessionStorage();
-    this.#session.on('store_changed', this.emit);
+    this.#session.on('store_changed', (event, ...args) => this.emit(event, ...args));
   }
 
   public async all(): Promise<[string, unknown][]> {
