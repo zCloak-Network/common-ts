@@ -32,11 +32,7 @@ export class DidManager extends DidBase<ZkidDidKeys$Json | KiltDidKeys$Json> {
     this.kilt.on('remove', () => onRemove);
   }
 
-  public override addDidFromMnemonic(
-    mnemonic: string,
-    password: string,
-    type: 'zk' | 'kilt' = 'zk'
-  ): string {
+  public override addDidFromMnemonic(mnemonic: string, password: string, type: 'zk' | 'kilt' = 'zk'): string {
     if (type === 'zk') {
       return this.zk.addDidFromMnemonic(mnemonic, password);
     } else {
@@ -44,11 +40,7 @@ export class DidManager extends DidBase<ZkidDidKeys$Json | KiltDidKeys$Json> {
     }
   }
 
-  public override addDidFromJson(
-    json: ZkidDidKeys$Json | KiltDidKeys$Json,
-    newPass: string,
-    oldPass: string
-  ): string {
+  public override addDidFromJson(json: ZkidDidKeys$Json | KiltDidKeys$Json, newPass: string, oldPass: string): string {
     if (isZkDidKeys$Json(json)) {
       return this.zk.addDidFromJson(json, newPass, oldPass);
     }

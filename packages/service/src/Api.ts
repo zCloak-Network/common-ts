@@ -56,12 +56,9 @@ export class CredentialApi extends Request {
   }
 
   getAttestationStatus(params: { senderKeyId: string }) {
-    return this.get<ServerResponse<{ attestationStatus: AttestationStatus }>>(
-      '/admin-attester/attestation-status',
-      {
-        params
-      }
-    );
+    return this.get<ServerResponse<{ attestationStatus: AttestationStatus }>>('/admin-attester/attestation-status', {
+      params
+    });
   }
 
   getAttestation(params: { senderKeyId: string; receiverKeyId: string }) {
@@ -115,12 +112,7 @@ export class CredentialApi extends Request {
     return this.post<ServerResponse<null>>('/message', { body });
   }
 
-  getMessages(params: {
-    receiverKeyId?: string;
-    senderKeyId?: string;
-    start_id?: string;
-    size?: number;
-  }) {
+  getMessages(params: { receiverKeyId?: string; senderKeyId?: string; start_id?: string; size?: number }) {
     return this.get<ServerResponse<(MessageBody & { id: string })[]>>('/message', { params });
   }
 }

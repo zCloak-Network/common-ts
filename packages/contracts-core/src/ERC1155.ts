@@ -11,12 +11,7 @@ import { BaseContract } from './base';
 import { callMethod } from './utils';
 
 class ERC1155 extends BaseContract {
-  constructor(
-    address: string,
-    provider: JsonRpcProvider,
-    abi = abis.ERC1155,
-    account?: string | null
-  ) {
+  constructor(address: string, provider: JsonRpcProvider, abi = abis.ERC1155, account?: string | null) {
     super(address, provider, abi, account);
   }
 

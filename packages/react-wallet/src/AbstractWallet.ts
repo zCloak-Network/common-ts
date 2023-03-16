@@ -34,8 +34,5 @@ export abstract class AbstractWallet extends Events {
 
   public abstract disconnect(): Promise<void>;
 
-  public abstract switchNetwork(
-    chainId: number,
-    params?: AddEthereumChainParameter
-  ): Promise<boolean>;
+  public abstract switchNetwork(chainId: number, params?: AddEthereumChainParameter): Promise<boolean>;
 }

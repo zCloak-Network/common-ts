@@ -29,12 +29,9 @@ describe('encrypt and decrypt', () => {
           '0x887a133dfbc4741d71fcb882443f7260c3405f5a46c62a24ec3327ab1b72fad1'
         ],
         claimNonceMap: {
-          '0xa7c77ad182242fb339b5c2298a5261b0a422689bb6114b2450c21b0d01e41ce8':
-            '8d583499-4dd0-4438-ad0e-91427f2c6213',
-          '0x73cf049941ed8805d3d1bf8a553f9004b91f28bfb45dd00ba22a9b8869fe2e67':
-            '4b270eb2-7b62-4173-b46d-c95af345d704',
-          '0x42db520aad41fb03d1aebd0afe4828e52c147000f93c1aa3331ccf8ff567cdbb':
-            'c87ac94c-5be7-4b60-8973-9b9849807f63'
+          '0xa7c77ad182242fb339b5c2298a5261b0a422689bb6114b2450c21b0d01e41ce8': '8d583499-4dd0-4438-ad0e-91427f2c6213',
+          '0x73cf049941ed8805d3d1bf8a553f9004b91f28bfb45dd00ba22a9b8869fe2e67': '4b270eb2-7b62-4173-b46d-c95af345d704',
+          '0x42db520aad41fb03d1aebd0afe4828e52c147000f93c1aa3331ccf8ff567cdbb': 'c87ac94c-5be7-4b60-8973-9b9849807f63'
         },
         legitimations: [],
         delegationId: null,
@@ -53,9 +50,7 @@ describe('encrypt and decrypt', () => {
     const decrypted = vcDecrypt(encrypted, '1234');
 
     expect(decrypted).toEqual(kiltVC);
-    expect(() => vcDecrypt(encrypted, '123')).toThrow(
-      'Unable to decrypt using the supplied passphrase'
-    );
+    expect(() => vcDecrypt(encrypted, '123')).toThrow('Unable to decrypt using the supplied passphrase');
   });
 
   it('encrypt zkid vc and descrypt', () => {
@@ -92,8 +87,7 @@ describe('encrypt and decrypt', () => {
           created: 1669915042670,
           verificationMethod: 'did:zk:0xdC6BF231a4f18074288C07C3f31f2eD170E368aD#key-0',
           proofPurpose: 'assertionMethod',
-          proofValue:
-            'zHghh8GGTZpQsMfbkaotA2XyKFT8QFY87sBbGGrQPtuyeBj86rMZK95LJ3WF9J7BHiffabpHsDbd64xoXc5AmLMskk'
+          proofValue: 'zHghh8GGTZpQsMfbkaotA2XyKFT8QFY87sBbGGrQPtuyeBj86rMZK95LJ3WF9J7BHiffabpHsDbd64xoXc5AmLMskk'
         }
       ]
     };
@@ -103,8 +97,6 @@ describe('encrypt and decrypt', () => {
     const decrypted = vcDecrypt(encrypted, '1234');
 
     expect(decrypted).toEqual(zkidVC);
-    expect(() => vcDecrypt(encrypted, '123')).toThrow(
-      'Unable to decrypt using the supplied passphrase'
-    );
+    expect(() => vcDecrypt(encrypted, '123')).toThrow('Unable to decrypt using the supplied passphrase');
   });
 });

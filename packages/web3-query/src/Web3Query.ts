@@ -67,10 +67,7 @@ export class Web3Query {
   }
 
   public async all<T extends any[] = any[]>(calls: ContractCall[]): Promise<T>;
-  public async all<T extends any[] = any[]>(
-    calls: ContractCall[],
-    callback: (results: T) => void
-  ): Promise<() => void>;
+  public async all<T extends any[] = any[]>(calls: ContractCall[], callback: (results: T) => void): Promise<() => void>;
 
   public async all<T extends any[] = any[]>(
     calls: ContractCall[],
@@ -99,15 +96,9 @@ export class Web3Query {
   }
 
   public async one<TOne = any>(call: ContractCall): Promise<TOne>;
-  public async one<TOne = any>(
-    call: ContractCall,
-    callback: (results: TOne) => void
-  ): Promise<() => void>;
+  public async one<TOne = any>(call: ContractCall, callback: (results: TOne) => void): Promise<() => void>;
 
-  public async one<TOne = any>(
-    call: ContractCall,
-    callback?: (results: TOne) => void
-  ): Promise<TOne | (() => void)> {
+  public async one<TOne = any>(call: ContractCall, callback?: (results: TOne) => void): Promise<TOne | (() => void)> {
     const [result] = await all<[TOne]>([call], await getAddress(this._provider), this._provider);
 
     if (callback) {

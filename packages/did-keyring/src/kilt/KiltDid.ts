@@ -26,16 +26,12 @@ export class KiltDid extends DidBase<DidKeys$Json> {
    * @returns a [[LightDidDetails]] object
    */
   public override addDidFromMnemonic(mnemonic: string, password: string): DidUri {
-    const pairs = [
-      this.keyring.addFromUri(mnemonic, {}, 'sr25519'),
-      this.keyring.addFromUri(mnemonic, {}, 'ed25519')
-    ];
+    const pairs = [this.keyring.addFromUri(mnemonic, {}, 'sr25519'), this.keyring.addFromUri(mnemonic, {}, 'ed25519')];
 
     const didDetails = LightDidDetails.fromDetails({
       authenticationKey: {
         publicKey: pairs[0].publicKey,
-        type:
-          pairs[0].type === 'sr25519' ? VerificationKeyType.Sr25519 : VerificationKeyType.Ed25519
+        type: pairs[0].type === 'sr25519' ? VerificationKeyType.Sr25519 : VerificationKeyType.Ed25519
       },
       encryptionKey: {
         publicKey: pairs[1].publicKey,
@@ -60,8 +56,7 @@ export class KiltDid extends DidBase<DidKeys$Json> {
     const didDetails = LightDidDetails.fromDetails({
       authenticationKey: {
         publicKey: pairs[0].publicKey,
-        type:
-          pairs[0].type === 'sr25519' ? VerificationKeyType.Sr25519 : VerificationKeyType.Ed25519
+        type: pairs[0].type === 'sr25519' ? VerificationKeyType.Sr25519 : VerificationKeyType.Ed25519
       },
       encryptionKey: {
         publicKey: pairs[1].publicKey,

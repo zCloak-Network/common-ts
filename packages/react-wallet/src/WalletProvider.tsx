@@ -30,10 +30,7 @@ interface Props {
 
 const WalletContext = createContext<WalletState>({} as WalletState);
 
-export const WalletProvider: React.FC<React.PropsWithChildren<Props>> = ({
-  children,
-  supportedChainId
-}) => {
+export const WalletProvider: React.FC<React.PropsWithChildren<Props>> = ({ children, supportedChainId }) => {
   const [state, setState] = useState<WalletData>({});
 
   const wallet = useRef<AbstractWallet>();
@@ -45,10 +42,7 @@ export const WalletProvider: React.FC<React.PropsWithChildren<Props>> = ({
 
     setState((state) => ({
       ...state,
-      account:
-        _wallet.accounts && _wallet.accounts.length > 0
-          ? getAddress(_wallet.accounts[0])
-          : undefined,
+      account: _wallet.accounts && _wallet.accounts.length > 0 ? getAddress(_wallet.accounts[0]) : undefined,
       chainId: _wallet.chainId,
       provider: _wallet.provider
     }));

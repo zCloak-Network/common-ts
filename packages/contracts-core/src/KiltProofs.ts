@@ -27,14 +27,9 @@ class KiltProofs extends BaseContract {
     callback?: (exists: boolean) => void
   ): Promise<boolean> | Promise<() => void> {
     if (callback) {
-      return this.web3Query.one<boolean>(
-        this.multicallContract.single_proof_exists(who, requestHash),
-        callback
-      );
+      return this.web3Query.one<boolean>(this.multicallContract.single_proof_exists(who, requestHash), callback);
     } else {
-      return this.web3Query.one<boolean>(
-        this.multicallContract.single_proof_exists(who, requestHash)
-      );
+      return this.web3Query.one<boolean>(this.multicallContract.single_proof_exists(who, requestHash));
     }
   }
 

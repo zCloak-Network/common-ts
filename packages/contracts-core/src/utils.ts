@@ -53,12 +53,7 @@ export function getProviderOrSigner(
 
 // account is optional
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function getContract(
-  address: string,
-  ABI: any,
-  library: JsonRpcProvider,
-  account?: string | null
-): Contract {
+export function getContract(address: string, ABI: any, library: JsonRpcProvider, account?: string | null): Contract {
   if (!isAddress(address) || address === AddressZero) {
     throw Error(`Invalid 'address' parameter '${address}'.`);
   }
@@ -92,11 +87,7 @@ export async function getGasEstimate(
         .catch((error: any) => {
           console.debug('Call threw error', error);
 
-          return new CallError(
-            methodName,
-            'Call threw error',
-            error?.error?.data?.message || 'Unknown error'
-          );
+          return new CallError(methodName, 'Call threw error', error?.error?.data?.message || 'Unknown error');
         });
     });
 
@@ -126,8 +117,8 @@ export async function callMethod<T>(
       // if the user rejected the tx, pass this along
       if (
         [
-          -32700, -32600, -32601, -32602, -32603, -32000, -32001, -32002, -32003, -32004, -32005,
-          -32006, 4001, 4100, 4200, 4900, 4901
+          -32700, -32600, -32601, -32602, -32603, -32000, -32001, -32002, -32003, -32004, -32005, -32006, 4001, 4100,
+          4200, 4900, 4901
         ].includes(error?.code)
       ) {
         throw new RpcError(error.code);
@@ -142,11 +133,6 @@ export async function callMethod<T>(
 export function getRequestHash(requestDetails: RequestDetails) {
   return keccak256(
     ['bytes32', 'uint128[]', 'bytes32', 'bytes32'],
-    [
-      requestDetails.cType,
-      requestDetails.fieldNames,
-      requestDetails.programHash,
-      requestDetails.attester
-    ]
+    [requestDetails.cType, requestDetails.fieldNames, requestDetails.programHash, requestDetails.attester]
   );
 }

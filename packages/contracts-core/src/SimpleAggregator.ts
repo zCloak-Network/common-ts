@@ -13,11 +13,7 @@ class SimpleAggregator extends BaseContract {
   }
 
   public isFinished(cOwner: string, requestHash: BytesLike): Promise<boolean>;
-  public isFinished(
-    cOwner: string,
-    requestHash: BytesLike,
-    callback: (exists: boolean) => void
-  ): Promise<() => void>;
+  public isFinished(cOwner: string, requestHash: BytesLike, callback: (exists: boolean) => void): Promise<() => void>;
 
   public isFinished(
     cOwner: string,
@@ -25,10 +21,7 @@ class SimpleAggregator extends BaseContract {
     callback?: (exists: boolean) => void
   ): Promise<boolean> | Promise<() => void> {
     if (callback) {
-      return this.web3Query.one<boolean>(
-        this.multicallContract.isFinished(cOwner, requestHash),
-        callback
-      );
+      return this.web3Query.one<boolean>(this.multicallContract.isFinished(cOwner, requestHash), callback);
     } else {
       return this.web3Query.one<boolean>(this.multicallContract.isFinished(cOwner, requestHash));
     }

@@ -39,9 +39,7 @@ export class Keyring extends PolkadotKeyring implements KiltKeystore {
     data,
     peerPublicKey,
     publicKey
-  }: RequestData<A> & { peerPublicKey: Uint8Array }): Promise<
-    ResponseData<A> & { nonce: Uint8Array }
-  > {
+  }: RequestData<A> & { peerPublicKey: Uint8Array }): Promise<ResponseData<A> & { nonce: Uint8Array }> {
     const pair = this.getPair(publicKey);
 
     const nonce = randomAsU8a(24);

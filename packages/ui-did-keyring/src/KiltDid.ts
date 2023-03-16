@@ -49,10 +49,7 @@ export class KiltDid extends KiltDidSuper {
     super.remove(didUrl);
   }
 
-  public override addDid(
-    didUriOrDetails: DidUri | LightDidDetails,
-    password?: string | undefined
-  ): LightDidDetails {
+  public override addDid(didUriOrDetails: DidUri | LightDidDetails, password?: string | undefined): LightDidDetails {
     const didDetails = super.addDid(didUriOrDetails, password);
 
     this.#store.set(kiltDidKey(didDetails.uri), didDetails.uri);

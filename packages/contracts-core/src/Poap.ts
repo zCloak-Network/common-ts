@@ -2,11 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type { BigNumber, BigNumberish } from '@ethersproject/bignumber';
-import type {
-  JsonRpcProvider,
-  TransactionReceipt,
-  TransactionResponse
-} from '@ethersproject/providers';
+import type { JsonRpcProvider, TransactionReceipt, TransactionResponse } from '@ethersproject/providers';
 
 import * as abis from './abis';
 import { ERC1155 } from './ERC1155';

@@ -37,10 +37,7 @@ export async function switchNetwork(
   }
 }
 
-export async function addNetwork(
-  externalProvider: any,
-  params: AddEthereumChainParameter
-): Promise<void> {
+export async function addNetwork(externalProvider: any, params: AddEthereumChainParameter): Promise<void> {
   await externalProvider?.request?.({
     method: 'wallet_addEthereumChain',
     params: [

@@ -32,13 +32,4 @@ const zkPairKeyRegex = new RegExp(`^${ZK_PAIR_PREFIX}0x[0-9a-f]*`, '');
 const zkDidKey = (didUri: DidUrl): string => didUri;
 const zkDidRegex = new RegExp(`^${ZK_DID_PREFIX}0x[0-9A-Fa-f]*`, '');
 
-export {
-  kiltPairKey,
-  kiltPairKeyRegex,
-  kiltDidKey,
-  kiltDidRegex,
-  zkPairKey,
-  zkPairKeyRegex,
-  zkDidKey,
-  zkDidRegex
-};
+export { kiltPairKey, kiltPairKeyRegex, kiltDidKey, kiltDidRegex, zkPairKey, zkPairKeyRegex, zkDidKey, zkDidRegex };
