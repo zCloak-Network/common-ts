@@ -25,8 +25,11 @@ export class LocalStorage extends Events<StorageEvent> {
           }
         } else {
           if (event.key) {
-            this.#items.set(event.key, event.newValue);
-            this.emit('store_changed', event.key, event.oldValue, event.newValue);
+            const oldValue = deserialize(event.oldValue);
+            const newValue = deserialize(event.newValue);
+
+            this.#items.set(event.key, newValue);
+            this.emit('store_changed', event.key, oldValue, newValue);
           }
         }
       }
@@ -48,13 +51,15 @@ export class LocalStorage extends Events<StorageEvent> {
     const oldValue = this.#items.get(key);
 
     this.#items.set(key, val);
-    this.emit('store_changed', key, oldValue, value);
+    this.emit('store_changed', key, oldValue, val);
   }
 
   public remove(key: string) {
     localStorage.removeItem(key);
+    const oldValue = this.#items.get(key);
+
     this.#items.delete(key);
-    this.emit('store_changed', key, this.#items.get(key), null);
+    this.emit('store_changed', key, oldValue, null);
   }
 
   public each(fn: (key: string, val: any) => void): void {
