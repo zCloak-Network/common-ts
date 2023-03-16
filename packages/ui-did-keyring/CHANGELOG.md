@@ -1,5 +1,12 @@
 # @zcloak/ui-did-keyring
 
+## 1.1.6
+
+### Patch Changes
+
+- Updated dependencies [[`dbfa3a0`](https://github.com/zCloak-Network/common-ts/commit/dbfa3a0a537071ddb4bc067d4a572dd78f3c7fbe)]:
+  - @zcloak/ui-store@0.9.5
+
 ## 1.1.5
 
 ### Patch Changes

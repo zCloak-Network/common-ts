@@ -1,5 +1,11 @@
 # @zcloak/ui-store
 
+## 0.9.5
+
+### Patch Changes
+
+- [`dbfa3a0`](https://github.com/zCloak-Network/common-ts/commit/dbfa3a0a537071ddb4bc067d4a572dd78f3c7fbe) Thanks [@zzcwoshizz](https://github.com/zzcwoshizz)! - fix emit event error
+
 ## 0.9.4
 
 ### Patch Changes
