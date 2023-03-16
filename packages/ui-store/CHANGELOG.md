@@ -1,5 +1,11 @@
 # @zcloak/ui-store
 
+## 0.9.3
+
+### Patch Changes
+
+- [`353acc1`](https://github.com/zCloak-Network/common-ts/commit/353acc190a9b7b5dc63fc0cea448f4b411327e10) Thanks [@zzcwoshizz](https://github.com/zzcwoshizz)! - fix the browser storage event not work right
+
 ## 0.9.2
 
 ### Patch Changes
