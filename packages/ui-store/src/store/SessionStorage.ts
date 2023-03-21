@@ -45,9 +45,7 @@ export class SessionStorage extends Events<StorageEvent> {
   }
 
   public set(key: string, value: any) {
-    const val = serialize(value);
-
-    sessionStorage.setItem(key, val);
+    sessionStorage.setItem(key, serialize(value));
     const oldValue = this.#items.get(key);
 
     this.#items.set(key, value);

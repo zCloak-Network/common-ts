@@ -45,13 +45,11 @@ export class LocalStorage extends Events<StorageEvent> {
   }
 
   public set(key: string, value: any) {
-    const val = serialize(value);
-
-    localStorage.setItem(key, val);
+    localStorage.setItem(key, serialize(value));
     const oldValue = this.#items.get(key);
 
-    this.#items.set(key, val);
-    this.emit('store_changed', key, oldValue, val);
+    this.#items.set(key, value);
+    this.emit('store_changed', key, oldValue, value);
   }
 
   public remove(key: string) {
