@@ -1,5 +1,11 @@
 # @zcloak/ui-store
 
+## 0.9.7
+
+### Patch Changes
+
+- [`41573d0`](https://github.com/zCloak-Network/common-ts/commit/41573d0bf272c34faf9e19bba51d0aa61149e490) Thanks [@zzcwoshizz](https://github.com/zzcwoshizz)! - dont emit serialize value when set on browser storage
+
 ## 0.9.6
 
 ### Patch Changes
